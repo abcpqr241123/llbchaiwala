@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLB Chai Wala — Preloader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@400;700&family=Poppins:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── Reset ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #09060300
+        }
+
+        /* ── Design Tokens ── */
+        :root {
+            --bg: #080503;
+            --surface: #120d06;
+            --orange: #e8720c;
+            --orange-glow: #f5891a;
+            --gold: #d4a030;
+            --gold-light: #f0c060;
+            --cream: #f5e6c8;
+            --cream-dim: #c8b090;
+            --muted: #6b5840;
+            --grad: linear-gradient(135deg, #e8720c 0%, #d4a030 100%);
+        }
+
+        /* ══════════════════════════════
+   PRELOADER SHELL
+══════════════════════════════ */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity .8s cubic-bezier(.16, 1, .3, 1),
+                transform .8s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        #preloader.exit {
+            opacity: 0;
+            transform: scale(1.04);
+            pointer-events: none;
+        }
+
+        /* ── Ambient BG glow ── */
+        #preloader::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% 60%,
+                    rgba(232, 114, 12, .13) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 30% at 50% 80%,
+                    rgba(212, 160, 48, .07) 0%, transparent 55%);
+            pointer-events: none;
+            animation: ambientPulse 4s ease-in-out infinite;
+        }
+
+        /* Grain overlay */
+        #preloader::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        /* ══════════════════════════════
+   INNER LAYOUT
+══════════════════════════════ */
+        .loader-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* ══════════════════════════════
+   TEA CUP SVG
+══════════════════════════════ */
+        .cup-wrap {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: .5rem;
+        }
+
+        /* Plate glow */
+        .cup-glow {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 22px;
+            background: radial-gradient(ellipse, rgba(232, 114, 12, .45) 0%, transparent 75%);
+            filter: blur(6px);
+            animation: glowPulse 2.5s ease-in-out infinite;
+        }
+
+        /* Orbital ring */
+        .cup-ring {
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 114, 12, .18);
+            animation: orbit 6s linear infinite;
+        }
+
+        .cup-ring::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--orange-glow);
+            box-shadow: 0 0 10px 3px rgba(245, 137, 26, .6);
+        }
+
+        /* Outer orbital */
+        .cup-ring-outer {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 160, 48, .1);
+            animation: orbit 9s linear infinite reverse;
+        }
+
+        .cup-ring-outer::before {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            right: 22%;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            box-shadow: 0 0 8px 2px rgba(240, 192, 96, .5);
+        }
+
+        /* The cup itself */
+        .tea-cup {
+            animation: cupFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 12px 20px rgba(232, 114, 12, .25));
+        }
+
+        /* ══════════════════════════════
+   STEAM WISPS
+══════════════════════════════ */
+        .steam-group {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 70px;
+            pointer-events: none;
+        }
+
+        .steam-wisp {
+            position: absolute;
+            bottom: 0;
+            width: 5px;
+            border-radius: 3px;
+            background: linear-gradient(to top,
+                    rgba(245, 137, 26, .6),
+                    rgba(240, 192, 96, .3),
+                    transparent);
+            transform-origin: bottom center;
+            animation: steamRise var(--dur) ease-in-out infinite var(--delay);
+            opacity: 0;
+        }
+
+        .steam-wisp:nth-child(1) {
+            left: 22px;
+            height: 50px;
+            --dur: 2.2s;
+            --delay: 0s;
+        }
+
+        .steam-wisp:nth-child(2) {
+            left: 36px;
+            height: 65px;
+            --dur: 2.6s;
+            --delay: .35s;
+            width: 6px;
+        }
+
+        .steam-wisp:nth-child(3) {
+            left: 50px;
+            height: 48px;
+            --dur: 2s;
+            --delay: .7s;
+        }
+
+        .steam-wisp:nth-child(4) {
+            left: 62px;
+            height: 42px;
+            --dur: 2.4s;
+            --delay: .15s;
+            width: 4px;
+        }
+
+        /* ══════════════════════════════
+   BRAND TEXT
+══════════════════════════════ */
+        .brand-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .1rem;
+            margin-top: .6rem;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeSlideUp .7s cubic-bezier(.16, 1, .3, 1) .4s forwards;
+        }
+
+        .brand-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            color: var(--orange-glow);
+            text-shadow: 0 0 30px rgba(245, 137, 26, .7),
+                0 0 60px rgba(245, 137, 26, .25);
+            letter-spacing: .05em;
+            animation: textGlow 2.5s ease-in-out infinite .6s;
+        }
+
+        .brand-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            letter-spacing: .35em;
+            background: linear-gradient(120deg, var(--cream) 20%, var(--orange-glow) 60%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(232, 114, 12, .35));
+        }
+
+        .brand-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(.65rem, 1.8vw, .78rem);
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: .35rem;
+            font-weight: 300;
+        }
+
+        /* ══════════════════════════════
+   PROGRESS SYSTEM
+══════════════════════════════ */
+        .progress-wrap {
+            margin-top: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .7rem;
+            opacity: 0;
+            animation: fadeSlideUp .6s cubic-bezier(.16, 1, .3, 1) .7s forwards;
+            width: clamp(200px, 55vw, 280px);
+        }
+
+        /* Track */
+        .progress-track {
+            width: 100%;
+            height: 2px;
+            background: rgba(232, 114, 12, .12);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--grad);
+            border-radius: 2px;
+            transition: width .08s linear;
+            position: relative;
+        }
+
+        /* shimmer on fill */
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            box-shadow: 0 0 10px 3px rgba(240, 192, 96, .8);
+        }
+
+        /* Percentage */
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .pct-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            line-height: 1;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: .04em;
+            min-width: 4ch;
+        }
+
+        .pct-unit {
+            font-family: 'Poppins', sans-serif;
+            font-size: .65rem;
+            letter-spacing: .15em;
+            color: var(--muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            align-self: flex-end;
+            padding-bottom: .3rem;
+        }
+
+        /* Status text */
+        .status-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: .68rem;
+            letter-spacing: .12em;
+            color: var(--muted);
+            font-style: italic;
+            height: 1.2em;
+            text-align: center;
+            transition: opacity .3s;
+        }
+
+        /* Dot indicators */
+        .dot-row {
+            display: flex;
+            gap: 8px;
+            margin-top: .2rem;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(232, 114, 12, .2);
+            transition: background .4s, box-shadow .4s;
+        }
+
+        .dot.active {
+            background: var(--orange);
+            box-shadow: 0 0 8px 2px rgba(232, 114, 12, .5);
+        }
+
+        /* ══════════════════════════════
+   FLOATING PARTICLES
+══════════════════════════════ */
+        #pCanvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ══════════════════════════════
+   CORNER ACCENTS
+══════════════════════════════ */
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: .3;
+        }
+
+        .corner-tl {
+            top: 24px;
+            left: 24px;
+            border-top: 1px solid var(--orange);
+            border-left: 1px solid var(--orange);
+        }
+
+        .corner-tr {
+            top: 24px;
+            right: 24px;
+            border-top: 1px solid var(--orange);
+            border-right: 1px solid var(--orange);
+        }
+
+        .corner-bl {
+            bottom: 24px;
+            left: 24px;
+            border-bottom: 1px solid var(--orange);
+            border-left: 1px solid var(--orange);
+        }
+
+        .corner-br {
+            bottom: 24px;
+            right: 24px;
+            border-bottom: 1px solid var(--orange);
+            border-right: 1px solid var(--orange);
+        }
+
+        /* ══════════════════════════════
+   REVEAL OVERLAY (cinematic wipe)
+══════════════════════════════ */
+        #revealOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg);
+            transform-origin: top center;
+            transform: scaleY(1);
+            transition: transform .9s cubic-bezier(.76, 0, .24, 1);
+            pointer-events: none;
+        }
+
+        #revealOverlay.wipe {
+            transform: scaleY(0);
+        }
+
+        /* ══════════════════════════════
+   KEYFRAMES
+══════════════════════════════ */
+        @keyframes ambientPulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .6
+            }
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                transform: translateX(-50%) scaleX(1);
+                opacity: .8
+            }
+
+            50% {
+                transform: translateX(-50%) scaleX(1.3);
+                opacity: .4
+            }
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes cupFloat {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-7px)
+            }
+        }
+
+        @keyframes steamRise {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scaleX(1)
+            }
+
+            15% {
+                opacity: .85
+            }
+
+            60% {
+                opacity: .5;
+                transform: translateX(var(--drift, 4px)) scaleX(1.6)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scaleX(2)
+            }
+        }
+
+        @keyframes textGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 30px rgba(245, 137, 26, .7), 0 0 60px rgba(245, 137, 26, .25)
+            }
+
+            50% {
+                text-shadow: 0 0 50px rgba(245, 137, 26, 1), 0 0 90px rgba(245, 137, 26, .4), 0 0 120px rgba(245, 137, 26, .15)
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:480px) {
+            .corner {
+                width: 28px;
+                height: 28px
+            }
+
+            .corner-tl,
+            .corner-tr {
+                top: 16px
+            }
+
+            .corner-tl,
+            .corner-bl {
+                left: 16px
+            }
+
+            .corner-tr,
+            .corner-br {
+                right: 16px
+            }
+
+            .corner-bl,
+            .corner-br {
+                bottom: 16px
+            }
+
+            .cup-wrap {
+                width: 140px;
+                height: 140px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cinematic wipe overlay (runs first) -->
+    <div id="revealOverlay"></div>
+
+    <!-- ══ PRELOADER ══ -->
+    <div id="preloader" role="status" aria-label="Loading LLB Chai Wala">
+
+        <!-- Particle canvas -->
+        <canvas id="pCanvas"></canvas>
+
+        <!-- Corner accents -->
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <div class="loader-inner">
+
+            <!-- ── Tea Cup ── -->
+            <div class="cup-wrap">
+                <div class="cup-ring-outer"></div>
+                <div class="cup-ring"></div>
+                <div class="cup-glow"></div>
+
+                <!-- Steam wisps above cup -->
+                <div class="steam-group">
+                    <div class="steam-wisp" style="--drift:3px"></div>
+                    <div class="steam-wisp" style="--drift:-2px"></div>
+                    <div class="steam-wisp" style="--drift:4px"></div>
+                    <div class="steam-wisp" style="--drift:-3px"></div>
+                </div>
+
+                <!-- SVG Tea Cup -->
+                <svg class="tea-cup" width="110" height="110" viewBox="0 0 110 110" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="cupGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#c45e08" />
+                            <stop offset="50%" stop-color="#e8720c" />
+                            <stop offset="100%" stop-color="#d4a030" />
+                        </linearGradient>
+                        <linearGradient id="teaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#c87020" stop-opacity=".9" />
+                            <stop offset="100%" stop-color="#7a3808" stop-opacity=".95" />
+                        </linearGradient>
+                        <linearGradient id="plateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#9a6030" />
+                            <stop offset="100%" stop-color="#5a3010" />
+                        </linearGradient>
+                        <linearGradient id="rimGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#f0c060" />
+                            <stop offset="100%" stop-color="#d4a030" />
+                        </linearGradient>
+                        <radialGradient id="teaSheen" cx="35%" cy="30%" r="55%">
+                            <stop offset="0%" stop-color="#f0a040" stop-opacity=".4" />
+                            <stop offset="100%" stop-color="transparent" />
+                        </radialGradient>
+                        <filter id="softGlow">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Saucer/plate -->
+                    <ellipse cx="55" cy="88" rx="36" ry="8" fill="url(#plateGrad)" opacity=".9" />
+                    <ellipse cx="55" cy="86" rx="34" ry="6" fill="none" stroke="url(#rimGrad)" stroke-width="1.2"
+                        opacity=".7" />
+
+                    <!-- Cup body -->
+                    <path d="M28 52 Q27 80 36 84 Q55 88 74 84 Q83 80 82 52 Z" fill="url(#cupGrad)"
+                        filter="url(#softGlow)" />
+
+                    <!-- Tea liquid surface -->
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="url(#teaGrad)" />
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="url(#teaSheen)" />
+
+                    <!-- Cup rim -->
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="none" stroke="url(#rimGrad)" stroke-width="1.8" />
+
+                    <!-- Cup top opening ellipse (outer) -->
+                    <ellipse cx="55" cy="51" rx="27" ry="7.5" fill="none" stroke="url(#rimGrad)" stroke-width=".8"
+                        opacity=".4" />
+
+                    <!-- Inner shadow on cup body -->
+                    <path d="M28 52 Q27 80 36 84 Q55 88 74 84 Q83 80 82 52" fill="none" stroke="rgba(0,0,0,.25)"
+                        stroke-width="1.5" />
+
+                    <!-- Cup handle -->
+                    <path d="M82 60 Q98 60 98 70 Q98 80 82 80" fill="none" stroke="url(#cupGrad)" stroke-width="5.5"
+                        stroke-linecap="round" />
+                    <path d="M82 60 Q96 61 96 70 Q96 79 82 80" fill="none" stroke="url(#rimGrad)" stroke-width="1.2"
+                        stroke-linecap="round" opacity=".6" />
+
+                    <!-- Highlight on cup body -->
+                    <path d="M34 58 Q33 75 38 81" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"
+                        stroke-linecap="round" />
+
+                    <!-- Tea ripple on surface -->
+                    <ellipse cx="50" cy="52" rx="10" ry="3" fill="none" stroke="rgba(240,192,96,.3)" stroke-width="1"
+                        opacity=".7" />
+                </svg>
+            </div>
+
+            <!-- ── Brand Text ── -->
+            <div class="brand-wrap">
+                <div class="brand-hindi">एलएलबी चाय वाला</div>
+                <div class="brand-name">LLB Chai Wala</div>
+                <div class="brand-tagline">Gautam Nagar &nbsp;·&nbsp; New Delhi</div>
+            </div>
+
+            <!-- ── Progress ── -->
+            <div class="progress-wrap">
+                <div class="progress-row">
+                    <div>
+                        <span class="pct-num" id="pctNum">0</span><span class="pct-unit">%</span>
+                    </div>
+                    <div class="dot-row" id="dotRow">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="pFill"></div>
+                </div>
+                <div class="status-text" id="statusTxt">Warming up the kettle…</div>
+            </div>
+
+        </div><!-- /loader-inner -->
+    </div><!-- /preloader -->
+
+    <!-- Page content revealed after loader -->
+    <div id="pageContent" style="display:none;color:#f5e6c8;font-family:'Poppins',sans-serif;
+  text-align:center;padding:4rem 2rem;background:#080503;min-height:100vh;
+  flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;
+    letter-spacing:.3em;background:linear-gradient(135deg,#e8720c,#d4a030);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            LLB CHAI WALA
+        </div>
+        <p style="color:#6b5840;font-size:.85rem;letter-spacing:.12em;">
+            Website loading complete. Build next section →
+        </p>
+    </div>
+
+    <script>
+        /* ── Particle System ── */
+        (function () {
+            const canvas = document.getElementById('pCanvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, pts = [], raf;
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+
+            function mkPt(init) {
+                const cols = [
+                    'rgba(232,114,12,', 'rgba(212,160,48,',
+                    'rgba(245,137,26,', 'rgba(180,90,10,'
+                ];
+                return {
+                    x: Math.random() * W,
+                    y: init ? Math.random() * H : H + 5,
+                    r: Math.random() * 2 + .4,
+                    vy: Math.random() * .45 + .12,
+                    vx: (Math.random() - .5) * .25,
+                    op: Math.random() * .45 + .08,
+                    col: cols[Math.floor(Math.random() * cols.length)],
+                    flicker: Math.random() < .28
+                };
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach((p, i) => {
+                    p.y -= p.vy; p.x += p.vx;
+                    if (p.flicker) p.op += (Math.random() - .5) * .04;
+                    p.op = Math.min(.6, Math.max(.05, p.op));
+                    if (p.y < H * .25) p.op -= .003;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.col + p.op + ')';
+                    ctx.fill();
+
+                    if (p.r > 1.4) {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
+                        ctx.fillStyle = p.col + (p.op * .12) + ')';
+                        ctx.fill();
+                    }
+
+                    if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
+                });
+                raf = requestAnimationFrame(draw);
+            }
+
+            resize();
+            for (let i = 0; i < 60; i++) pts.push(mkPt(true));
+            draw();
+            window.addEventListener('resize', resize, { passive: true });
+            window._stopParticles = () => { cancelAnimationFrame(raf); };
+        })();
+
+        /* ── Preloader Logic ── */
+        (function () {
+            const MESSAGES = [
+                'Warming up the kettle…',
+                'Grinding the finest tea leaves…',
+                'Adding a pinch of masala…',
+                'Almost ready, just a moment…',
+                'Pouring your perfect cup…',
+                'LLB style, coming right up!'
+            ];
+
+            const fill = document.getElementById('pFill');
+            const pctEl = document.getElementById('pctNum');
+            const status = document.getElementById('statusTxt');
+            const dots = document.getElementById('dotRow').children;
+            const loader = document.getElementById('preloader');
+            const page = document.getElementById('pageContent');
+            const wipe = document.getElementById('revealOverlay');
+
+            let pct = 0;
+            let msgIdx = 0;
+
+            /* Cinematic wipe IN on load */
+            requestAnimationFrame(() => {
+                setTimeout(() => wipe.classList.add('wipe'), 60);
+            });
+
+            /* Progress tick — non-linear for realism */
+            function getSpeed() {
+                if (pct < 30) return Math.random() * 2.5 + 1.5;  // fast start
+                if (pct < 70) return Math.random() * 1.8 + .8;   // steady middle
+                if (pct < 90) return Math.random() * 1 + .4;     // slight pause near end
+                return Math.random() * .6 + .2;                 // slow final stretch
+            }
+
+            function tick() {
+                if (pct >= 100) {
+                    pctEl.textContent = '100';
+                    fill.style.width = '100%';
+                    status.textContent = 'Chai ready! ☕';
+                    updateDots(100);
+                    setTimeout(exit, 600);
+                    return;
+                }
+
+                pct = Math.min(100, pct + getSpeed());
+                const rounded = Math.floor(pct);
+
+                pctEl.textContent = rounded;
+                fill.style.width = rounded + '%';
+                updateDots(rounded);
+
+                /* Swap status messages at milestones */
+                const mIdx = Math.min(MESSAGES.length - 1, Math.floor(pct / 17));
+                if (mIdx !== msgIdx) {
+                    msgIdx = mIdx;
+                    status.style.opacity = '0';
+                    setTimeout(() => {
+                        status.textContent = MESSAGES[msgIdx];
+                        status.style.opacity = '1';
+                    }, 200);
+                }
+
+                /* Variable interval for organic feel */
+                const delay = 28 + Math.random() * 55;
+                setTimeout(tick, delay);
+            }
+
+            function updateDots(val) {
+                const thresh = [20, 40, 60, 80, 100];
+                thresh.forEach((t, i) => {
+                    if (val >= t) dots[i].classList.add('active');
+                });
+            }
+
+            /* Exit sequence */
+            function exit() {
+                loader.classList.add('exit');
+                window._stopParticles && window._stopParticles();
+
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    page.style.display = 'flex';
+                }, 820);
+            }
+
+            /* Start after a brief cinematic pause */
+            setTimeout(tick, 500);
+
+            /* Replay button for demo */
+            page.insertAdjacentHTML('beforeend',
+                `<button onclick="location.reload()" style="
+      margin-top:2rem;padding:12px 32px;
+      background:linear-gradient(135deg,#e8720c,#d4a030);
+      color:#fff;border:none;border-radius:50px;
+      font-family:'Poppins',sans-serif;font-size:.85rem;
+      font-weight:600;letter-spacing:.08em;cursor:pointer;
+      box-shadow:0 4px 20px rgba(232,114,12,.4);">
+      ↻ &nbsp;Replay Loader
+    </button>`
+            );
+
+        })();
+    </script>
+</body>
+
+</html>

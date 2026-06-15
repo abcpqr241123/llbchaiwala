@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLB Chai Wala — Table Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ============================================
+   RESET & TOKENS
+============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: #0a0603;
+            color: #f5e6c8;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        :root {
+            --orange: #e8720c;
+            --orange-glow: #f5891a;
+            --gold: #d4a030;
+            --gold-light: #f0c060;
+            --cream: #f5e6c8;
+            --cream-dim: #c8b090;
+            --muted: #6b5840;
+            --success: #22c55e;
+            --border: rgba(212, 128, 40, .18);
+            --bg: #0a0603;
+            --surface: rgba(16, 10, 4, .82);
+            --grad: linear-gradient(135deg, #e8720c 0%, #d4a030 100%);
+            --ease: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        /* ============================================
+   BOOKING SECTION
+============================================ */
+        #booking {
+            position: relative;
+            width: 100%;
+            padding: clamp(5rem, 10vh, 8rem) clamp(1rem, 4vw, 2rem);
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0603 0%, #0f0906 50%, #0a0603 100%);
+        }
+
+        /* Multi-layer ambient BG */
+        #booking::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232, 114, 12, .08) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 55% at 8% 70%, rgba(212, 160, 48, .05) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 45% at 92% 25%, rgba(180, 80, 10, .05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Grain overlay */
+        #booking::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            opacity: .55;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Particle canvas */
+        #bookingCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── Two-column layout ── */
+        .booking-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2.5rem, 5vw, 5rem);
+            align-items: center;
+        }
+
+        /* ── LEFT — Info panel ── */
+        .booking-info {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity .85s var(--ease), transform .85s var(--ease);
+        }
+
+        .booking-info.in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .info-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .65rem;
+            font-size: .68rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+        }
+
+        .info-eyebrow::before {
+            content: '';
+            display: block;
+            width: 26px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange));
+        }
+
+        .info-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            line-height: .95;
+            letter-spacing: .04em;
+            margin-bottom: 1.2rem;
+        }
+
+        .info-title .t1 {
+            display: block;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-title .t2 {
+            display: block;
+            background: linear-gradient(135deg, var(--orange-glow) 0%, var(--gold) 55%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 24px rgba(232, 114, 12, .4));
+        }
+
+        .info-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 1.05rem;
+            color: var(--orange);
+            letter-spacing: .04em;
+            margin-bottom: 1.4rem;
+            opacity: .7;
+        }
+
+        .info-desc {
+            font-size: clamp(.85rem, 1.6vw, .96rem);
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 1.85;
+            margin-bottom: 2.2rem;
+        }
+
+        .info-desc em {
+            font-style: normal;
+            color: var(--cream-dim);
+        }
+
+        /* Info feature list */
+        .info-features {
+            display: flex;
+            flex-direction: column;
+            gap: .85rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .feat-row {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+        }
+
+        .feat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            flex-shrink: 0;
+            background: rgba(232, 114, 12, .1);
+            border: 1px solid rgba(232, 114, 12, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: transform .3s var(--ease), background .3s;
+        }
+
+        .feat-row:hover .feat-icon {
+            background: rgba(232, 114, 12, .18);
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .feat-text {
+            display: flex;
+            flex-direction: column;
+            gap: .08rem;
+        }
+
+        .feat-label {
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--cream-dim);
+        }
+
+        .feat-sub {
+            font-size: .7rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        /* Hours card */
+        .hours-card {
+            padding: 1.1rem 1.4rem;
+            background: rgba(17, 12, 5, .65);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hours-title {
+            font-size: .62rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: .7rem;
+            font-weight: 500;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: .78rem;
+            color: var(--cream-dim);
+            padding: .25rem 0;
+            border-bottom: 1px solid rgba(212, 128, 40, .08);
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .hours-row span:last-child {
+            color: var(--orange-glow);
+            font-weight: 500;
+        }
+
+        /* ── RIGHT — Form panel ── */
+        .booking-form-wrap {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity .85s var(--ease) .1s, transform .85s var(--ease) .1s;
+        }
+
+        .booking-form-wrap.in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Glass card */
+        .form-card {
+            background: rgba(16, 10, 4, .72);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: clamp(1.8rem, 4vw, 2.8rem);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+        }
+
+        /* Gradient top border */
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange), var(--gold), transparent);
+            opacity: .7;
+        }
+
+        /* Subtle corner glow */
+        .form-card::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 114, 12, .08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .form-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: .12em;
+            margin-bottom: 1.8rem;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 1.2rem;
+        }
+
+        .form-full {
+            grid-column: 1/-1;
+        }
+
+        /* ── Field group ── */
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: .45rem;
+            position: relative;
+        }
+
+        .field-label {
+            font-size: .65rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            transition: color .3s;
+        }
+
+        .field:focus-within .field-label {
+            color: var(--orange-glow);
+        }
+
+        .label-req {
+            color: var(--orange);
+            font-size: .7rem;
+        }
+
+        /* Input/select/textarea shared */
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background: rgba(10, 6, 2, .7);
+            border: 1px solid rgba(212, 128, 40, .2);
+            border-radius: 12px;
+            color: var(--cream);
+            font-family: 'Poppins', sans-serif;
+            font-size: .85rem;
+            font-weight: 400;
+            outline: none;
+            transition: border-color .3s, box-shadow .3s, background .3s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        .field select option {
+            background: #0f0906;
+            color: var(--cream);
+        }
+
+        /* Date & time native styling fix */
+        .field input[type="date"],
+        .field input[type="time"] {
+            color-scheme: dark;
+        }
+
+        /* Focus state */
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: rgba(232, 114, 12, .55);
+            box-shadow: 0 0 0 3px rgba(232, 114, 12, .1), 0 0 20px rgba(232, 114, 12, .08);
+            background: rgba(15, 9, 3, .85);
+        }
+
+        /* Valid state */
+        .field input.valid,
+        .field select.valid {
+            border-color: rgba(34, 197, 94, .4);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, .06);
+        }
+
+        /* Error state */
+        .field input.error,
+        .field select.error,
+        .field textarea.error {
+            border-color: rgba(239, 68, 68, .5);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, .08);
+            animation: fieldShake .4s ease;
+        }
+
+        /* Textarea no resize */
+        .field textarea {
+            padding: 12px 14px;
+            resize: none;
+            min-height: 90px;
+            scrollbar-width: thin;
+        }
+
+        /* Field icon */
+        .field-icon {
+            position: absolute;
+            bottom: 0;
+            left: 14px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            color: var(--muted);
+            pointer-events: none;
+            transition: color .3s;
+        }
+
+        .field:focus-within .field-icon {
+            color: var(--orange-glow);
+        }
+
+        /* Textarea no icon padding override */
+        .field textarea~.field-icon {
+            display: none;
+        }
+
+        .field.no-icon input,
+        .field.no-icon select,
+        .field.no-icon textarea {
+            padding-left: 14px;
+        }
+
+        /* Select arrow */
+        .select-arrow {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            pointer-events: none;
+            color: var(--muted);
+            transition: color .3s;
+        }
+
+        .field:focus-within .select-arrow {
+            color: var(--orange-glow);
+        }
+
+        /* Error message */
+        .field-error {
+            font-size: .62rem;
+            color: #ef4444;
+            letter-spacing: .06em;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height .3s var(--ease), opacity .3s;
+        }
+
+        .field-error.show {
+            height: 1.1rem;
+            opacity: 1;
+        }
+
+        /* People counter */
+        .people-counter {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .people-counter input {
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: .06em;
+            cursor: default;
+        }
+
+        .pc-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            background: rgba(232, 114, 12, .1);
+            border: 1px solid rgba(232, 114, 12, .22);
+            color: var(--orange-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: background .25s, border-color .25s, transform .15s;
+            user-select: none;
+        }
+
+        .pc-btn:hover {
+            background: rgba(232, 114, 12, .22);
+            border-color: rgba(232, 114, 12, .5);
+        }
+
+        .pc-btn:active {
+            transform: scale(.88);
+        }
+
+        /* Submit button */
+        .btn-book {
+            width: 100%;
+            margin-top: 1.4rem;
+            padding: 15px;
+            background: var(--grad);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: .9rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 28px rgba(232, 114, 12, .38);
+            transition: box-shadow .3s, transform .2s;
+        }
+
+        .btn-book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .22), transparent);
+            transition: left .55s;
+        }
+
+        .btn-book:hover {
+            box-shadow: 0 10px 38px rgba(232, 114, 12, .6);
+            transform: translateY(-2px);
+        }
+
+        .btn-book:hover::before {
+            left: 160%;
+        }
+
+        .btn-book:active {
+            transform: translateY(0);
+        }
+
+        .btn-book:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-book svg {
+            transition: transform .3s var(--ease);
+        }
+
+        .btn-book:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* ── Success overlay ── */
+        .form-success {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: rgba(10, 6, 2, .97);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2.5rem;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .5s var(--ease);
+            z-index: 10;
+        }
+
+        .form-success.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-icon {
+            font-size: 3.2rem;
+            animation: successPop .6s var(--ease) .2s both;
+        }
+
+        .success-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: .1em;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-msg {
+            font-size: .85rem;
+            color: var(--cream-dim);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .success-ref {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: .2em;
+            color: var(--gold-light);
+        }
+
+        .btn-book-again {
+            margin-top: .5rem;
+            padding: 10px 26px;
+            background: rgba(34, 197, 94, .1);
+            border: 1px solid rgba(34, 197, 94, .3);
+            color: #4ade80;
+            font-family: 'Poppins', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background .25s, border-color .25s;
+        }
+
+        .btn-book-again:hover {
+            background: rgba(34, 197, 94, .18);
+            border-color: rgba(34, 197, 94, .5);
+        }
+
+        /* ── Floating decoration ── */
+        .deco-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 114, 12, .07);
+            pointer-events: none;
+            z-index: 1;
+            animation: decoSpin var(--ds) linear infinite;
+        }
+
+        .deco-ring:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            left: -80px;
+            --ds: 22s;
+        }
+
+        .deco-ring:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: -50px;
+            --ds: 16s;
+            animation-direction: reverse;
+            border-color: rgba(212, 160, 48, .06);
+        }
+
+        /* ── Keyframes ── */
+        @keyframes fieldShake {
+
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+
+            25% {
+                transform: translateX(-5px)
+            }
+
+            75% {
+                transform: translateX(5px)
+            }
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0) rotate(-20deg)
+            }
+
+            70% {
+                transform: scale(1.2) rotate(5deg)
+            }
+
+            100% {
+                transform: scale(1) rotate(0)
+            }
+        }
+
+        @keyframes decoSpin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:860px) {
+            .booking-wrap {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .booking-info {
+                transform: none;
+            }
+
+            .booking-form-wrap {
+                transform: none;
+            }
+        }
+
+        @media(max-width:560px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: 1;
+            }
+
+            .form-card {
+                padding: 1.5rem 1.2rem;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════
+     BOOKING SECTION
+═══════════════════════════════════ -->
+    <section id="booking" aria-label="Reserve a table">
+
+        <canvas id="bookingCanvas" aria-hidden="true"></canvas>
+
+        <!-- Decorative rings -->
+        <div class="deco-ring" aria-hidden="true"></div>
+        <div class="deco-ring" aria-hidden="true"></div>
+
+        <div class="booking-wrap">
+
+            <!-- ── LEFT: Info ── -->
+            <div class="booking-info js-bin">
+
+                <p class="info-eyebrow">Reserve Your Spot</p>
+
+                <h2 class="info-title">
+                    <span class="t1">Book a</span>
+                    <span class="t2">Table</span>
+                </h2>
+
+                <p class="info-hindi">अपनी जगह बुक करें</p>
+
+                <p class="info-desc">
+                    Skip the wait — reserve your cosy corner at LLB Chai Wala.
+                    Whether it's a <em>study session</em>, a <em>date evening</em>,
+                    or just <em>apna adda</em> time with friends, we'll have your
+                    table ready and chai waiting.
+                </p>
+
+                <div class="info-features">
+                    <div class="feat-row">
+                        <div class="feat-icon">☕</div>
+                        <div class="feat-text">
+                            <span class="feat-label">Complimentary Welcome Chai</span>
+                            <span class="feat-sub">Every reserved table gets a free welcome cup</span>
+                        </div>
+                    </div>
+                    <div class="feat-row">
+                        <div class="feat-icon">🪑</div>
+                        <div class="feat-text">
+                            <span class="feat-label">Guaranteed Seating</span>
+                            <span class="feat-sub">Your table held for up to 15 minutes after booking time</span>
+                        </div>
+                    </div>
+                    <div class="feat-row">
+                        <div class="feat-icon">📱</div>
+                        <div class="feat-text">
+                            <span class="feat-label">Confirmation via WhatsApp</span>
+                            <span class="feat-sub">Booking details sent directly to your phone</span>
+                        </div>
+                    </div>
+                    <div class="feat-row">
+                        <div class="feat-icon">🎉</div>
+                        <div class="feat-text">
+                            <span class="feat-label">Special Occasion Setup</span>
+                            <span class="feat-sub">Birthday, anniversary? Mention it in special requests</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hours-card">
+                    <div class="hours-title">Opening Hours</div>
+                    <div class="hours-row"><span>Monday – Friday</span><span>7:00 AM – 11:00 PM</span></div>
+                    <div class="hours-row"><span>Saturday</span><span>7:00 AM – 12:00 AM</span></div>
+                    <div class="hours-row"><span>Sunday</span><span>8:00 AM – 11:00 PM</span></div>
+                </div>
+
+            </div><!-- /booking-info -->
+
+            <!-- ── RIGHT: Form ── -->
+            <div class="booking-form-wrap js-bin">
+
+                <div class="form-card">
+
+                    <!-- Success overlay (hidden) -->
+                    <div class="form-success" id="formSuccess" aria-live="polite" aria-hidden="true">
+                        <div class="success-icon">🎉</div>
+                        <div class="success-title">Table Booked!</div>
+                        <p class="success-msg">Your table has been reserved.<br />We'll WhatsApp your confirmation
+                            shortly.</p>
+                        <div class="success-ref" id="successRef">REF #LLB0000</div>
+                        <button class="btn-book-again" id="bookAgainBtn">Make Another Booking</button>
+                    </div>
+
+                    <div class="form-title">Reserve Your Table</div>
+
+                    <form id="bookingForm" novalidate autocomplete="off">
+                        <div class="form-grid">
+
+                            <!-- Name -->
+                            <div class="field">
+                                <label class="field-label" for="bName">
+                                    Full Name <span class="label-req">*</span>
+                                </label>
+                                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <input type="text" id="bName" name="name" placeholder="Your full name" maxlength="60" />
+                                <div class="field-error" id="errName">Please enter your name.</div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="field">
+                                <label class="field-label" for="bPhone">
+                                    Phone Number <span class="label-req">*</span>
+                                </label>
+                                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.07 6.07l1.87-1.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                </svg>
+                                <input type="tel" id="bPhone" name="phone" placeholder="+91 98765 43210"
+                                    maxlength="15" />
+                                <div class="field-error" id="errPhone">Enter a valid 10-digit number.</div>
+                            </div>
+
+                            <!-- Number of People -->
+                            <div class="field">
+                                <label class="field-label" for="bPeople">
+                                    Number of People <span class="label-req">*</span>
+                                </label>
+                                <div class="people-counter">
+                                    <button type="button" class="pc-btn" id="pcMinus"
+                                        aria-label="Decrease guests">−</button>
+                                    <input type="number" id="bPeople" name="people" value="2" min="1" max="12" readonly
+                                        style="padding-left:14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;" />
+                                    <button type="button" class="pc-btn" id="pcPlus"
+                                        aria-label="Increase guests">+</button>
+                                </div>
+                                <div class="field-error" id="errPeople">Min 1, max 12 guests.</div>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="field">
+                                <label class="field-label" for="bDate">
+                                    Date <span class="label-req">*</span>
+                                </label>
+                                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                </svg>
+                                <input type="date" id="bDate" name="date" />
+                                <div class="field-error" id="errDate">Please select a valid date.</div>
+                            </div>
+
+                            <!-- Time -->
+                            <div class="field">
+                                <label class="field-label" for="bTime">
+                                    Time <span class="label-req">*</span>
+                                </label>
+                                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                                <select id="bTime" name="time">
+                                    <option value="" disabled selected>Select a time slot</option>
+                                    <optgroup label="Morning">
+                                        <option>07:00 AM</option>
+                                        <option>07:30 AM</option>
+                                        <option>08:00 AM</option>
+                                        <option>08:30 AM</option>
+                                        <option>09:00 AM</option>
+                                        <option>09:30 AM</option>
+                                        <option>10:00 AM</option>
+                                        <option>10:30 AM</option>
+                                        <option>11:00 AM</option>
+                                        <option>11:30 AM</option>
+                                    </optgroup>
+                                    <optgroup label="Afternoon">
+                                        <option>12:00 PM</option>
+                                        <option>12:30 PM</option>
+                                        <option>01:00 PM</option>
+                                        <option>01:30 PM</option>
+                                        <option>02:00 PM</option>
+                                        <option>02:30 PM</option>
+                                        <option>03:00 PM</option>
+                                        <option>03:30 PM</option>
+                                    </optgroup>
+                                    <optgroup label="Evening ☕">
+                                        <option>04:00 PM</option>
+                                        <option>04:30 PM</option>
+                                        <option>05:00 PM</option>
+                                        <option>05:30 PM</option>
+                                        <option>06:00 PM</option>
+                                        <option>06:30 PM</option>
+                                        <option>07:00 PM</option>
+                                        <option>07:30 PM</option>
+                                        <option>08:00 PM</option>
+                                        <option>08:30 PM</option>
+                                    </optgroup>
+                                    <optgroup label="Night">
+                                        <option>09:00 PM</option>
+                                        <option>09:30 PM</option>
+                                        <option>10:00 PM</option>
+                                        <option>10:30 PM</option>
+                                    </optgroup>
+                                </select>
+                                <svg class="select-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                                <div class="field-error" id="errTime">Please select a time slot.</div>
+                            </div>
+
+                            <!-- Special Request -->
+                            <div class="field form-full no-icon">
+                                <label class="field-label" for="bRequest">
+                                    Special Requests
+                                    <span
+                                        style="font-size:.58rem;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:300;">(optional)</span>
+                                </label>
+                                <textarea id="bRequest" name="request"
+                                    placeholder="Birthday setup, window seat, dietary preferences, anything you'd like us to know…"
+                                    maxlength="300"></textarea>
+                                <div style="font-size:.6rem;color:var(--muted);text-align:right;margin-top:.25rem;">
+                                    <span id="charCount">0</span>/300
+                                </div>
+                            </div>
+
+                        </div><!-- /form-grid -->
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn-book" id="bookBtn">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                            </svg>
+                            <span id="bookBtnLabel">Confirm Booking</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                    </form>
+                </div><!-- /form-card -->
+            </div><!-- /booking-form-wrap -->
+
+        </div><!-- /booking-wrap -->
+    </section>
+
+    <script>
+        'use strict';
+
+        /* ── Particle canvas ── */
+        (function () {
+            const c = document.getElementById('bookingCanvas'); if (!c) return;
+            const ctx = c.getContext('2d');
+            const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
+            let W, H, pts = [], raf;
+            function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+            function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.5 + .3, vy: Math.random() * .35 + .08, vx: (Math.random() - .5) * .15, op: Math.random() * .32 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach((p, i) => {
+                    p.y -= p.vy; p.x += p.vx;
+                    if (p.fl) p.op += (Math.random() - .5) * .028;
+                    p.op = Math.min(.42, Math.max(.04, p.op));
+                    if (p.y < H * .15) p.op -= .003;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
+                    if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.5, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
+                    if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
+                }); raf = requestAnimationFrame(draw);
+            }
+            const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
+            resize(); for (let i = 0; i < 40; i++)pts.push(mk(true)); draw();
+            document.addEventListener('visibilitychange', () => document.hidden ? cancelAnimationFrame(raf) : draw());
+        })();
+
+        /* ── Scroll reveal ── */
+        (function () {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); });
+            }, { threshold: .12, rootMargin: '-30px 0px' });
+            document.querySelectorAll('.js-bin').forEach(el => io.observe(el));
+        })();
+
+        /* ── Set min date = today ── */
+        (function () {
+            const d = document.getElementById('bDate');
+            if (!d) return;
+            const today = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            d.min = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+            /* Default to tomorrow */
+            const tom = new Date(today); tom.setDate(tom.getDate() + 1);
+            d.value = `${tom.getFullYear()}-${pad(tom.getMonth() + 1)}-${pad(tom.getDate())}`;
+        })();
+
+        /* ── People counter ── */
+        (function () {
+            const inp = document.getElementById('bPeople');
+            const minus = document.getElementById('pcMinus');
+            const plus = document.getElementById('pcPlus');
+            if (!inp) return;
+            function update(delta) {
+                const val = parseInt(inp.value, 10) || 1;
+                const next = Math.min(12, Math.max(1, val + delta));
+                inp.value = next;
+                minus.style.opacity = next <= 1 ? .35 : 1;
+                plus.style.opacity = next >= 12 ? .35 : 1;
+                inp.classList.remove('error'); inp.classList.add('valid');
+            }
+            minus.addEventListener('click', () => update(-1));
+            plus.addEventListener('click', () => update(1));
+            update(0);
+        })();
+
+        /* ── Char counter ── */
+        (function () {
+            const ta = document.getElementById('bRequest');
+            const cc = document.getElementById('charCount');
+            if (!ta || !cc) return;
+            ta.addEventListener('input', () => {
+                const n = ta.value.length; cc.textContent = n;
+                cc.style.color = n > 260 ? '#ef4444' : n > 200 ? '#f5891a' : '';
+            });
+        })();
+
+        /* ── Live validation helpers ── */
+        function setValid(id) {
+            const el = document.getElementById(id); if (!el) return;
+            el.classList.remove('error'); el.classList.add('valid');
+            const err = document.getElementById('err' + id.replace('b', ''));
+            if (err) err.classList.remove('show');
+        }
+        function setError(id, msg) {
+            const el = document.getElementById(id); if (!el) return;
+            el.classList.remove('valid'); el.classList.add('error');
+            const errId = 'err' + id.charAt(1).toUpperCase() + id.slice(2);
+            const err = document.getElementById(errId);
+            if (err) { if (msg) err.textContent = msg; err.classList.add('show'); }
+        }
+
+        /* Live blur validation */
+        document.getElementById('bName')?.addEventListener('blur', function () {
+            this.value.trim().length >= 2 ? setValid('bName') : setError('bName', 'Please enter your full name.');
+        });
+        document.getElementById('bPhone')?.addEventListener('blur', function () {
+            const cleaned = this.value.replace(/\D/g, '');
+            cleaned.length >= 10 && cleaned.length <= 13 ? setValid('bPhone') : setError('bPhone', 'Enter a valid 10-digit number.');
+        });
+        document.getElementById('bDate')?.addEventListener('change', function () {
+            this.value ? setValid('bDate') : setError('bDate', 'Please select a date.');
+        });
+        document.getElementById('bTime')?.addEventListener('change', function () {
+            this.value ? setValid('bTime') : setError('bTime', 'Please select a time slot.');
+        });
+
+        /* ── Form submit ── */
+        document.getElementById('bookingForm')?.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let ok = true;
+
+            const name = document.getElementById('bName').value.trim();
+            const phone = document.getElementById('bPhone').value.replace(/\D/g, '');
+            const date = document.getElementById('bDate').value;
+            const time = document.getElementById('bTime').value;
+
+            if (name.length < 2) { setError('bName', 'Please enter your full name.'); ok = false; }
+            else setValid('bName');
+            if (phone.length < 10 || phone.length > 13) { setError('bPhone', 'Enter a valid 10-digit number.'); ok = false; }
+            else setValid('bPhone');
+            if (!date) { setError('bDate', 'Please select a date.'); ok = false; }
+            else setValid('bDate');
+            if (!time) { setError('bTime', 'Please select a time slot.'); ok = false; }
+            else setValid('bTime');
+
+            if (!ok) return;
+
+            /* Loading state */
+            const btn = document.getElementById('bookBtn');
+            const lbl = document.getElementById('bookBtnLabel');
+            btn.disabled = true;
+            lbl.textContent = 'Confirming…';
+
+            setTimeout(() => {
+                /* Generate ref */
+                const ref = 'LLB' + String(Math.floor(1000 + Math.random() * 9000));
+                document.getElementById('successRef').textContent = `REF #${ref}`;
+
+                /* Show success */
+                const success = document.getElementById('formSuccess');
+                success.classList.add('show');
+                success.setAttribute('aria-hidden', 'false');
+            }, 1400);
+        });
+
+        /* ── Book again ── */
+        document.getElementById('bookAgainBtn')?.addEventListener('click', function () {
+            const success = document.getElementById('formSuccess');
+            success.classList.remove('show'); success.setAttribute('aria-hidden', 'true');
+            document.getElementById('bookingForm').reset();
+            document.querySelectorAll('.field input,.field select,.field textarea').forEach(el => {
+                el.classList.remove('valid', 'error');
+            });
+            document.querySelectorAll('.field-error').forEach(el => el.classList.remove('show'));
+            document.getElementById('charCount').textContent = '0';
+            document.getElementById('bookBtn').disabled = false;
+            document.getElementById('bookBtnLabel').textContent = 'Confirm Booking';
+            /* Reset date to tomorrow */
+            const d = document.getElementById('bDate');
+            const tom = new Date(); tom.setDate(tom.getDate() + 1);
+            const pad = n => String(n).padStart(2, '0');
+            d.value = `${tom.getFullYear()}-${pad(tom.getMonth() + 1)}-${pad(tom.getDate())}`;
+            document.getElementById('bPeople').value = 2;
+        });
+    </script>
+</body>
+
+</html>

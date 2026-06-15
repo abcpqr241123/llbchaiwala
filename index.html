@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =============================================
+       LLB CHAI WALA — index.html
+       Sections built:
+       ✅ Loading Screen
+       ✅ Navbar
+       ✅ Hero Section
+  ============================================= -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="LLB Chai Wala — Premium Chai & Fast Food Cafe, Gautam Nagar, New Delhi." />
+    <meta name="theme-color" content="#0a0603" />
+    <title>LLB Chai Wala | Premium Chai & Fast Food — Gautam Nagar, Delhi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ══ SCROLL PROGRESS ══ -->
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- ══ CINEMATIC WIPE ══ -->
+    <div id="revealOverlay" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════
+       PRELOADER
+  ══════════════════════════════════════════ -->
+    <div id="preloader" role="status" aria-live="polite" aria-label="Loading LLB Chai Wala">
+        <canvas id="pCanvas" aria-hidden="true"></canvas>
+        <div class="corner corner-tl" aria-hidden="true"></div>
+        <div class="corner corner-tr" aria-hidden="true"></div>
+        <div class="corner corner-bl" aria-hidden="true"></div>
+        <div class="corner corner-br" aria-hidden="true"></div>
+        <div class="loader-inner">
+            <div class="cup-wrap">
+                <div class="cup-ring-outer"></div>
+                <div class="cup-ring"></div>
+                <div class="cup-glow"></div>
+                <div class="steam-group" aria-hidden="true">
+                    <div class="steam-wisp" style="--drift:3px"></div>
+                    <div class="steam-wisp" style="--drift:-2px"></div>
+                    <div class="steam-wisp" style="--drift:4px"></div>
+                    <div class="steam-wisp" style="--drift:-3px"></div>
+                </div>
+                <svg class="tea-cup" width="110" height="110" viewBox="0 0 110 110" fill="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="cupGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#c45e08" />
+                            <stop offset="50%" stop-color="#e8720c" />
+                            <stop offset="100%" stop-color="#d4a030" />
+                        </linearGradient>
+                        <linearGradient id="teaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#c87020" stop-opacity=".9" />
+                            <stop offset="100%" stop-color="#7a3808" stop-opacity=".95" />
+                        </linearGradient>
+                        <linearGradient id="plateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#9a6030" />
+                            <stop offset="100%" stop-color="#5a3010" />
+                        </linearGradient>
+                        <linearGradient id="rimGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#f0c060" />
+                            <stop offset="100%" stop-color="#d4a030" />
+                        </linearGradient>
+                        <radialGradient id="teaSheen" cx="35%" cy="30%" r="55%">
+                            <stop offset="0%" stop-color="#f0a040" stop-opacity=".4" />
+                            <stop offset="100%" stop-color="transparent" />
+                        </radialGradient>
+                        <filter id="softGlow">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b" />
+                            <feMerge>
+                                <feMergeNode in="b" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <ellipse cx="55" cy="88" rx="36" ry="8" fill="url(#plateGrad)" opacity=".9" />
+                    <ellipse cx="55" cy="86" rx="34" ry="6" fill="none" stroke="url(#rimGrad)" stroke-width="1.2"
+                        opacity=".7" />
+                    <path d="M28 52 Q27 80 36 84 Q55 88 74 84 Q83 80 82 52 Z" fill="url(#cupGrad)"
+                        filter="url(#softGlow)" />
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="url(#teaGrad)" />
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="url(#teaSheen)" />
+                    <ellipse cx="55" cy="52" rx="27" ry="7.5" fill="none" stroke="url(#rimGrad)" stroke-width="1.8" />
+                    <ellipse cx="55" cy="51" rx="27" ry="7.5" fill="none" stroke="url(#rimGrad)" stroke-width=".8"
+                        opacity=".4" />
+                    <path d="M28 52 Q27 80 36 84 Q55 88 74 84 Q83 80 82 52" fill="none" stroke="rgba(0,0,0,.25)"
+                        stroke-width="1.5" />
+                    <path d="M82 60 Q98 60 98 70 Q98 80 82 80" fill="none" stroke="url(#cupGrad)" stroke-width="5.5"
+                        stroke-linecap="round" />
+                    <path d="M82 60 Q96 61 96 70 Q96 79 82 80" fill="none" stroke="url(#rimGrad)" stroke-width="1.2"
+                        stroke-linecap="round" opacity=".6" />
+                    <path d="M34 58 Q33 75 38 81" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"
+                        stroke-linecap="round" />
+                    <ellipse cx="50" cy="52" rx="10" ry="3" fill="none" stroke="rgba(240,192,96,.3)" stroke-width="1"
+                        opacity=".7" />
+                </svg>
+            </div>
+            <div class="brand-wrap">
+                <div class="brand-hindi">एलएलबी चाय वाला</div>
+                <div class="brand-name">LLB Chai Wala</div>
+                <div class="brand-tagline">Gautam Nagar &nbsp;·&nbsp; New Delhi</div>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-row">
+                    <div><span class="pct-num" id="pctNum">0</span><span class="pct-unit">%</span></div>
+                    <div class="dot-row" id="dotRow">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="pFill"></div>
+                </div>
+                <div class="status-text" id="statusTxt">Warming up the kettle…</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <header id="navbar" class="at-top" role="banner">
+        <nav class="nav-inner" aria-label="Main navigation">
+
+            <a href="#hero" class="nav-logo" aria-label="LLB Chai Wala — Home">
+                <span class="logo-hindi">एलएलबी</span>
+                <span class="logo-sep" aria-hidden="true"></span>
+                <span class="logo-text-wrap">
+                    <span class="logo-main">Chai Wala</span>
+                    <span class="logo-sub">Gautam Nagar · Delhi</span>
+                </span>
+            </a>
+
+            <ul class="nav-links" role="list">
+                <li><a href="#hero" class="nav-link active" data-section="hero">Home</a></li>
+                <li><a href="#menu" class="nav-link" data-section="menu">Menu</a></li>
+                <li><a href="#offers" class="nav-link nav-hot" data-section="offers">Offers</a></li>
+                <li><a href="#rewards" class="nav-link" data-section="rewards">Rewards</a></li>
+                <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
+                <li><a href="#reviews" class="nav-link" data-section="reviews">Reviews</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="nav-icon-btn" aria-label="Search" id="searchBtn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                </button>
+                <button class="nav-icon-btn" aria-label="Cart" id="cartBtn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
+                    <span class="cart-badge" id="cartBadge" aria-live="polite">0</span>
+                </button>
+                <a href="#menu" class="nav-cta">
+                    Order Now
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false"
+                aria-controls="mobileDrawer">
+                <span></span><span></span><span></span>
+            </button>
+
+        </nav>
+    </header>
+
+    <!-- Mobile drawer backdrop -->
+    <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+    <!-- Mobile drawer -->
+    <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation" aria-hidden="true" role="dialog">
+        <div class="drawer-logo">
+            <span
+                style="font-family:'Noto Serif Devanagari',serif;font-size:1.1rem;color:#f5891a;text-shadow:0 0 15px rgba(245,137,26,.5);">एलएलबी</span>
+            <span style="width:1px;height:18px;background:rgba(212,128,40,.25);"></span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.2em;color:#c8b090;">CHAI
+                WALA</span>
+        </div>
+        <ul class="drawer-nav" role="list">
+            <li><a href="#hero" class="drawer-link" data-drawer-link>Home <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#menu" class="drawer-link" data-drawer-link>Menu <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#offers" class="drawer-link" data-drawer-link style="color:#f0c060;">Offers <span
+                        class="hot-tag">Hot 🔥</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#rewards" class="drawer-link" data-drawer-link>Rewards <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#gallery" class="drawer-link" data-drawer-link>Gallery <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#reviews" class="drawer-link" data-drawer-link>Reviews <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+            <li><a href="#contact" class="drawer-link" data-drawer-link>Contact <svg width="14" height="14"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a></li>
+        </ul>
+        <div class="drawer-cta">
+            <a href="#menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                </svg>
+                Order Now
+            </a>
+            <a href="#contact">Visit Us</a>
+        </div>
+        <p class="drawer-footer">Gautam Nagar, New Delhi &nbsp;·&nbsp; Open daily 7am–11pm</p>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+       MAIN SITE
+  ══════════════════════════════════════════ -->
+    <main id="siteMain" aria-hidden="true">
+
+        <!-- HERO SECTION -->
+        <section id="hero" aria-label="Hero — LLB Chai Wala">
+            <div class="hero-bg"></div>
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <canvas id="heroCanvas" aria-hidden="true"></canvas>
+            <div class="pour-visual" aria-hidden="true">
+                <div class="pour-stream" style="height:clamp(120px,22vh,220px)"></div>
+                <div class="pour-cup-wrap">
+                    <div class="pour-steam">
+                        <div class="ps"></div>
+                        <div class="ps"></div>
+                        <div class="ps"></div>
+                        <div class="ps"></div>
+                    </div>
+                    <div class="pour-glow"></div>
+                    <svg viewBox="0 0 200 170" fill="none" style="width:100%;display:block;" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="hCupGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#7a3808" />
+                                <stop offset="40%" stop-color="#c45e08" />
+                                <stop offset="100%" stop-color="#8b4a0e" />
+                            </linearGradient>
+                            <linearGradient id="hRimGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#f0c060" />
+                                <stop offset="100%" stop-color="#b07820" />
+                            </linearGradient>
+                            <linearGradient id="hTeaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#d07828" />
+                                <stop offset="100%" stop-color="#6a3008" />
+                            </linearGradient>
+                            <linearGradient id="hSaucerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#9a6030" />
+                                <stop offset="100%" stop-color="#4a2008" />
+                            </linearGradient>
+                            <radialGradient id="hSheen" cx="30%" cy="25%" r="60%">
+                                <stop offset="0%" stop-color="#f09030" stop-opacity=".5" />
+                                <stop offset="100%" stop-color="transparent" />
+                            </radialGradient>
+                            <clipPath id="cupClip">
+                                <path d="M44 72 Q42 132 58 138 Q100 144 142 138 Q158 132 156 72 Z" />
+                            </clipPath>
+                            <filter id="hGlow">
+                                <feGaussianBlur stdDeviation="3" result="b" />
+                                <feMerge>
+                                    <feMergeNode in="b" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <ellipse cx="100" cy="150" rx="68" ry="14" fill="url(#hSaucerGrad)" opacity=".9" />
+                        <ellipse cx="100" cy="148" rx="62" ry="10" fill="none" stroke="url(#hRimGrad)"
+                            stroke-width="1.5" opacity=".6" />
+                        <ellipse cx="100" cy="148" rx="30" ry="5" fill="none" stroke="rgba(212,160,48,.25)"
+                            stroke-width="1" />
+                        <path d="M44 72 Q42 132 58 138 Q100 144 142 138 Q158 132 156 72 Z" fill="url(#hCupGrad)"
+                            filter="url(#hGlow)" />
+                        <g clip-path="url(#cupClip)">
+                            <rect x="40" y="92" width="122" height="52" fill="url(#hTeaGrad)" opacity=".95" />
+                            <ellipse cx="90" cy="92" rx="18" ry="4" fill="none" stroke="rgba(240,180,80,.3)"
+                                stroke-width="1.2" />
+                        </g>
+                        <ellipse cx="100" cy="72" rx="56" ry="14" fill="url(#hTeaGrad)" opacity=".92" />
+                        <ellipse cx="100" cy="72" rx="56" ry="14" fill="url(#hSheen)" />
+                        <ellipse cx="100" cy="72" rx="56" ry="14" fill="none" stroke="url(#hRimGrad)"
+                            stroke-width="2.5" />
+                        <ellipse cx="100" cy="70" rx="56" ry="14" fill="none" stroke="url(#hRimGrad)" stroke-width=".8"
+                            opacity=".4" />
+                        <path d="M44 72 Q42 132 58 138 Q100 144 142 138 Q158 132 156 72" fill="none"
+                            stroke="rgba(0,0,0,.3)" stroke-width="2" />
+                        <path d="M156 90 Q184 90 184 108 Q184 126 156 126" fill="none" stroke="url(#hCupGrad)"
+                            stroke-width="10" stroke-linecap="round" />
+                        <path d="M156 90 Q181 92 181 108 Q181 124 156 126" fill="none" stroke="url(#hRimGrad)"
+                            stroke-width="1.8" stroke-linecap="round" opacity=".5" />
+                        <path d="M54 80 Q52 118 60 134" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="4"
+                            stroke-linecap="round" />
+                        <ellipse cx="105" cy="72" rx="8" ry="2.5" id="splashRipple" fill="none"
+                            stroke="rgba(240,200,80,.6)" stroke-width="1.5" opacity=".7" />
+                    </svg>
+                </div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge"><span class="badge-ping"></span>Now open &nbsp;·&nbsp; Gautam Nagar, Delhi</div>
+                <p class="hero-eyebrow" style="margin-top:1rem">असली चाय का स्वाद</p>
+                <h1 class="hero-title">
+                    <span class="title-l1">LLB</span>
+                    <span class="title-l2">Chai Wala</span>
+                </h1>
+                <p class="hero-subtitle-italic">"Every Sip Feels Like Home"</p>
+                <div class="hero-divider"></div>
+                <p class="hero-tagline">Premium masala chai, sizzling fast food &amp; the warmth of<br /><em>apna
+                        adda</em> — crafted for dreamers, students &amp; night owls.</p>
+                <div class="hero-btns">
+                    <a href="#menu" class="btn-order">Order Now <svg width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a>
+                    <a href="#menu" class="btn-explore">Explore Menu <svg width="15" height="15" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg></a>
+                </div>
+            </div>
+            <div class="hero-stats" role="list">
+                <div class="stat-item" role="listitem"><span class="stat-num" data-count="50">0+</span><span
+                        class="stat-lbl">Menu Items</span></div>
+                <div class="stat-item" role="listitem"><span class="stat-num" data-count="1200">0+</span><span
+                        class="stat-lbl">Happy Customers</span></div>
+                <div class="stat-item" role="listitem"><span class="stat-num">4.8★</span><span class="stat-lbl">Avg
+                        Rating</span></div>
+                <div class="stat-item" role="listitem"><span class="stat-num">3yr</span><span class="stat-lbl">Of Chai
+                        Love</span></div>
+            </div>
+            <div class="scroll-indicator" aria-label="Scroll down">
+                <div class="scroll-track">
+                    <div class="scroll-thumb"></div>
+                </div>
+                <div class="scroll-dot"></div>
+                <span class="scroll-label">Scroll</span>
+            </div>
+            <div class="hero-line" aria-hidden="true"></div>
+        </section>
+
+        <!-- ════════════════════════════
+         COUNTER SECTION
+    ════════════════════════════ -->
+        <section id="counters" aria-label="Our achievements in numbers">
+
+            <canvas id="counterCanvas" aria-hidden="true"></canvas>
+
+            <div class="counter-header">
+                <p class="counter-eyebrow js-reveal">Numbers That Speak</p>
+                <h2 class="counter-title js-reveal"><span>The LLB Legacy</span></h2>
+                <p class="counter-subtitle js-reveal">
+                    Every cup poured with love, every smile earned with flavour.<br />
+                    This is what we've built together.
+                </p>
+            </div>
+
+            <div class="counter-grid">
+
+                <div class="counter-card js-card" aria-label="10,000 plus cups served">
+                    <div class="card-pulse" aria-hidden="true"></div>
+                    <div class="card-icon" aria-hidden="true">☕</div>
+                    <div class="card-number">
+                        <span class="card-count" data-target="10000">0</span>
+                        <span class="card-suffix">+</span>
+                    </div>
+                    <p class="card-label">Cups Served</p>
+                    <p class="card-sub">Since day one</p>
+                </div>
+
+                <div class="counter-card js-card" aria-label="5,000 plus happy customers">
+                    <div class="card-pulse" aria-hidden="true"></div>
+                    <div class="card-icon" aria-hidden="true">😊</div>
+                    <div class="card-number">
+                        <span class="card-count" data-target="5000">0</span>
+                        <span class="card-suffix">+</span>
+                    </div>
+                    <p class="card-label">Happy Customers</p>
+                    <p class="card-sub">And counting</p>
+                </div>
+
+                <div class="counter-card js-card" aria-label="2,000 plus online orders">
+                    <div class="card-pulse" aria-hidden="true"></div>
+                    <div class="card-icon" aria-hidden="true">📱</div>
+                    <div class="card-number">
+                        <span class="card-count" data-target="2000">0</span>
+                        <span class="card-suffix">+</span>
+                    </div>
+                    <p class="card-label">Online Orders</p>
+                    <p class="card-sub">Delivered hot</p>
+                </div>
+
+                <div class="counter-card js-card" aria-label="100 plus daily visitors">
+                    <div class="card-pulse" aria-hidden="true"></div>
+                    <div class="card-icon" aria-hidden="true">🏃</div>
+                    <div class="card-number">
+                        <span class="card-count" data-target="100">0</span>
+                        <span class="card-suffix">+</span>
+                    </div>
+                    <p class="card-label">Daily Visitors</p>
+                    <p class="card-sub">Every single day</p>
+                </div>
+
+            </div>
+
+            <div class="counter-divider" aria-hidden="true"></div>
+        </section>
+
+        <!-- ════════════════════════════
+         SPECIAL OFFERS SECTION
+    ════════════════════════════ -->
+        <section id="offers" aria-label="Special offers and deals">
+
+            <canvas id="offersCanvas" aria-hidden="true"></canvas>
+
+            <div class="offers-header">
+                <p class="offers-eyebrow js-ov">
+                    <span class="oe-line"></span>Limited Time Deals<span class="oe-line"></span>
+                </p>
+                <h2 class="offers-title js-ov">
+                    <span class="ot-white">Special </span><span class="ot-orange">Offers</span>
+                </h2>
+                <p class="offers-desc js-ov">
+                    Handpicked deals brewed with love. Grab them before they're gone —<br />
+                    <em style="color:var(--cream-dim)">kyunki acchi cheez zyada der nahi tikti.</em>
+                </p>
+                <div class="offers-timer js-ov">
+                    <span class="timer-dot"></span>
+                    Offers valid today only &nbsp;·&nbsp; While stocks last
+                </div>
+            </div>
+
+            <div class="offers-grid">
+
+                <!-- BOGO Chai — featured wide -->
+                <div class="offer-card offer-card-wide js-ocard" aria-label="Buy 1 Get 1 Chai offer">
+                    <div class="card-shimmer"></div>
+                    <div class="card-corner card-corner-tl"></div>
+                    <div class="card-corner card-corner-br"></div>
+                    <div class="card-inner">
+                        <div class="wide-left">
+                            <span class="card-badge badge-hot"><span class="badge-dot"></span>Hottest Deal</span>
+                            <div class="card-icon-wrap" style="margin-top:2.5rem">☕</div>
+                            <div class="card-offer-label">Buy 1 Get 1 Free</div>
+                            <div class="card-title">Double the Chai, Same Price</div>
+                            <p class="card-desc">Share with your chai-buddy or keep both — we won't judge. <strong>Every
+                                    cup brewed fresh,</strong> every sip worth it.</p>
+                            <ul class="card-includes">
+                                <li>Any 2 Chai of choice</li>
+                                <li>All chai variants</li>
+                                <li>Dine-in &amp; takeaway</li>
+                                <li>No coupon needed</li>
+                            </ul>
+                            <div class="card-footer">
+                                <div class="card-price-wrap">
+                                    <span class="price-old">₹60</span>
+                                    <span class="price-new">₹30</span>
+                                    <span class="price-save">You save ₹30 🎉</span>
+                                </div>
+                                <a href="#menu" class="card-cta">Grab Deal <svg width="14" height="14"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg></a>
+                            </div>
+                            <div class="card-expiry">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                                Valid Mon–Fri · 3 PM – 7 PM only
+                            </div>
+                        </div>
+                        <div class="wide-right">
+                            <div class="wide-cups">
+                                <span class="wcup">☕</span><span class="wcup">+</span><span class="wcup">☕</span>
+                            </div>
+                            <div class="wide-divider">1 + 1 FREE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student Combo -->
+                <div class="offer-card js-ocard" aria-label="Student combo offer">
+                    <div class="card-shimmer"></div>
+                    <div class="card-corner card-corner-tl"></div>
+                    <div class="card-corner card-corner-br"></div>
+                    <div class="card-inner">
+                        <span class="card-badge badge-new"><span class="badge-dot"></span>Students Only</span>
+                        <div class="card-icon-wrap" style="margin-top:2.5rem">🎓</div>
+                        <div class="card-offer-label">Student Combo</div>
+                        <div class="card-title">"Padhai + Chai" — The OG Duo</div>
+                        <p class="card-desc">Fuel your grind. One chai, one snack, one smile. <strong>Show your student
+                                ID</strong> and unlock this exclusive deal.</p>
+                        <ul class="card-includes">
+                            <li>1 Masala Chai</li>
+                            <li>1 Maggi / Toast</li>
+                            <li>Valid on student ID</li>
+                            <li>Mon–Sat only</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="card-price-wrap">
+                                <span class="price-old">₹90</span>
+                                <span class="price-new">₹59</span>
+                                <span class="price-save">Save ₹31 📚</span>
+                            </div>
+                            <a href="#menu" class="card-cta">Claim <svg width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                        <div class="card-expiry">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            Show valid student ID at counter
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Couple Combo -->
+                <div class="offer-card js-ocard" aria-label="Couple combo offer">
+                    <div class="card-shimmer"></div>
+                    <div class="card-corner card-corner-tl"></div>
+                    <div class="card-corner card-corner-br"></div>
+                    <div class="card-inner">
+                        <span class="card-badge badge-pop"><span class="badge-dot"></span>Most Popular</span>
+                        <div class="card-icon-wrap" style="margin-top:2.5rem">💑</div>
+                        <div class="card-offer-label">Couple Combo</div>
+                        <div class="card-title">"Dono ka adda, ek hi jagah"</div>
+                        <p class="card-desc">Two chai, two snacks, one cozy corner. <strong>The perfect chai
+                                date</strong> — simple, warm, unforgettable.</p>
+                        <ul class="card-includes">
+                            <li>2 Special Chai</li>
+                            <li>2 Snacks of choice</li>
+                            <li>Priority seating</li>
+                            <li>Anytime, any day</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="card-price-wrap">
+                                <span class="price-old">₹160</span>
+                                <span class="price-new">₹119</span>
+                                <span class="price-save">Save ₹41 ❤️</span>
+                            </div>
+                            <a href="#menu" class="card-cta">Book Now <svg width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                        <div class="card-expiry">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            Valid all 7 days · No time restriction
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evening Snacks Deal -->
+                <div class="offer-card js-ocard" aria-label="Evening snacks deal">
+                    <div class="card-shimmer"></div>
+                    <div class="card-corner card-corner-tl"></div>
+                    <div class="card-corner card-corner-br"></div>
+                    <div class="card-inner">
+                        <span class="card-badge badge-eve"><span class="badge-dot"></span>Evening Special</span>
+                        <div class="card-icon-wrap" style="margin-top:2.5rem">🌆</div>
+                        <div class="card-offer-label">Evening Snacks Deal</div>
+                        <div class="card-title">"Shaam ki chai, life ka best time"</div>
+                        <p class="card-desc">Chai + full snacks platter to end your day on a golden note. <strong>Best
+                                vibes, best bites.</strong></p>
+                        <ul class="card-includes">
+                            <li>1 Cutting Chai</li>
+                            <li>Snacks Platter (4 items)</li>
+                            <li>4 PM – 8 PM only</li>
+                            <li>Dine-in only</li>
+                        </ul>
+                        <div class="card-footer">
+                            <div class="card-price-wrap">
+                                <span class="price-old">₹140</span>
+                                <span class="price-new">₹99</span>
+                                <span class="price-save">Save ₹41 🌅</span>
+                            </div>
+                            <a href="#menu" class="card-cta">Order Now <svg width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                        <div class="card-expiry">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            4 PM – 8 PM · Dine-in only
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ════════════════════════════
+         OFFERS SECTION
+    ════════════════════════════ -->
+        <section id="offers" aria-label="Special offers and deals">
+            <canvas id="offersCanvas" aria-hidden="true"></canvas>
+            <div class="offers-header">
+                <p class="offers-eyebrow js-in">Hot Deals &amp; Discounts</p>
+                <h2 class="offers-title js-in"><span class="t-plain">Today's</span><span class="t-glow">Special
+                        Offers</span></h2>
+                <p class="offers-desc js-in">Limited-time deals crafted for chai lovers &amp; fast-food fans.<br />Grab
+                    them before they're gone. ☕🔥</p>
+            </div>
+            <div class="offers-grid">
+
+                <div class="offer-card js-in" style="--glow-col:rgba(232,114,12,.14)">
+                    <div class="card-inner">
+                        <div class="card-stripe" style="--stripe:linear-gradient(90deg,#e8720c,#f0c060)"></div>
+                        <div class="card-shine"></div>
+                        <div class="card-expiry" style="--expiry-bg:rgba(232,114,12,.9)">Today Only</div>
+                        <div class="card-top">
+                            <div>
+                                <div class="card-tag"
+                                    style="--tag-bg:rgba(232,114,12,.12);--tag-border:rgba(232,114,12,.28);--tag-col:#f5891a;--tag-hover-bg:rgba(232,114,12,.22)">
+                                    <span class="tag-dot"></span>BOGO Deal</div>
+                                <div class="timer-badge" style="margin-top:.6rem">⏱ Ends in &nbsp;<span
+                                        class="countdown" id="cdTimer1"><span class="cdown-block"><span
+                                                class="cdown-num cd-h">04</span><span
+                                                class="cdown-lbl">Hrs</span></span><span class="cdown-sep">:</span><span
+                                            class="cdown-block"><span class="cdown-num cd-m">30</span><span
+                                                class="cdown-lbl">Min</span></span><span class="cdown-sep">:</span><span
+                                            class="cdown-block"><span class="cdown-num cd-s">00</span><span
+                                                class="cdown-lbl">Sec</span></span></span></div>
+                            </div>
+                            <div class="card-icon-wrap">☕</div>
+                        </div>
+                        <h3 class="card-name">Buy 1 Get 1<br />Free Chai</h3>
+                        <p class="card-tagline">"Share a cup, share a moment — double the warmth."</p>
+                        <div class="card-div"></div>
+                        <ul class="card-items">
+                            <li>Any signature masala chai</li>
+                            <li>Valid on dine-in only</li>
+                            <li>Both cups same variant</li>
+                            <li>No coupon code needed</li>
+                        </ul>
+                        <div class="card-bottom">
+                            <div class="card-price"><span class="price-label">You Pay</span>
+                                <div class="price-val"><span class="price-orig">₹60</span><span
+                                        class="price-now">₹30</span></div>
+                            </div>
+                            <a href="#menu" class="card-cta">Grab Deal <svg width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offer-card js-in" style="--glow-col:rgba(100,180,255,.1)">
+                    <div class="card-inner">
+                        <div class="card-stripe" style="--stripe:linear-gradient(90deg,#3b82f6,#a855f7)"></div>
+                        <div class="card-shine"></div>
+                        <div class="card-expiry" style="--expiry-bg:rgba(99,102,241,.85)">Student</div>
+                        <div class="card-top">
+                            <div>
+                                <div class="card-tag"
+                                    style="--tag-bg:rgba(99,102,241,.12);--tag-border:rgba(99,102,241,.3);--tag-col:#a5b4fc;--tag-hover-bg:rgba(99,102,241,.2)">
+                                    <span class="tag-dot" style="color:#a5b4fc"></span>Study Buddy</div>
+                            </div>
+                            <div class="card-icon-wrap"
+                                style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.25)">🎓</div>
+                        </div>
+                        <h3 class="card-name">Student<br />Combo Offer</h3>
+                        <p class="card-tagline">"Fuel your hustle — chai + snack under ₹99."</p>
+                        <div class="card-div" style="background:linear-gradient(to right,#6366f1,transparent)"></div>
+                        <ul class="card-items">
+                            <li>1 Chai + 1 Samosa or Bread Pakora</li>
+                            <li>Valid with student ID card</li>
+                            <li>Mon – Fri, 10am – 5pm</li>
+                            <li>One combo per student</li>
+                        </ul>
+                        <div class="card-bottom">
+                            <div class="card-price"><span class="price-label">Combo Price</span>
+                                <div class="price-val"><span class="price-orig">₹140</span><span class="price-now"
+                                        style="background:linear-gradient(135deg,#818cf8,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹99</span>
+                                </div>
+                            </div>
+                            <a href="#menu" class="card-cta"
+                                style="background:linear-gradient(135deg,#4f46e5,#7c3aed);box-shadow:0 4px 18px rgba(99,102,241,.35)">Grab
+                                Deal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offer-card js-in" style="--glow-col:rgba(236,72,153,.1)">
+                    <div class="card-inner">
+                        <div class="card-stripe" style="--stripe:linear-gradient(90deg,#ec4899,#f97316)"></div>
+                        <div class="card-shine"></div>
+                        <div class="card-expiry" style="--expiry-bg:rgba(236,72,153,.85)">Romantic</div>
+                        <div class="card-top">
+                            <div>
+                                <div class="card-tag"
+                                    style="--tag-bg:rgba(236,72,153,.12);--tag-border:rgba(236,72,153,.3);--tag-col:#f9a8d4;--tag-hover-bg:rgba(236,72,153,.22)">
+                                    <span class="tag-dot" style="color:#f9a8d4"></span>Couple Special</div>
+                            </div>
+                            <div class="card-icon-wrap"
+                                style="background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.25)">💑</div>
+                        </div>
+                        <h3 class="card-name">Couple<br />Combo</h3>
+                        <p class="card-tagline">"Two hearts, two cups — one unforgettable evening."</p>
+                        <div class="card-div" style="background:linear-gradient(to right,#ec4899,transparent)"></div>
+                        <ul class="card-items">
+                            <li>2 Chai + 2 Snacks of choice</li>
+                            <li>Complimentary dessert bite</li>
+                            <li>Valid any day after 6pm</li>
+                            <li>Dine-in only, cosy seating</li>
+                        </ul>
+                        <div class="card-bottom">
+                            <div class="card-price"><span class="price-label">For Two</span>
+                                <div class="price-val"><span class="price-orig">₹280</span><span class="price-now"
+                                        style="background:linear-gradient(135deg,#ec4899,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹199</span>
+                                </div>
+                            </div>
+                            <a href="#menu" class="card-cta"
+                                style="background:linear-gradient(135deg,#ec4899,#f97316);box-shadow:0 4px 18px rgba(236,72,153,.35)">Grab
+                                Deal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offer-card js-in" style="--glow-col:rgba(234,179,8,.1)">
+                    <div class="card-inner">
+                        <div class="card-stripe" style="--stripe:linear-gradient(90deg,#ca8a04,#f0c060)"></div>
+                        <div class="card-shine"></div>
+                        <div class="card-expiry" style="--expiry-bg:rgba(202,138,4,.88)">4–8 PM</div>
+                        <div class="card-top">
+                            <div>
+                                <div class="card-tag"
+                                    style="--tag-bg:rgba(234,179,8,.12);--tag-border:rgba(234,179,8,.28);--tag-col:#fde047;--tag-hover-bg:rgba(234,179,8,.2)">
+                                    <span class="tag-dot" style="color:#fde047"></span>Evening Special</div>
+                            </div>
+                            <div class="card-icon-wrap"
+                                style="background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.25)">🌇</div>
+                        </div>
+                        <h3 class="card-name">Evening<br />Snacks Deal</h3>
+                        <p class="card-tagline">"Wind down right — crispy bites &amp; hot chai at sunset."</p>
+                        <div class="card-div" style="background:linear-gradient(to right,#ca8a04,transparent)"></div>
+                        <ul class="card-items">
+                            <li>Any 3 snacks from evening menu</li>
+                            <li>1 Chai or Cold Coffee free</li>
+                            <li>Valid daily 4pm – 8pm only</li>
+                            <li>Dine-in &amp; takeaway both</li>
+                        </ul>
+                        <div class="card-bottom">
+                            <div class="card-price"><span class="price-label">Evening Rate</span>
+                                <div class="price-val"><span class="price-orig">₹200</span><span class="price-now"
+                                        style="background:linear-gradient(135deg,#ca8a04,#fde047);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹149</span>
+                                </div>
+                            </div>
+                            <a href="#menu" class="card-cta"
+                                style="background:linear-gradient(135deg,#ca8a04,#f0c060);box-shadow:0 4px 18px rgba(202,138,4,.35)">Grab
+                                Deal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="offers-footer js-in">
+                <p>Offers valid at <strong>Gautam Nagar, New Delhi</strong> outlet only · Subject to availability</p>
+                <a href="#menu" class="btn-all-offers">View All Offers <svg width="14" height="14" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></a>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════
+         MENU SECTION
+    ════════════════════════════ -->
+        <section id="menu" aria-label="Our menu">
+            <canvas id="menuCanvas" aria-hidden="true"></canvas>
+            <div class="menu-header">
+                <p class="menu-eyebrow js-min">Crafted With Love</p>
+                <h2 class="menu-title js-min"><span class="t-cream">Our</span><span class="t-fire">Signature Menu</span>
+                </h2>
+                <p class="menu-sub js-min">From steaming kulhad chai to crispy snacks — every item made
+                    fresh,<br />every flavour designed to make you come back.</p>
+            </div>
+            <div class="menu-tabs js-min">
+                <button class="tab-btn active" data-filter="all">All Items</button>
+                <button class="tab-btn" data-filter="chai">☕ Chai</button>
+                <button class="tab-btn" data-filter="drinks">🥤 Drinks</button>
+                <button class="tab-btn" data-filter="snacks">🍟 Snacks</button>
+                <button class="tab-btn" data-filter="meals">🍱 Meals</button>
+            </div>
+            <div class="menu-grid" id="menuGrid">
+
+                <div class="menu-card js-mc" data-cat="chai" style="--card-glow:rgba(232,114,12,.22)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">☕</div><span class="card-badge"
+                            style="--badge-bg:rgba(232,114,12,.15);--badge-brd:rgba(232,114,12,.3);--badge-col:#f5891a">Chai</span><span
+                            class="card-best">⭐ Best Seller</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Masala Chai</div>
+                        <p class="card-desc">Classic spiced brew — ginger, cardamom, tulsi &amp; secret masala blend.
+                        </p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹20</span></div><button class="btn-cart"
+                                data-item="Masala Chai" data-price="20"><svg width="13" height="13" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="chai" style="--card-glow:rgba(200,140,40,.22)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">🏺</div><span class="card-badge"
+                            style="--badge-bg:rgba(200,140,40,.15);--badge-brd:rgba(200,140,40,.3);--badge-col:#d4a030">Chai</span><span
+                            class="card-best">🏺 Kulhad</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Kulhad Chai</div>
+                        <p class="card-desc">Earthy kulhad aroma, rich milk chai — the purest desi chai experience.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹30</span></div><button class="btn-cart"
+                                data-item="Kulhad Chai" data-price="30"><svg width="13" height="13" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="drinks" style="--card-glow:rgba(120,70,20,.3)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">☕</div><span class="card-badge"
+                            style="--badge-bg:rgba(120,70,20,.18);--badge-brd:rgba(160,100,40,.3);--badge-col:#c8b090">Coffee</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Coffee</div>
+                        <p class="card-desc">Hot or cold, dark or creamy — our café-style coffee hits different.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹40</span></div><button class="btn-cart" data-item="Coffee"
+                                data-price="40"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(220,180,40,.18)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">🍜</div><span class="card-badge"
+                            style="--badge-bg:rgba(220,180,40,.12);--badge-brd:rgba(220,180,40,.28);--badge-col:#fde047">Meal</span><span
+                            class="card-best">🔥 Hot Pick</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Masala Maggi</div>
+                        <p class="card-desc">Loaded desi-style Maggi with veggies, cheese &amp; extra masala.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹50</span></div><button class="btn-cart"
+                                data-item="Masala Maggi" data-price="50"><svg width="13" height="13" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(232,140,12,.2)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="plate-emoji">🥟</div><span class="card-badge"
+                            style="--badge-bg:rgba(232,114,12,.12);--badge-brd:rgba(232,114,12,.28);--badge-col:#f5891a">Snack</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Samosa</div>
+                        <p class="card-desc">Golden crispy shell, spiced potato filling — best with green chutney.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">Per Piece</span><span
+                                    class="price-amount">₹15</span></div><button class="btn-cart" data-item="Samosa"
+                                data-price="15"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(250,200,60,.15)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">🍛</div><span class="card-badge"
+                            style="--badge-bg:rgba(250,200,60,.1);--badge-brd:rgba(250,200,60,.25);--badge-col:#fde047">Meal</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Poha</div>
+                        <p class="card-desc">Fluffy flattened rice, tempered with mustard, curry leaves &amp; lemon.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹40</span></div><button class="btn-cart" data-item="Poha"
+                                data-price="40"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(100,200,80,.12)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="plate-emoji">🥪</div><span class="card-badge"
+                            style="--badge-bg:rgba(100,200,80,.1);--badge-brd:rgba(100,200,80,.25);--badge-col:#86efac">Meal</span><span
+                            class="card-best">🌿 Veg</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Sandwich</div>
+                        <p class="card-desc">Toasted veg or grilled — loaded with cheese, mint chutney &amp; veggies.
+                        </p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹60</span></div><button class="btn-cart" data-item="Sandwich"
+                                data-price="60"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(180,100,200,.15)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="card-steam">
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                            <div class="sw"></div>
+                        </div>
+                        <div class="plate-emoji">🥟</div><span class="card-badge"
+                            style="--badge-bg:rgba(180,100,200,.1);--badge-brd:rgba(180,100,200,.25);--badge-col:#d8b4fe">Snack</span><span
+                            class="card-best">💜 Popular</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Momos</div>
+                        <p class="card-desc">Steamed or fried — veg momos with fiery red chutney.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">6 Piece</span><span
+                                    class="price-amount">₹70</span></div><button class="btn-cart" data-item="Momos"
+                                data-price="70"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(232,114,12,.2)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="plate-emoji">🧅</div><span class="card-badge"
+                            style="--badge-bg:rgba(232,114,12,.12);--badge-brd:rgba(232,114,12,.28);--badge-col:#f5891a">Snack</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Pakoda</div>
+                        <p class="card-desc">Crispy onion &amp; aloo pakodas — monsoon magic any time of year.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">Plate</span><span
+                                    class="price-amount">₹40</span></div><button class="btn-cart" data-item="Pakoda"
+                                data-price="40"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(240,160,40,.15)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="plate-emoji">🍔</div><span class="card-badge"
+                            style="--badge-bg:rgba(240,160,40,.12);--badge-brd:rgba(240,160,40,.28);--badge-col:#fbbf24">Meal</span><span
+                            class="card-best">🔥 New</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Burger</div>
+                        <p class="card-desc">Crispy veg patty, fresh slaw, secret sauce — proper street-style burger.
+                        </p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹80</span></div><button class="btn-cart" data-item="Burger"
+                                data-price="80"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card js-mc" data-cat="drinks" style="--card-glow:rgba(60,180,255,.15)">
+                    <div class="card-plate">
+                        <div class="plate-glow"></div>
+                        <div class="plate-emoji">🥤</div><span class="card-badge"
+                            style="--badge-bg:rgba(60,180,255,.1);--badge-brd:rgba(60,180,255,.25);--badge-col:#7dd3fc">Drink</span><span
+                            class="card-best">❄️ Chilled</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-name">Cold Drinks</div>
+                        <p class="card-desc">Chilled sodas, lemonades &amp; cold coffees to beat the Delhi heat.</p>
+                        <div class="card-foot">
+                            <div class="card-price"><span class="price-from">From</span><span
+                                    class="price-amount">₹30</span></div><button class="btn-cart" data-item="Cold Drink"
+                                data-price="30"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                    <line x1="3" y1="6" x2="21" y2="6" />
+                                    <path d="M16 10a4 4 0 0 1-8 0" />
+                                </svg><span>Add</span></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Cart Toast -->
+        <div id="cartToast" role="status" aria-live="polite">
+            <span class="toast-icon">🛒</span>
+            <span id="toastMsg">Item added!</span>
+            <span class="toast-count" id="toastCount">1</span>
+            <span style="color:var(--muted);font-size:.7rem">in cart</span>
+        </div>
+
+        <!-- Cart FAB -->
+        <button id="menuCartFab" aria-label="View cart">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span class="fab-badge" id="fabBadge">0</span>
+        </button>
+
+        <!-- ════════════════════════════
+         CART OVERLAY + PANEL
+    ════════════════════════════ -->
+        <div id="cartOverlay"></div>
+
+        <div id="cartPanel" role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true">
+            <div class="cart-header">
+                <div class="cart-header-left">
+                    <span class="cart-title">Your Cart</span>
+                    <span class="cart-item-count" id="cartItemCount">0 items</span>
+                </div>
+                <button class="cart-close" id="cartCloseBtn" aria-label="Close cart">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round">
+                        <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="cart-items" id="cartItemsList">
+                <div class="cart-empty" id="cartEmpty">
+                    <div class="cart-empty-icon">🛒</div>
+                    <div class="cart-empty-title">Your cart is empty</div>
+                    <p class="cart-empty-sub">Add some chai &amp; snacks to get started.<br />We promise it'll be worth
+                        it. ☕</p>
+                </div>
+            </div>
+
+            <div class="cart-coupon" id="cartCouponSection" style="display:none">
+                <div class="coupon-label">Have a coupon?</div>
+                <div class="coupon-row">
+                    <input type="text" class="coupon-input" id="couponInput" placeholder="Enter code e.g. CHAI50"
+                        maxlength="20" autocomplete="off" spellcheck="false" />
+                    <button class="coupon-apply" id="couponApplyBtn">Apply</button>
+                </div>
+                <div class="coupon-msg" id="couponMsg"></div>
+                <div class="coupon-chip" id="couponChip">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    <span id="couponChipLabel">CHAI50 applied</span>
+                    <button class="chip-remove" id="couponRemoveBtn" aria-label="Remove coupon">✕</button>
+                </div>
+            </div>
+
+            <div class="cart-summary" id="cartSummary" style="display:none">
+                <div class="summary-row">
+                    <span>Subtotal</span><span class="val" id="summarySubtotal">₹0</span>
+                </div>
+                <div class="summary-row" id="discountRow" style="display:none">
+                    <span id="discountLabel">Discount</span>
+                    <span class="val discount" id="discountVal">-₹0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery</span><span class="val" id="summaryDelivery">Free</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-val" id="summaryTotal">₹0</span>
+                </div>
+                <button class="btn-checkout" id="checkoutBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Place Order
+                </button>
+                <div class="secure-note">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    Secure &amp; encrypted checkout
+                </div>
+            </div>
+        </div><!-- /cartPanel -->
+
+        <!-- Cart FAB -->
+        <button id="cartFab" aria-label="Open cart">
+            <div class="fab-ripple"></div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span id="fabCount">0</span>
+        </button>
+
+        <!-- Toast -->
+        <div id="llbToast" role="status" aria-live="polite">
+            <span>🛒</span>
+            <span><span class="toast-item-name" id="toastItemName"></span> added to cart!</span>
+        </div>
+
+        <!-- ════════════════════════════
+         BOOKING SECTION
+    ════════════════════════════ -->
+        <section id="booking" aria-label="Reserve a table">
+            <canvas id="bookingCanvas" aria-hidden="true"></canvas>
+            <div class="deco-ring" aria-hidden="true"></div>
+            <div class="deco-ring" aria-hidden="true"></div>
+
+            <div class="booking-wrap">
+
+                <!-- Info -->
+                <div class="booking-info js-bin">
+                    <p class="info-eyebrow">Reserve Your Spot</p>
+                    <h2 class="info-title">
+                        <span class="t1">Book a</span>
+                        <span class="t2">Table</span>
+                    </h2>
+                    <p class="info-hindi">अपनी जगह बुक करें</p>
+                    <p class="info-desc">
+                        Skip the wait — reserve your cosy corner at LLB Chai Wala.
+                        Whether it's a <em>study session</em>, a <em>date evening</em>,
+                        or just <em>apna adda</em> time with friends, we'll have your
+                        table ready and chai waiting.
+                    </p>
+                    <div class="info-features">
+                        <div class="feat-row">
+                            <div class="feat-icon">☕</div>
+                            <div class="feat-text"><span class="feat-label">Complimentary Welcome Chai</span><span
+                                    class="feat-sub">Every reserved table gets a free welcome cup</span></div>
+                        </div>
+                        <div class="feat-row">
+                            <div class="feat-icon">🪑</div>
+                            <div class="feat-text"><span class="feat-label">Guaranteed Seating</span><span
+                                    class="feat-sub">Your table held for up to 15 minutes after booking time</span>
+                            </div>
+                        </div>
+                        <div class="feat-row">
+                            <div class="feat-icon">📱</div>
+                            <div class="feat-text"><span class="feat-label">Confirmation via WhatsApp</span><span
+                                    class="feat-sub">Booking details sent directly to your phone</span></div>
+                        </div>
+                        <div class="feat-row">
+                            <div class="feat-icon">🎉</div>
+                            <div class="feat-text"><span class="feat-label">Special Occasion Setup</span><span
+                                    class="feat-sub">Birthday, anniversary? Mention it in special requests</span></div>
+                        </div>
+                    </div>
+                    <div class="hours-card">
+                        <div class="hours-title">Opening Hours</div>
+                        <div class="hours-row"><span>Monday – Friday</span><span>7:00 AM – 11:00 PM</span></div>
+                        <div class="hours-row"><span>Saturday</span><span>7:00 AM – 12:00 AM</span></div>
+                        <div class="hours-row"><span>Sunday</span><span>8:00 AM – 11:00 PM</span></div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="booking-form-wrap js-bin">
+                    <div class="form-card">
+                        <div class="form-success" id="formSuccess" aria-live="polite" aria-hidden="true">
+                            <div class="success-icon">🎉</div>
+                            <div class="success-title">Table Booked!</div>
+                            <p class="success-msg">Your table has been reserved.<br />We'll WhatsApp your confirmation
+                                shortly.</p>
+                            <div class="success-ref" id="successRef">REF #LLB0000</div>
+                            <button class="btn-book-again" id="bookAgainBtn">Make Another Booking</button>
+                        </div>
+                        <div class="form-title">Reserve Your Table</div>
+                        <form id="bookingForm" novalidate autocomplete="off">
+                            <div class="form-grid">
+
+                                <div class="field">
+                                    <label class="field-label" for="bName">Full Name <span
+                                            class="label-req">*</span></label>
+                                    <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                    <input type="text" id="bName" name="name" placeholder="Your full name"
+                                        maxlength="60" />
+                                    <div class="field-error" id="errName">Please enter your name.</div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="field-label" for="bPhone">Phone Number <span
+                                            class="label-req">*</span></label>
+                                    <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.07 6.07l1.87-1.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                    <input type="tel" id="bPhone" name="phone" placeholder="+91 98765 43210"
+                                        maxlength="15" />
+                                    <div class="field-error" id="errPhone">Enter a valid 10-digit number.</div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="field-label" for="bPeople">Number of People <span
+                                            class="label-req">*</span></label>
+                                    <div class="people-counter">
+                                        <button type="button" class="pc-btn" id="pcMinus"
+                                            aria-label="Decrease guests">−</button>
+                                        <input type="number" id="bPeople" name="people" value="2" min="1" max="12"
+                                            readonly
+                                            style="padding-left:14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;" />
+                                        <button type="button" class="pc-btn" id="pcPlus"
+                                            aria-label="Increase guests">+</button>
+                                    </div>
+                                    <div class="field-error" id="errPeople">Min 1, max 12 guests.</div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="field-label" for="bDate">Date <span class="label-req">*</span></label>
+                                    <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                    <input type="date" id="bDate" name="date" />
+                                    <div class="field-error" id="errDate">Please select a valid date.</div>
+                                </div>
+
+                                <div class="field">
+                                    <label class="field-label" for="bTime">Time <span class="label-req">*</span></label>
+                                    <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                    <select id="bTime" name="time">
+                                        <option value="" disabled selected>Select a time slot</option>
+                                        <optgroup label="Morning">
+                                            <option>07:00 AM</option>
+                                            <option>07:30 AM</option>
+                                            <option>08:00 AM</option>
+                                            <option>08:30 AM</option>
+                                            <option>09:00 AM</option>
+                                            <option>09:30 AM</option>
+                                            <option>10:00 AM</option>
+                                            <option>10:30 AM</option>
+                                            <option>11:00 AM</option>
+                                            <option>11:30 AM</option>
+                                        </optgroup>
+                                        <optgroup label="Afternoon">
+                                            <option>12:00 PM</option>
+                                            <option>12:30 PM</option>
+                                            <option>01:00 PM</option>
+                                            <option>01:30 PM</option>
+                                            <option>02:00 PM</option>
+                                            <option>02:30 PM</option>
+                                            <option>03:00 PM</option>
+                                            <option>03:30 PM</option>
+                                        </optgroup>
+                                        <optgroup label="Evening ☕">
+                                            <option>04:00 PM</option>
+                                            <option>04:30 PM</option>
+                                            <option>05:00 PM</option>
+                                            <option>05:30 PM</option>
+                                            <option>06:00 PM</option>
+                                            <option>06:30 PM</option>
+                                            <option>07:00 PM</option>
+                                            <option>07:30 PM</option>
+                                            <option>08:00 PM</option>
+                                            <option>08:30 PM</option>
+                                        </optgroup>
+                                        <optgroup label="Night">
+                                            <option>09:00 PM</option>
+                                            <option>09:30 PM</option>
+                                            <option>10:00 PM</option>
+                                            <option>10:30 PM</option>
+                                        </optgroup>
+                                    </select>
+                                    <svg class="select-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                    <div class="field-error" id="errTime">Please select a time slot.</div>
+                                </div>
+
+                                <div class="field form-full no-icon">
+                                    <label class="field-label" for="bRequest">Special Requests <span
+                                            style="font-size:.58rem;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:300;">(optional)</span></label>
+                                    <textarea id="bRequest" name="request"
+                                        placeholder="Birthday setup, window seat, dietary preferences…"
+                                        maxlength="300"></textarea>
+                                    <div style="font-size:.6rem;color:var(--muted);text-align:right;margin-top:.25rem;">
+                                        <span id="charCount">0</span>/300</div>
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn-book" id="bookBtn">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+                                </svg>
+                                <span id="bookBtnLabel">Confirm Booking</span>
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ════════════════════════════
+         REWARDS SECTION
+    ════════════════════════════ -->
+        <section id="rewards" aria-label="Loyalty rewards programme">
+            <canvas id="rewardsCanvas" aria-hidden="true"></canvas>
+            <div class="float-deco d1" aria-hidden="true"></div>
+            <div class="float-deco d2" aria-hidden="true"></div>
+            <div class="float-deco d3" aria-hidden="true"></div>
+            <div class="rewards-header">
+                <p class="rw-eyebrow js-rw">Earn While You Sip</p>
+                <h2 class="rw-title js-rw"><span class="t1">Loyalty</span><span class="t2">Rewards</span></h2>
+                <p class="rw-sub js-rw">Every cup earns you points, badges &amp; free chai. Join the LLB family.</p>
+            </div>
+            <div class="points-banner js-rw">
+                <div class="pb-left">
+                    <div class="pb-icon">⭐</div>
+                    <div class="pb-text">
+                        <p>LLB Rewards Programme</p><strong>Earn 1 Point Per ₹10 Spent</strong>
+                    </div>
+                </div>
+                <div class="pb-right">
+                    <div class="pb-stat"><span class="pb-stat-num">500+</span><span class="pb-stat-lbl">Members</span>
+                    </div>
+                    <div class="pb-stat"><span class="pb-stat-num">12K+</span><span class="pb-stat-lbl">Redeemed</span>
+                    </div>
+                    <div class="pb-stat"><span class="pb-stat-num">Free</span><span class="pb-stat-lbl">To Join</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rewards-grid">
+                <div class="reward-card js-rc"
+                    style="--card-border:rgba(232,114,12,.38);--card-glow:rgba(232,114,12,.12);--card-stripe:linear-gradient(90deg,#e8720c,#f0c060);--card-div:#e8720c;--perk-dot:var(--orange);--perk-glow:rgba(232,114,12,.4);--progress-grad:linear-gradient(90deg,#e8720c,#f5891a);--progress-dot:#f5891a;--progress-glow:rgba(245,137,26,.7);--btn-bg:rgba(232,114,12,.12);--btn-brd:rgba(232,114,12,.3);--btn-col:#f5891a;--btn-hover-bg:var(--grad);--btn-shadow:rgba(232,114,12,.4);--price-grad:var(--grad);--badge-grad:var(--grad);--badge-ring:rgba(232,114,12,.3);--badge-dot:var(--orange-glow);--badge-bg:rgba(17,12,5,.9);--badge-brd:rgba(232,114,12,.22);--badge-glow:rgba(232,114,12,.45);--tier-bg:rgba(232,114,12,.12);--tier-brd:rgba(232,114,12,.3);--tier-col:var(--orange-glow)">
+                    <div class="rc-inner">
+                        <div class="rc-stripe"></div>
+                        <div class="rc-glow"></div>
+                        <div class="rc-shine"></div>
+                        <div class="rc-top">
+                            <div class="rc-badge">
+                                <div class="badge-bg"></div>
+                                <div class="badge-ring"></div>
+                                <div class="badge-icon">☕</div>
+                            </div>
+                            <div class="rc-tier"><span class="tier-dot"></span>Chai Lover</div>
+                        </div>
+                        <h3 class="rc-name">Buy 5 Chai,<br />Get 1 Free</h3>
+                        <p class="rc-tagline">"Your sixth cup — on us. Always."</p>
+                        <div class="rc-div"></div>
+                        <div class="rc-progress">
+                            <div class="rp-label"><span>Progress</span><span>3 of 5 cups</span></div>
+                            <div class="rp-track">
+                                <div class="rp-fill" data-fill="60"></div>
+                            </div>
+                            <div class="rp-cups"><span class="cup filled" style="--ci:0">☕</span><span
+                                    class="cup filled" style="--ci:1">☕</span><span class="cup filled"
+                                    style="--ci:2">☕</span><span class="cup" style="--ci:3">☕</span><span class="cup"
+                                    style="--ci:4">☕</span><span class="cup" style="--ci:5">🎁</span></div>
+                        </div>
+                        <ul class="rc-perks">
+                            <li>Every 5 chai = 1 free chai of your choice</li>
+                            <li>Valid on all regular &amp; masala variants</li>
+                            <li>Resets automatically after free cup</li>
+                            <li>No minimum spend required</li>
+                        </ul>
+                        <div class="rc-foot">
+                            <div class="rc-price"><span class="rp-from">Membership</span><span
+                                    class="rp-val">Free</span></div><a href="#" class="rc-btn"><span>Join Now</span><svg
+                                    width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reward-card js-rc"
+                    style="--card-border:rgba(99,102,241,.38);--card-glow:rgba(99,102,241,.1);--card-stripe:linear-gradient(90deg,#4f46e5,#818cf8);--card-div:#818cf8;--perk-dot:#818cf8;--perk-glow:rgba(129,140,248,.35);--progress-grad:linear-gradient(90deg,#4f46e5,#818cf8);--progress-dot:#a5b4fc;--progress-glow:rgba(165,180,252,.6);--btn-bg:rgba(99,102,241,.12);--btn-brd:rgba(99,102,241,.3);--btn-col:#a5b4fc;--btn-hover-bg:linear-gradient(135deg,#4f46e5,#7c3aed);--btn-shadow:rgba(99,102,241,.4);--price-grad:linear-gradient(135deg,#818cf8,#a855f7);--badge-grad:linear-gradient(135deg,#4f46e5,#818cf8);--badge-ring:rgba(99,102,241,.3);--badge-dot:#a5b4fc;--badge-bg:rgba(17,12,5,.9);--badge-brd:rgba(99,102,241,.22);--badge-glow:rgba(99,102,241,.45);--tier-bg:rgba(99,102,241,.12);--tier-brd:rgba(99,102,241,.28);--tier-col:#a5b4fc">
+                    <div class="rc-inner">
+                        <div class="rc-stripe"></div>
+                        <div class="rc-glow"></div>
+                        <div class="rc-shine"></div>
+                        <div class="rc-top">
+                            <div class="rc-badge">
+                                <div class="badge-bg"></div>
+                                <div class="badge-ring"></div>
+                                <div class="badge-icon">🎓</div>
+                            </div>
+                            <div class="rc-tier"><span class="tier-dot"></span>Student Tier</div>
+                        </div>
+                        <h3 class="rc-name">Student<br />Membership</h3>
+                        <p class="rc-tagline">"Study harder, sip smarter — discounts every day."</p>
+                        <div class="rc-div"></div>
+                        <div class="rc-progress">
+                            <div class="rp-label"><span>Monthly Points</span><span>240 / 500 pts</span></div>
+                            <div class="rp-track">
+                                <div class="rp-fill" data-fill="48"></div>
+                            </div>
+                        </div>
+                        <ul class="rc-perks">
+                            <li>20% off every order with valid student ID</li>
+                            <li>Free upgrade on any chai size</li>
+                            <li>Priority seating during exam season</li>
+                            <li>Access to student-only flash deals</li>
+                        </ul>
+                        <div class="rc-foot">
+                            <div class="rc-price"><span class="rp-from">Monthly</span><span class="rp-val"
+                                    style="background:linear-gradient(135deg,#818cf8,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹49</span>
+                            </div><a href="#" class="rc-btn"><span>Enrol Now</span><svg width="14" height="14"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reward-card js-rc"
+                    style="--card-border:rgba(212,160,48,.45);--card-glow:rgba(212,160,48,.14);--card-stripe:linear-gradient(90deg,#92400e,#d4a030,#f0c060);--card-div:#d4a030;--perk-dot:var(--gold);--perk-glow:rgba(212,160,48,.4);--progress-grad:linear-gradient(90deg,#92400e,#d4a030,#f0c060);--progress-dot:#f0c060;--progress-glow:rgba(240,192,96,.7);--btn-bg:rgba(212,160,48,.12);--btn-brd:rgba(212,160,48,.32);--btn-col:var(--gold-light);--btn-hover-bg:linear-gradient(135deg,#92400e,#d4a030);--btn-shadow:rgba(212,160,48,.45);--price-grad:linear-gradient(135deg,var(--gold-light),var(--gold));--badge-grad:linear-gradient(135deg,#92400e,#d4a030);--badge-ring:rgba(212,160,48,.4);--badge-dot:#f0c060;--badge-bg:rgba(12,8,2,.95);--badge-brd:rgba(212,160,48,.28);--badge-glow:rgba(212,160,48,.55);--tier-bg:rgba(212,160,48,.14);--tier-brd:rgba(212,160,48,.35);--tier-col:#f0c060">
+                    <div class="rc-inner">
+                        <div class="rc-stripe"></div>
+                        <div class="rc-glow"></div>
+                        <div class="rc-shine"></div>
+                        <div class="rc-top">
+                            <div class="rc-badge">
+                                <div class="badge-bg"></div>
+                                <div class="badge-ring"></div>
+                                <div class="badge-icon">👑</div>
+                            </div>
+                            <div class="rc-tier"><span class="tier-dot"></span>VIP Gold</div>
+                        </div>
+                        <h3 class="rc-name">VIP<br />Chai Club</h3>
+                        <p class="rc-tagline">"For those who don't settle for anything but the best."</p>
+                        <div class="rc-div"></div>
+                        <div class="rc-progress">
+                            <div class="rp-label"><span>VIP Points</span><span>820 / 1000 pts</span></div>
+                            <div class="rp-track">
+                                <div class="rp-fill" data-fill="82"></div>
+                            </div>
+                        </div>
+                        <ul class="rc-perks">
+                            <li>Unlimited free refills on any chai</li>
+                            <li>30% off all orders, always</li>
+                            <li>Reserved premium seating, no wait</li>
+                            <li>Early access to new menu items</li>
+                            <li>Monthly surprise gift from LLB</li>
+                        </ul>
+                        <div class="rc-foot">
+                            <div class="rc-price"><span class="rp-from">Per Year</span><span class="rp-val"
+                                    style="background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">₹499</span>
+                            </div><a href="#" class="rc-btn"><span>Go VIP</span><svg width="14" height="14"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reward-card js-rc"
+                    style="--card-border:rgba(236,72,153,.38);--card-glow:rgba(236,72,153,.1);--card-stripe:linear-gradient(90deg,#ec4899,#f97316,#f0c060);--card-div:#ec4899;--perk-dot:#f9a8d4;--perk-glow:rgba(249,168,212,.3);--progress-grad:linear-gradient(90deg,#ec4899,#f97316);--progress-dot:#fda4af;--progress-glow:rgba(253,164,175,.6);--btn-bg:rgba(236,72,153,.12);--btn-brd:rgba(236,72,153,.3);--btn-col:#f9a8d4;--btn-hover-bg:linear-gradient(135deg,#ec4899,#f97316);--btn-shadow:rgba(236,72,153,.4);--price-grad:linear-gradient(135deg,#f9a8d4,#ec4899);--badge-grad:linear-gradient(135deg,#ec4899,#f97316);--badge-ring:rgba(236,72,153,.3);--badge-dot:#fda4af;--badge-bg:rgba(17,12,5,.9);--badge-brd:rgba(236,72,153,.22);--badge-glow:rgba(236,72,153,.5);--tier-bg:rgba(236,72,153,.12);--tier-brd:rgba(236,72,153,.28);--tier-col:#f9a8d4">
+                    <div class="rc-inner">
+                        <div class="rc-stripe"></div>
+                        <div class="rc-glow"></div>
+                        <div class="rc-shine"></div>
+                        <div class="rc-top">
+                            <div class="rc-badge">
+                                <div class="badge-bg"></div>
+                                <div class="badge-ring"></div>
+                                <div class="badge-icon">🎂</div>
+                            </div>
+                            <div class="rc-tier"><span class="tier-dot"></span>Birthday Perk</div>
+                        </div>
+                        <h3 class="rc-name">Birthday<br />Rewards</h3>
+                        <p class="rc-tagline">"Your birthday deserves free chai &amp; a little extra magic."</p>
+                        <div class="rc-div"></div>
+                        <div class="rc-progress">
+                            <div class="rp-label"><span>Days to Birthday</span><span>28 days left 🎉</span></div>
+                            <div class="rp-track">
+                                <div class="rp-fill" data-fill="72"></div>
+                            </div>
+                        </div>
+                        <ul class="rc-perks">
+                            <li>Free chai + snack on your birthday</li>
+                            <li>Birthday week — 25% off everything</li>
+                            <li>Personalised birthday message from LLB</li>
+                            <li>Surprise birthday dessert at the table</li>
+                        </ul>
+                        <div class="rc-foot">
+                            <div class="rc-price"><span class="rp-from">Membership</span><span class="rp-val"
+                                    style="background:linear-gradient(135deg,#f9a8d4,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Free</span>
+                            </div><a href="#" class="rc-btn"><span>Register Now</span><svg width="14" height="14"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rewards-footer js-rw">
+                <p>Rewards apply at <strong>LLB Chai Wala, Gautam Nagar, New Delhi</strong> · Points never expire</p>
+                <a href="#" class="btn-join">⭐ &nbsp;Join Rewards Programme</a>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════
+         GALLERY SECTION
+    ════════════════════════════ -->
+        <section id="gallery" aria-label="Photo gallery">
+            <canvas id="galleryCanvas" aria-hidden="true"></canvas>
+
+            <div class="gallery-header">
+                <p class="gl-eyebrow js-gl">Visual Stories</p>
+                <h2 class="gl-title js-gl"><span class="t1">Our</span><span class="t2">Gallery</span></h2>
+                <p class="gl-sub js-gl">Moments brewed with passion — from steaming cups to sizzling snacks &amp; the
+                    warmth of our adda.</p>
+            </div>
+
+            <div class="gallery-filters js-gl">
+                <button class="gl-filter active" data-cat="all">All</button>
+                <button class="gl-filter" data-cat="chai">☕ Chai</button>
+                <button class="gl-filter" data-cat="food">🍟 Food</button>
+                <button class="gl-filter" data-cat="cafe">🏠 Cafe</button>
+                <button class="gl-filter" data-cat="vibes">✨ Vibes</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+
+                <div class="gl-item js-gitem" data-cat="chai" data-title="Masala Chai"
+                    data-desc="Our signature brew — ginger, cardamom, tulsi & secret masala. The one that started it all."
+                    data-tag="Chai" style="--card-h:260px;--glow:rgba(232,114,12,.22);--em-size:4.5rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Chai</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">☕</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Masala Chai</div>
+                            <div class="gl-overlay-tag">Signature · Hot</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="food" data-title="Crispy Samosa"
+                    data-desc="Golden crispy pastry filled with spiced potatoes — our most-loved snack, paired perfectly with green chutney."
+                    data-tag="Snack" style="--card-h:160px;--glow:rgba(240,180,40,.2);--em-size:3.5rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Food</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🥟</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Crispy Samosa</div>
+                            <div class="gl-overlay-tag">Snack · Popular</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="cafe" data-title="Our Cosy Corner"
+                    data-desc="The warm amber glow, the low hum of conversation, the smell of chai in the air — this is LLB."
+                    data-tag="Cafe" style="--card-h:210px;--glow:rgba(212,160,48,.18);--em-size:4rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Cafe</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🏮</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Our Cosy Corner</div>
+                            <div class="gl-overlay-tag">Ambience · Delhi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="chai" data-title="Kulhad Chai"
+                    data-desc="The earthen kulhad amplifies every sip — a taste of tradition, served fresh from our kitchen."
+                    data-tag="Chai" style="--card-h:240px;--glow:rgba(200,140,40,.22);--em-size:4.2rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Chai</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🏺</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Kulhad Chai</div>
+                            <div class="gl-overlay-tag">Traditional · Earthy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="vibes" data-title="Late Night Adda"
+                    data-desc="When the city sleeps and the real conversations begin — LLB is open, warm, and always welcoming."
+                    data-tag="Vibes" style="--card-h:170px;--glow:rgba(180,80,200,.15);--em-size:3.6rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Vibes</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🌙</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Late Night Adda</div>
+                            <div class="gl-overlay-tag">Night · Chill</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="food" data-title="Masala Maggi"
+                    data-desc="Extra masala, loaded with veggies, a generous sprinkle of cheese — comfort in a bowl, every time."
+                    data-tag="Meal" style="--card-h:200px;--glow:rgba(220,190,40,.18);--em-size:3.8rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Food</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🍜</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Masala Maggi</div>
+                            <div class="gl-overlay-tag">Meal · Hot Pick</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="vibes" data-title="Study with Chai"
+                    data-desc="The perfect study companion — books, notes, and an endless supply of chai. LLB is your second home."
+                    data-tag="Vibes" style="--card-h:270px;--glow:rgba(100,180,255,.12);--em-size:4rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Vibes</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">📚</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Study with Chai</div>
+                            <div class="gl-overlay-tag">Vibes · Student Life</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="food" data-title="Steamed Momos"
+                    data-desc="Juicy veg momos steamed to perfection — served piping hot with our signature fiery red chutney."
+                    data-tag="Snack" style="--card-h:155px;--glow:rgba(180,100,200,.15);--em-size:3.4rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Food</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🥟</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Steamed Momos</div>
+                            <div class="gl-overlay-tag">Snack · Popular</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="chai" data-title="Ginger Chai"
+                    data-desc="Sharp ginger punch, warm spices, and a creamy finish — the cure for every dull Delhi morning."
+                    data-tag="Chai" style="--card-h:205px;--glow:rgba(232,114,12,.2);--em-size:3.8rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Chai</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">☕</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Ginger Chai</div>
+                            <div class="gl-overlay-tag">Chai · Spiced</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="cafe" data-title="Evening Glow"
+                    data-desc="As the sun sets over Gautam Nagar, our cafe comes alive with warm light, laughter and chai."
+                    data-tag="Cafe" style="--card-h:250px;--glow:rgba(232,160,20,.18);--em-size:4.2rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Cafe</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🌅</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Evening Glow</div>
+                            <div class="gl-overlay-tag">Cafe · Sunset</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="food" data-title="Street Burger"
+                    data-desc="Crispy veg patty, fresh slaw, tangy secret sauce — proper Delhi street-style burger, served fresh."
+                    data-tag="Meal" style="--card-h:165px;--glow:rgba(240,160,40,.18);--em-size:3.5rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Food</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🍔</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Street Burger</div>
+                            <div class="gl-overlay-tag">Meal · New</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gl-item js-gitem" data-cat="vibes" data-title="Friends &amp; Chai"
+                    data-desc="The best conversations happen over chai. Pull up a chair, call your gang — LLB is always ready."
+                    data-tag="Vibes" style="--card-h:215px;--glow:rgba(236,72,153,.12);--em-size:3.9rem">
+                    <div class="gl-visual">
+                        <div class="gl-bg-glow"></div>
+                        <div class="gl-cat">Vibes</div>
+                        <div class="gl-zoom"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                                <line x1="11" y1="8" x2="11" y2="14" />
+                                <line x1="8" y1="11" x2="14" y2="11" />
+                            </svg></div>
+                        <div class="gl-emoji">🫂</div>
+                        <div class="gl-overlay">
+                            <div class="gl-overlay-title">Friends &amp; Chai</div>
+                            <div class="gl-overlay-tag">Vibes · Social</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Lightbox (global, outside section) -->
+        <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+            <button class="lb-close" id="lbClose" aria-label="Close lightbox">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+            </button>
+            <button class="lb-arrow" id="lbPrev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg></button>
+            <div class="lb-content">
+                <div class="lb-visual">
+                    <div class="lb-glow"></div>
+                    <div class="lb-emoji" id="lbEmoji">☕</div>
+                </div>
+                <div class="lb-info">
+                    <div class="lb-title" id="lbTitle"></div>
+                    <div class="lb-desc" id="lbDesc"></div>
+                    <div class="lb-tag" id="lbTag"></div>
+                </div>
+                <div class="lb-dots" id="lbDots"></div>
+            </div>
+            <button class="lb-arrow" id="lbNext" aria-label="Next"><svg width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                </svg></button>
+            <div class="lb-counter" id="lbCounter">1 / 12</div>
+        </div>
+
+        <!-- Future sections: #reviews #contact -->
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

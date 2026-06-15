@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLB Chai Wala — Counter Section</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: #0a0603;
+            color: #f5e6c8;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 130vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        :root {
+            --orange: #e8720c;
+            --orange-glow: #f5891a;
+            --gold: #d4a030;
+            --gold-light: #f0c060;
+            --cream: #f5e6c8;
+            --cream-dim: #c8b090;
+            --muted: #6b5840;
+            --border: rgba(212, 128, 40, .18);
+            --bg: #0a0603;
+            --bg2: #110e07;
+            --grad: linear-gradient(135deg, #e8720c 0%, #d4a030 100%);
+            --ease: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        /* =============================================
+   COUNTER SECTION
+============================================= */
+        #counters {
+            position: relative;
+            width: 100%;
+            padding: clamp(5rem, 10vh, 8rem) 1.5rem;
+            overflow: hidden;
+        }
+
+        /* ── Background layers ── */
+        #counters::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 50%,
+                    rgba(232, 114, 12, .07) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 40% at 15% 80%,
+                    rgba(212, 160, 48, .05) 0%, transparent 55%),
+                radial-gradient(ellipse 35% 35% at 85% 20%,
+                    rgba(180, 80, 10, .04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Grain texture */
+        #counters::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            opacity: .6;
+            pointer-events: none;
+        }
+
+        /* Particle canvas */
+        #counterCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── Section header ── */
+        .counter-header {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-bottom: clamp(3rem, 6vw, 4.5rem);
+        }
+
+        .counter-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            font-size: .7rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease);
+        }
+
+        .counter-eyebrow.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .counter-eyebrow::before,
+        .counter-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange));
+        }
+
+        .counter-eyebrow::after {
+            background: linear-gradient(to left, transparent, var(--orange));
+        }
+
+        .counter-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            letter-spacing: .06em;
+            line-height: 1;
+            margin-bottom: .8rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .8s var(--ease) .1s, transform .8s var(--ease) .1s;
+        }
+
+        .counter-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .counter-title span {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--orange-glow) 55%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .counter-subtitle {
+            font-size: clamp(.82rem, 1.8vw, .95rem);
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease) .2s, transform .7s var(--ease) .2s;
+        }
+
+        .counter-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Cards grid ── */
+        .counter-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(1rem, 2.5vw, 1.5rem);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ── Single counter card ── */
+        .counter-card {
+            position: relative;
+            padding: clamp(1.8rem, 3.5vw, 2.5rem) clamp(1.2rem, 2.5vw, 2rem);
+            background: rgba(17, 12, 5, .7);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: default;
+            text-align: center;
+
+            /* Stagger in */
+            opacity: 0;
+            transform: translateY(35px) scale(.97);
+            transition:
+                opacity .75s var(--ease),
+                transform .75s var(--ease),
+                box-shadow .4s ease,
+                border-color .4s ease;
+        }
+
+        .counter-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .counter-card:nth-child(1) {
+            transition-delay: .05s
+        }
+
+        .counter-card:nth-child(2) {
+            transition-delay: .15s
+        }
+
+        .counter-card:nth-child(3) {
+            transition-delay: .25s
+        }
+
+        .counter-card:nth-child(4) {
+            transition-delay: .35s
+        }
+
+        /* Card hover */
+        .counter-card:hover {
+            border-color: rgba(232, 114, 12, .4);
+            box-shadow:
+                0 0 0 1px rgba(232, 114, 12, .12),
+                0 8px 40px rgba(232, 114, 12, .18),
+                0 20px 60px rgba(0, 0, 0, .5);
+            transform: translateY(-6px) scale(1.02) !important;
+        }
+
+        /* Gradient top border */
+        .counter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(to right,
+                    transparent, var(--orange), var(--gold), transparent);
+            opacity: 0;
+            transition: opacity .4s;
+        }
+
+        .counter-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card inner glow (hidden, expands on hover) */
+        .counter-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                    rgba(232, 114, 12, .1) 0%, transparent 75%);
+            opacity: 0;
+            transition: opacity .4s, width .4s;
+            pointer-events: none;
+        }
+
+        .counter-card:hover::after {
+            opacity: 1;
+            width: 120%;
+        }
+
+        /* Icon */
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(232, 114, 12, .1);
+            border: 1px solid rgba(232, 114, 12, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            font-size: 1.4rem;
+            transition: background .3s, border-color .3s, transform .4s var(--ease), box-shadow .4s;
+        }
+
+        .counter-card:hover .card-icon {
+            background: rgba(232, 114, 12, .18);
+            border-color: rgba(232, 114, 12, .45);
+            transform: scale(1.1) rotate(-4deg);
+            box-shadow: 0 0 20px rgba(232, 114, 12, .3);
+        }
+
+        /* Number */
+        .card-number {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: .15rem;
+            margin-bottom: .5rem;
+            line-height: 1;
+        }
+
+        .card-count {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            letter-spacing: .02em;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 12px rgba(232, 114, 12, .35));
+            transition: filter .3s;
+            /* separate element so we can animate the text */
+            display: inline-block;
+            min-width: 3ch;
+        }
+
+        .counter-card:hover .card-count {
+            filter: drop-shadow(0 0 22px rgba(232, 114, 12, .6));
+        }
+
+        .card-suffix {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            color: var(--gold);
+            letter-spacing: .05em;
+        }
+
+        /* Label */
+        .card-label {
+            font-size: clamp(.75rem, 1.4vw, .88rem);
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            margin-bottom: .4rem;
+            transition: color .3s;
+        }
+
+        .counter-card:hover .card-label {
+            color: var(--cream);
+        }
+
+        /* Sub-label */
+        .card-sub {
+            font-size: .65rem;
+            letter-spacing: .1em;
+            color: var(--muted);
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* Pulse ring (shows on hover) */
+        .card-pulse {
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            border: 1px solid rgba(232, 114, 12, .25);
+            opacity: 0;
+            animation: none;
+        }
+
+        .counter-card:hover .card-pulse {
+            opacity: 1;
+            animation: cardPulse 1.8s ease-out infinite;
+        }
+
+        /* ── Divider below section ── */
+        .counter-divider {
+            position: relative;
+            z-index: 2;
+            width: min(560px, 90%);
+            margin: clamp(3.5rem, 6vh, 5rem) auto 0;
+            height: 1px;
+            background: linear-gradient(to right,
+                    transparent 0%, rgba(232, 114, 12, .3) 25%,
+                    rgba(212, 160, 48, .45) 50%, rgba(232, 114, 12, .3) 75%,
+                    transparent 100%);
+        }
+
+        .counter-divider::before {
+            content: '☕';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: .9rem;
+            background: var(--bg);
+            padding: 0 .8rem;
+            line-height: 1;
+        }
+
+        /* ── Keyframes ── */
+        @keyframes cardPulse {
+            0% {
+                transform: scale(1);
+                opacity: .6
+            }
+
+            100% {
+                transform: scale(1.04);
+                opacity: 0
+            }
+        }
+
+        @keyframes floatY {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:900px) {
+            .counter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:480px) {
+            .counter-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: .85rem;
+            }
+
+            .counter-card {
+                padding: 1.4rem 1rem;
+            }
+
+            .card-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+                margin-bottom: .9rem;
+            }
+        }
+
+        @media(max-width:360px) {
+            .counter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- scroll trigger spacer -->
+    <div style="height:30vh"></div>
+
+    <!-- ═══════════════════════════════════
+     COUNTER SECTION
+═══════════════════════════════════ -->
+    <section id="counters" aria-label="Our achievements in numbers">
+
+        <canvas id="counterCanvas" aria-hidden="true"></canvas>
+
+        <!-- Header -->
+        <div class="counter-header">
+            <p class="counter-eyebrow js-reveal">Numbers That Speak</p>
+            <h2 class="counter-title js-reveal">
+                <span>The LLB Legacy</span>
+            </h2>
+            <p class="counter-subtitle js-reveal">
+                Every cup poured with love, every smile earned with flavour.<br />
+                This is what we've built together.
+            </p>
+        </div>
+
+        <!-- Cards -->
+        <div class="counter-grid">
+
+            <!-- Card 1 -->
+            <div class="counter-card js-card" aria-label="10,000 plus cups served">
+                <div class="card-pulse" aria-hidden="true"></div>
+                <div class="card-icon" aria-hidden="true">☕</div>
+                <div class="card-number">
+                    <span class="card-count" data-target="10000" data-suffix="">0</span>
+                    <span class="card-suffix">+</span>
+                </div>
+                <p class="card-label">Cups Served</p>
+                <p class="card-sub">Since day one</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="counter-card js-card" aria-label="5,000 plus happy customers">
+                <div class="card-pulse" aria-hidden="true"></div>
+                <div class="card-icon" aria-hidden="true">😊</div>
+                <div class="card-number">
+                    <span class="card-count" data-target="5000" data-suffix="">0</span>
+                    <span class="card-suffix">+</span>
+                </div>
+                <p class="card-label">Happy Customers</p>
+                <p class="card-sub">And counting</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="counter-card js-card" aria-label="2,000 plus online orders">
+                <div class="card-pulse" aria-hidden="true"></div>
+                <div class="card-icon" aria-hidden="true">📱</div>
+                <div class="card-number">
+                    <span class="card-count" data-target="2000" data-suffix="">0</span>
+                    <span class="card-suffix">+</span>
+                </div>
+                <p class="card-label">Online Orders</p>
+                <p class="card-sub">Delivered hot</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="counter-card js-card" aria-label="100 plus daily visitors">
+                <div class="card-pulse" aria-hidden="true"></div>
+                <div class="card-icon" aria-hidden="true">🏃</div>
+                <div class="card-number">
+                    <span class="card-count" data-target="100" data-suffix="">0</span>
+                    <span class="card-suffix">+</span>
+                </div>
+                <p class="card-label">Daily Visitors</p>
+                <p class="card-sub">Every single day</p>
+            </div>
+
+        </div><!-- /counter-grid -->
+
+        <div class="counter-divider" aria-hidden="true"></div>
+
+    </section>
+
+    <div style="height:30vh"></div>
+
+    <script>
+        'use strict';
+
+        /* ── Particle canvas ── */
+        (function () {
+            const c = document.getElementById('counterCanvas');
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
+            let W, H, pts = [], raf;
+
+            function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+
+            function mkPt(rand) {
+                return {
+                    x: Math.random() * W,
+                    y: rand ? Math.random() * H : H + 5,
+                    r: Math.random() * 1.8 + .3,
+                    vy: Math.random() * .4 + .1,
+                    vx: (Math.random() - .5) * .2,
+                    op: Math.random() * .38 + .06,
+                    col: COLS[Math.floor(Math.random() * COLS.length)],
+                    flick: Math.random() < .3
+                };
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach((p, i) => {
+                    p.y -= p.vy; p.x += p.vx;
+                    if (p.flick) p.op += (Math.random() - .5) * .035;
+                    p.op = Math.min(.5, Math.max(.04, p.op));
+                    if (p.y < H * .2) p.op -= .003;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.col + p.op + ')';
+                    ctx.fill();
+                    if (p.r > 1.2) {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
+                        ctx.fillStyle = p.col + (p.op * .1) + ')';
+                        ctx.fill();
+                    }
+                    if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
+                });
+                raf = requestAnimationFrame(draw);
+            }
+
+            const ro = new ResizeObserver(() => { resize(); });
+            ro.observe(c.parentElement || document.body);
+            resize();
+            for (let i = 0; i < 50; i++) pts.push(mkPt(true));
+            draw();
+            document.addEventListener('visibilitychange', () =>
+                document.hidden ? cancelAnimationFrame(raf) : draw()
+            );
+        })();
+
+        /* ── Intersection Observer for reveals + counters ── */
+        (function () {
+            const ease = t => 1 - Math.pow(1 - t, 4); // ease-out quartic
+
+            /* Format number with commas */
+            function fmt(n) { return n.toLocaleString('en-IN'); }
+
+            /* Animate single counter */
+            function animateCount(el) {
+                const target = parseInt(el.dataset.target, 10);
+                const dur = target >= 5000 ? 2200 : target >= 1000 ? 1800 : 1400;
+                const start = performance.now();
+
+                /* Scramble effect: cycle random numbers before settling */
+                const scramble = (progress) => {
+                    if (progress < .35) {
+                        /* Random scramble phase */
+                        const rand = Math.floor(Math.random() * target);
+                        el.textContent = fmt(rand);
+                    } else {
+                        /* Count-up phase */
+                        const p = (progress - .35) / .65;
+                        el.textContent = fmt(Math.floor(ease(Math.min(p, 1)) * target));
+                    }
+                };
+
+                (function tick(now) {
+                    const progress = Math.min((now - start) / dur, 1);
+                    scramble(progress);
+                    if (progress < 1) requestAnimationFrame(tick);
+                    else el.textContent = fmt(target);
+                })(start);
+            }
+
+            /* Reveal observer */
+            const revealIO = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    revealIO.unobserve(entry.target);
+                });
+            }, { threshold: .15, rootMargin: '-40px 0px' });
+
+            document.querySelectorAll('.js-reveal').forEach(el => revealIO.observe(el));
+
+            /* Card + counter observer */
+            const cardIO = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    /* Start counter after card appears */
+                    const countEl = entry.target.querySelector('.card-count[data-target]');
+                    if (countEl) {
+                        setTimeout(() => animateCount(countEl),
+                            /* stagger based on index */
+                            [...document.querySelectorAll('.js-card')].indexOf(entry.target) * 120 + 200
+                        );
+                    }
+                    cardIO.unobserve(entry.target);
+                });
+            }, { threshold: .2, rootMargin: '-30px 0px' });
+
+            document.querySelectorAll('.js-card').forEach(el => cardIO.observe(el));
+        })();
+
+        /* ── Card tilt on mouse move ── */
+        (function () {
+            document.querySelectorAll('.counter-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - .5;
+                    const y = (e.clientY - r.top) / r.height - .5;
+                    card.style.transform =
+                        `translateY(-6px) scale(1.02) perspective(600px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

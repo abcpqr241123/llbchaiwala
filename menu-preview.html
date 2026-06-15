@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLB Chai Wala — Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: #09060300;
+            color: #f5e6c8;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --orange: #e8720c;
+            --orange-glow: #f5891a;
+            --gold: #d4a030;
+            --gold-light: #f0c060;
+            --cream: #f5e6c8;
+            --cream-dim: #c8b090;
+            --muted: #6b5840;
+            --border: rgba(212, 128, 40, .18);
+            --bg: #09060300;
+            --bg2: #0e0905;
+            --grad: linear-gradient(135deg, #e8720c 0%, #d4a030 100%);
+            --ease: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        /* =============================================
+   MENU SECTION
+============================================= */
+        #menu {
+            position: relative;
+            width: 100%;
+            padding: clamp(5rem, 10vh, 8rem) clamp(1rem, 4vw, 2rem);
+            overflow: hidden;
+            background: linear-gradient(180deg, #09060300 0%, #0f0906 35%, #0a0603 100%);
+        }
+
+        #menu::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 75% 55% at 50% 40%, rgba(232, 114, 12, .07) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 45% at 5% 60%, rgba(212, 160, 48, .04) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 40% at 95% 30%, rgba(180, 80, 10, .04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #menuCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
+        .menu-header {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+
+        .menu-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            font-size: .68rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease);
+        }
+
+        .menu-eyebrow.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-eyebrow::before,
+        .menu-eyebrow::after {
+            content: '';
+            display: block;
+            width: 26px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange));
+        }
+
+        .menu-eyebrow::after {
+            background: linear-gradient(to left, transparent, var(--orange));
+        }
+
+        .menu-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 7vw, 4.5rem);
+            letter-spacing: .05em;
+            line-height: .95;
+            margin-bottom: .85rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .85s var(--ease) .08s, transform .85s var(--ease) .08s;
+        }
+
+        .menu-title.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-title .t-cream {
+            display: block;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .menu-title .t-fire {
+            display: block;
+            background: linear-gradient(135deg, var(--orange-glow) 0%, var(--gold) 55%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 28px rgba(232, 114, 12, .4));
+        }
+
+        .menu-sub {
+            font-size: clamp(.83rem, 1.8vw, .96rem);
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .7s var(--ease) .16s, transform .7s var(--ease) .16s;
+        }
+
+        .menu-sub.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Filter Tabs ── */
+        .menu-tabs {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease) .22s, transform .7s var(--ease) .22s;
+        }
+
+        .menu-tabs.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: rgba(17, 12, 5, .5);
+            color: var(--muted);
+            cursor: pointer;
+            transition: color .25s, border-color .25s, background .25s, box-shadow .25s, transform .2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--cream-dim);
+            border-color: rgba(232, 114, 12, .3);
+            background: rgba(232, 114, 12, .07);
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            border-color: var(--orange);
+            background: linear-gradient(135deg, #e8720c, #d4a030);
+            box-shadow: 0 4px 18px rgba(232, 114, 12, .35);
+        }
+
+        /* ── Grid ── */
+        .menu-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+            gap: clamp(1rem, 2.5vw, 1.5rem);
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        /* ── Menu Card ── */
+        .menu-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(16, 10, 4, .75);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px) scale(.97);
+            transition:
+                opacity .75s var(--ease),
+                transform .75s var(--ease),
+                box-shadow .4s ease,
+                border-color .35s;
+        }
+
+        .menu-card.in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .menu-card:hover {
+            border-color: rgba(232, 114, 12, .4);
+            box-shadow: 0 14px 50px rgba(0, 0, 0, .55), 0 0 0 1px rgba(232, 114, 12, .15);
+            transform: translateY(-6px) scale(1.02) !important;
+        }
+
+        /* Card stagger delays */
+        .menu-card:nth-child(1) {
+            transition-delay: .04s
+        }
+
+        .menu-card:nth-child(2) {
+            transition-delay: .09s
+        }
+
+        .menu-card:nth-child(3) {
+            transition-delay: .14s
+        }
+
+        .menu-card:nth-child(4) {
+            transition-delay: .19s
+        }
+
+        .menu-card:nth-child(5) {
+            transition-delay: .24s
+        }
+
+        .menu-card:nth-child(6) {
+            transition-delay: .29s
+        }
+
+        .menu-card:nth-child(7) {
+            transition-delay: .34s
+        }
+
+        .menu-card:nth-child(8) {
+            transition-delay: .39s
+        }
+
+        .menu-card:nth-child(9) {
+            transition-delay: .44s
+        }
+
+        .menu-card:nth-child(10) {
+            transition-delay: .48s
+        }
+
+        .menu-card:nth-child(11) {
+            transition-delay: .52s
+        }
+
+        /* Hidden when filtered */
+        .menu-card.hidden {
+            display: none;
+        }
+
+        /* ── Card Emoji Plate ── */
+        .card-plate {
+            position: relative;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(22, 14, 6, .6) 0%, rgba(12, 8, 3, .8) 100%);
+        }
+
+        /* BG glow behind emoji */
+        .plate-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 60%,
+                    var(--card-glow, rgba(232, 114, 12, .18)) 0%, transparent 68%);
+            transition: opacity .4s;
+            opacity: .7;
+        }
+
+        .menu-card:hover .plate-glow {
+            opacity: 1;
+        }
+
+        /* The emoji */
+        .plate-emoji {
+            font-size: 3.5rem;
+            position: relative;
+            z-index: 1;
+            transition: transform .45s var(--ease), filter .4s;
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .5));
+            user-select: none;
+        }
+
+        .menu-card:hover .plate-emoji {
+            transform: scale(1.18) translateY(-4px);
+            filter: drop-shadow(0 10px 22px rgba(232, 114, 12, .35));
+        }
+
+        /* Steam wisps for hot items */
+        .card-steam {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sw {
+            position: absolute;
+            bottom: 0;
+            width: 4px;
+            border-radius: 2px;
+            background: linear-gradient(to top, rgba(245, 137, 26, .5), rgba(240, 192, 96, .2), transparent);
+            transform-origin: bottom;
+            animation: sw-rise var(--sd) ease-in-out infinite var(--sl);
+            opacity: 0;
+        }
+
+        .sw:nth-child(1) {
+            left: 10px;
+            height: 28px;
+            --sd: 2s;
+            --sl: 0s;
+        }
+
+        .sw:nth-child(2) {
+            left: 24px;
+            height: 40px;
+            --sd: 2.4s;
+            --sl: .3s;
+            width: 5px;
+        }
+
+        .sw:nth-child(3) {
+            left: 40px;
+            height: 30px;
+            --sd: 2.1s;
+            --sl: .6s;
+        }
+
+        /* Category badge */
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            z-index: 3;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: .56rem;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            background: var(--badge-bg, rgba(232, 114, 12, .15));
+            border: 1px solid var(--badge-brd, rgba(232, 114, 12, .3));
+            color: var(--badge-col, var(--orange-glow));
+            backdrop-filter: blur(8px);
+        }
+
+        /* Bestseller crown */
+        .card-best {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            z-index: 3;
+            font-size: .62rem;
+            background: linear-gradient(135deg, #e8720c, #d4a030);
+            color: #fff;
+            padding: 3px 9px;
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        /* ── Card Body ── */
+        .card-body {
+            padding: 1.1rem 1.2rem 1.3rem;
+        }
+
+        /* Top-line gradient on hover */
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange), var(--gold), transparent);
+            opacity: 0;
+            transition: opacity .4s;
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Name */
+        .card-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.28rem;
+            letter-spacing: .06em;
+            line-height: 1.1;
+            margin-bottom: .3rem;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: filter .3s;
+        }
+
+        .menu-card:hover .card-name {
+            filter: drop-shadow(0 0 8px rgba(245, 232, 200, .2));
+        }
+
+        /* Description */
+        .card-desc {
+            font-size: .74rem;
+            color: var(--muted);
+            line-height: 1.6;
+            font-weight: 300;
+            margin-bottom: .9rem;
+            transition: color .3s;
+        }
+
+        .menu-card:hover .card-desc {
+            color: var(--cream-dim);
+        }
+
+        /* Bottom row */
+        .card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .5rem;
+        }
+
+        /* Price */
+        .card-price {
+            display: flex;
+            flex-direction: column;
+            gap: .05rem;
+        }
+
+        .price-from {
+            font-size: .55rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .price-amount {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.45rem;
+            line-height: 1;
+            letter-spacing: .03em;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Add to cart button */
+        .btn-cart {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            background: rgba(232, 114, 12, .1);
+            border: 1px solid rgba(232, 114, 12, .28);
+            color: var(--orange-glow);
+            font-family: 'Poppins', sans-serif;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background .3s, border-color .3s, color .3s, box-shadow .3s, transform .2s;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn-cart::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--grad);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .btn-cart:hover {
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(232, 114, 12, .4);
+            transform: translateY(-1px);
+        }
+
+        .btn-cart:hover::before {
+            opacity: 1;
+        }
+
+        .btn-cart span,
+        .btn-cart svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Added state */
+        .btn-cart.added {
+            background: rgba(34, 197, 94, .1);
+            border-color: rgba(34, 197, 94, .3);
+            color: #4ade80;
+        }
+
+        .btn-cart.added::before {
+            background: linear-gradient(135deg, #16a34a, #4ade80);
+        }
+
+        /* ── Cart Toast ── */
+        #cartToast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: rgba(15, 10, 4, .95);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            padding: .75rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .8rem;
+            color: var(--cream-dim);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .5), 0 0 0 1px rgba(232, 114, 12, .1);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s var(--ease), transform .35s var(--ease);
+            z-index: 9000;
+            white-space: nowrap;
+        }
+
+        #cartToast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast-icon {
+            font-size: 1rem;
+        }
+
+        .toast-count {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: var(--orange-glow);
+            margin-left: .2rem;
+        }
+
+        /* ── Cart FAB ── */
+        #menuCartFab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--grad);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 24px rgba(232, 114, 12, .45);
+            cursor: pointer;
+            border: none;
+            z-index: 8000;
+            transition: transform .3s var(--ease), box-shadow .3s;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        #menuCartFab.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #menuCartFab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(232, 114, 12, .65);
+        }
+
+        .fab-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            color: var(--orange);
+            font-size: .65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Keyframes ── */
+        @keyframes sw-rise {
+            0% {
+                opacity: 0;
+                transform: scaleX(1) translateY(0)
+            }
+
+            20% {
+                opacity: .75
+            }
+
+            60% {
+                opacity: .4;
+                transform: scaleX(1.8) translateY(-6px)
+            }
+
+            100% {
+                opacity: 0;
+                transform: scaleX(2.2) translateY(-45px)
+            }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:640px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: .85rem;
+            }
+
+            .card-plate {
+                height: 110px;
+            }
+
+            .plate-emoji {
+                font-size: 2.8rem;
+            }
+
+            .card-body {
+                padding: .9rem .9rem 1rem;
+            }
+
+            .card-name {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media(max-width:380px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="height:10vh;background:#09060300"></div>
+
+    <!-- ═══════════════════════════════════
+     MENU SECTION
+═══════════════════════════════════ -->
+    <section id="menu" aria-label="Our menu">
+
+        <canvas id="menuCanvas" aria-hidden="true"></canvas>
+
+        <!-- Header -->
+        <div class="menu-header">
+            <p class="menu-eyebrow js-min">Crafted With Love</p>
+            <h2 class="menu-title js-min">
+                <span class="t-cream">Our</span>
+                <span class="t-fire">Signature Menu</span>
+            </h2>
+            <p class="menu-sub js-min">
+                From steaming kulhad chai to crispy snacks — every item made fresh,<br />
+                every flavour designed to make you come back.
+            </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="menu-tabs js-min">
+            <button class="tab-btn active" data-filter="all">All Items</button>
+            <button class="tab-btn" data-filter="chai">☕ Chai</button>
+            <button class="tab-btn" data-filter="drinks">🥤 Drinks</button>
+            <button class="tab-btn" data-filter="snacks">🍟 Snacks</button>
+            <button class="tab-btn" data-filter="meals">🍱 Meals</button>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="menu-grid" id="menuGrid">
+
+            <!-- 1. Masala Chai -->
+            <div class="menu-card js-mc" data-cat="chai" style="--card-glow:rgba(232,114,12,.22)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">☕</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(232,114,12,.15);--badge-brd:rgba(232,114,12,.3);--badge-col:#f5891a">
+                        Chai
+                    </span>
+                    <span class="card-best">⭐ Best Seller</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Masala Chai</div>
+                    <p class="card-desc">Classic spiced brew — ginger, cardamom, tulsi &amp; secret masala blend.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹20</span>
+                        </div>
+                        <button class="btn-cart" data-item="Masala Chai" data-price="20">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Kulhad Chai -->
+            <div class="menu-card js-mc" data-cat="chai" style="--card-glow:rgba(200,140,40,.22)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">🏺</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(200,140,40,.15);--badge-brd:rgba(200,140,40,.3);--badge-col:#d4a030">
+                        Chai
+                    </span>
+                    <span class="card-best">🏺 Kulhad</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Kulhad Chai</div>
+                    <p class="card-desc">Earthy kulhad aroma, rich milk chai — the purest desi chai experience.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹30</span>
+                        </div>
+                        <button class="btn-cart" data-item="Kulhad Chai" data-price="30">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Coffee -->
+            <div class="menu-card js-mc" data-cat="drinks" style="--card-glow:rgba(120,70,20,.3)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">☕</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(120,70,20,.18);--badge-brd:rgba(160,100,40,.3);--badge-col:#c8b090">
+                        Coffee
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Coffee</div>
+                    <p class="card-desc">Hot or cold, dark or creamy — our café-style coffee hits different.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹40</span>
+                        </div>
+                        <button class="btn-cart" data-item="Coffee" data-price="40">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Maggi -->
+            <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(220,180,40,.18)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">🍜</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(220,180,40,.12);--badge-brd:rgba(220,180,40,.28);--badge-col:#fde047">
+                        Meal
+                    </span>
+                    <span class="card-best">🔥 Hot Pick</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Masala Maggi</div>
+                    <p class="card-desc">Loaded desi-style Maggi with veggies, cheese &amp; extra masala.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹50</span>
+                        </div>
+                        <button class="btn-cart" data-item="Masala Maggi" data-price="50">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Samosa -->
+            <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(232,140,12,.2)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="plate-emoji">🥟</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(232,114,12,.12);--badge-brd:rgba(232,114,12,.28);--badge-col:#f5891a">
+                        Snack
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Samosa</div>
+                    <p class="card-desc">Golden crispy shell, spiced potato filling — best with green chutney.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">Per Piece</span>
+                            <span class="price-amount">₹15</span>
+                        </div>
+                        <button class="btn-cart" data-item="Samosa" data-price="15">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Poha -->
+            <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(250,200,60,.15)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">🍛</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(250,200,60,.1);--badge-brd:rgba(250,200,60,.25);--badge-col:#fde047">
+                        Meal
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Poha</div>
+                    <p class="card-desc">Fluffy flattened rice, temperedwith mustard, curry leaves &amp; lemon.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹40</span>
+                        </div>
+                        <button class="btn-cart" data-item="Poha" data-price="40">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Sandwich -->
+            <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(100,200,80,.12)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="plate-emoji">🥪</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(100,200,80,.1);--badge-brd:rgba(100,200,80,.25);--badge-col:#86efac">
+                        Meal
+                    </span>
+                    <span class="card-best">🌿 Veg</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Sandwich</div>
+                    <p class="card-desc">Toasted veg or grilled — loaded with cheese, mint chutney &amp; veggies.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹60</span>
+                        </div>
+                        <button class="btn-cart" data-item="Sandwich" data-price="60">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Momos -->
+            <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(180,100,200,.15)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="card-steam">
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                        <div class="sw"></div>
+                    </div>
+                    <div class="plate-emoji">🥟</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(180,100,200,.1);--badge-brd:rgba(180,100,200,.25);--badge-col:#d8b4fe">
+                        Snack
+                    </span>
+                    <span class="card-best">💜 Popular</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Momos</div>
+                    <p class="card-desc">Steamed or fried — veg momos with fiery red chutney.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">6 Piece</span>
+                            <span class="price-amount">₹70</span>
+                        </div>
+                        <button class="btn-cart" data-item="Momos" data-price="70">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Pakoda -->
+            <div class="menu-card js-mc" data-cat="snacks" style="--card-glow:rgba(232,114,12,.2)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="plate-emoji">🧅</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(232,114,12,.12);--badge-brd:rgba(232,114,12,.28);--badge-col:#f5891a">
+                        Snack
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Pakoda</div>
+                    <p class="card-desc">Crispy onion &amp; aloo pakodas — monsoon magic any time of year.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">Plate</span>
+                            <span class="price-amount">₹40</span>
+                        </div>
+                        <button class="btn-cart" data-item="Pakoda" data-price="40">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Burger -->
+            <div class="menu-card js-mc" data-cat="meals" style="--card-glow:rgba(240,160,40,.15)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="plate-emoji">🍔</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(240,160,40,.12);--badge-brd:rgba(240,160,40,.28);--badge-col:#fbbf24">
+                        Meal
+                    </span>
+                    <span class="card-best">🔥 New</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Burger</div>
+                    <p class="card-desc">Crispy veg patty, fresh slaw, secret sauce — proper street-style burger.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹80</span>
+                        </div>
+                        <button class="btn-cart" data-item="Burger" data-price="80">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Cold Drinks -->
+            <div class="menu-card js-mc" data-cat="drinks" style="--card-glow:rgba(60,180,255,.15)">
+                <div class="card-plate">
+                    <div class="plate-glow"></div>
+                    <div class="plate-emoji">🥤</div>
+                    <span class="card-badge"
+                        style="--badge-bg:rgba(60,180,255,.1);--badge-brd:rgba(60,180,255,.25);--badge-col:#7dd3fc">
+                        Drink
+                    </span>
+                    <span class="card-best">❄️ Chilled</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-name">Cold Drinks</div>
+                    <p class="card-desc">Chilled sodas, lemonades &amp; cold coffees to beat the Delhi heat.</p>
+                    <div class="card-foot">
+                        <div class="card-price">
+                            <span class="price-from">From</span>
+                            <span class="price-amount">₹30</span>
+                        </div>
+                        <button class="btn-cart" data-item="Cold Drink" data-price="30">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /menu-grid -->
+
+    </section>
+
+    <!-- Cart Toast -->
+    <div id="cartToast" role="status" aria-live="polite">
+        <span class="toast-icon">🛒</span>
+        <span id="toastMsg">Item added!</span>
+        <span class="toast-count" id="toastCount">1</span>
+        <span style="color:var(--muted);font-size:.7rem">in cart</span>
+    </div>
+
+    <!-- Cart FAB -->
+    <button id="menuCartFab" aria-label="View cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <span class="fab-badge" id="fabBadge">0</span>
+    </button>
+
+    <div style="height:10vh;background:#09060300"></div>
+
+    <script>
+        'use strict';
+
+        /* ── Particle canvas ── */
+        (function () {
+            const c = document.getElementById('menuCanvas');
+            if (!c) return;
+            const ctx = c.getContext('2d');
+            const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
+            let W, H, pts = [], raf;
+            function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+            function mkPt(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.6 + .3, vy: Math.random() * .38 + .09, vx: (Math.random() - .5) * .18, op: Math.random() * .32 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach((p, i) => {
+                    p.y -= p.vy; p.x += p.vx;
+                    if (p.fl) p.op += (Math.random() - .5) * .03;
+                    p.op = Math.min(.45, Math.max(.04, p.op));
+                    if (p.y < H * .15) p.op -= .003;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2);
+                    ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
+                    if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.6, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
+                    if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
+                });
+                raf = requestAnimationFrame(draw);
+            }
+            const ro = new ResizeObserver(() => resize());
+            ro.observe(c.parentElement || document.body);
+            resize(); for (let i = 0; i < 55; i++)pts.push(mkPt(true)); draw();
+            document.addEventListener('visibilitychange', () => document.hidden ? cancelAnimationFrame(raf) : draw());
+        })();
+
+        /* ── Scroll reveals ── */
+        (function () {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); });
+            }, { threshold: .12, rootMargin: '-30px 0px' });
+            document.querySelectorAll('.js-min').forEach(el => io.observe(el));
+
+            const cardIO = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); cardIO.unobserve(e.target); });
+            }, { threshold: .08, rootMargin: '-20px 0px' });
+            document.querySelectorAll('.js-mc').forEach(el => cardIO.observe(el));
+        })();
+
+        /* ── Filter tabs ── */
+        (function () {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const cards = document.querySelectorAll('.menu-card');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const f = tab.dataset.filter;
+                    cards.forEach(card => {
+                        const show = f === 'all' || card.dataset.cat === f;
+                        if (show) {
+                            card.classList.remove('hidden');
+                            // re-trigger reveal if not yet shown
+                            if (!card.classList.contains('in')) {
+                                setTimeout(() => card.classList.add('in'), 50);
+                            }
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        })();
+
+        /* ── Card tilt ── */
+        document.querySelectorAll('.menu-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - .5;
+                const y = (e.clientY - r.top) / r.height - .5;
+                card.style.transform = `translateY(-6px) scale(1.02) perspective(600px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = '');
+        });
+
+        /* ── Cart logic ── */
+        (function () {
+            let cart = [];
+            const toast = document.getElementById('cartToast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastCount = document.getElementById('toastCount');
+            const fab = document.getElementById('menuCartFab');
+            const fabBadge = document.getElementById('fabBadge');
+            let toastTimer;
+
+            document.querySelectorAll('.btn-cart').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const item = btn.dataset.item;
+                    const price = parseInt(btn.dataset.price, 10);
+
+                    // Add to cart
+                    const existing = cart.find(c => c.name === item);
+                    if (existing) existing.qty++;
+                    else cart.push({ name: item, price, qty: 1 });
+
+                    // Button feedback
+                    btn.classList.add('added');
+                    const span = btn.querySelector('span');
+                    const origText = span.textContent;
+                    span.textContent = 'Added ✓';
+                    setTimeout(() => {
+                        btn.classList.remove('added');
+                        span.textContent = origText;
+                    }, 1400);
+
+                    // Toast
+                    const total = cart.reduce((s, c) => s + c.qty, 0);
+                    toastMsg.textContent = `${item} added!`;
+                    toastCount.textContent = total;
+                    toast.classList.add('show');
+                    clearTimeout(toastTimer);
+                    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+
+                    // FAB
+                    fabBadge.textContent = total;
+                    fab.classList.add('show');
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

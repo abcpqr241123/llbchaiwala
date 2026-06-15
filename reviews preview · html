@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLB Chai Wala — Reviews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=Noto+Serif+Devanagari:wght@700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: #0a0603;
+            color: #f5e6c8;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        :root {
+            --orange: #e8720c;
+            --orange-glow: #f5891a;
+            --gold: #d4a030;
+            --gold-light: #f0c060;
+            --cream: #f5e6c8;
+            --cream-dim: #c8b090;
+            --muted: #6b5840;
+            --border: rgba(212, 128, 40, .18);
+            --grad: linear-gradient(135deg, #e8720c, #d4a030);
+            --ease: cubic-bezier(.16, 1, .3, 1);
+            --ease-back: cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        /* =============================================
+   REVIEWS SECTION
+============================================= */
+        #reviews {
+            position: relative;
+            width: 100%;
+            padding: clamp(5rem, 10vh, 8rem) 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0603 0%, #0f0906 50%, #0a0603 100%);
+        }
+
+        #reviews::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 55% at 50% 50%, rgba(232, 114, 12, .07) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 50% at 8% 60%, rgba(212, 160, 48, .05) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 45% at 92% 30%, rgba(180, 80, 10, .04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        #reviewsCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
+        .reviews-header {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 clamp(1rem, 4vw, 2rem);
+            margin-bottom: clamp(3rem, 5vw, 4.5rem);
+        }
+
+        .rv-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .7rem;
+            font-size: .68rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease);
+        }
+
+        .rv-eyebrow.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rv-eyebrow::before,
+        .rv-eyebrow::after {
+            content: '';
+            display: block;
+            width: 26px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange));
+        }
+
+        .rv-eyebrow::after {
+            background: linear-gradient(to left, transparent, var(--orange));
+        }
+
+        .rv-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 7vw, 4.5rem);
+            letter-spacing: .05em;
+            line-height: .95;
+            margin-bottom: .9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .85s var(--ease) .08s, transform .85s var(--ease) .08s;
+        }
+
+        .rv-title.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rv-title .t1 {
+            display: block;
+            background: linear-gradient(135deg, var(--cream), var(--cream-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rv-title .t2 {
+            display: block;
+            background: linear-gradient(135deg, var(--orange-glow), var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 28px rgba(232, 114, 12, .4));
+        }
+
+        .rv-sub {
+            font-size: clamp(.83rem, 1.8vw, .95rem);
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 480px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease) .16s, transform .7s var(--ease) .16s;
+        }
+
+        .rv-sub.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Summary Bar ── */
+        .rv-summary {
+            position: relative;
+            z-index: 2;
+            max-width: 750px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+            padding: 0 clamp(1rem, 4vw, 2rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1.5rem, 4vw, 3.5rem);
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease) .24s, transform .7s var(--ease) .24s;
+        }
+
+        .rv-summary.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sum-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .25rem;
+        }
+
+        .sum-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            line-height: 1;
+            letter-spacing: .04em;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sum-stars {
+            display: flex;
+            gap: 3px;
+            margin: .1rem 0;
+        }
+
+        .sum-star {
+            font-size: 1rem;
+        }
+
+        .sum-label {
+            font-size: .62rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .sum-sep {
+            width: 1px;
+            height: 50px;
+            background: var(--border);
+        }
+
+        /* ── Slider wrapper ── */
+        .slider-wrap {
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            padding: 1.5rem 0 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .8s var(--ease) .3s, transform .8s var(--ease) .3s;
+        }
+
+        .slider-wrap.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Track — infinite scroll */
+        .slider-track {
+            display: flex;
+            gap: clamp(1rem, 2vw, 1.4rem);
+            width: max-content;
+            animation: slideAuto 38s linear infinite;
+            padding: 0 clamp(1rem, 2vw, 1.4rem);
+        }
+
+        .slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* ── Review Card ── */
+        .rv-card {
+            width: clamp(280px, 32vw, 360px);
+            flex-shrink: 0;
+            padding: clamp(1.5rem, 3vw, 1.9rem);
+            background: rgba(16, 10, 4, .8);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            transition: border-color .35s, box-shadow .35s, transform .35s;
+        }
+
+        .rv-card:hover {
+            border-color: rgba(232, 114, 12, .4);
+            box-shadow: 0 12px 45px rgba(0, 0, 0, .5), 0 0 0 1px rgba(232, 114, 12, .12);
+            transform: translateY(-5px);
+        }
+
+        /* Top shine on hover */
+        .rv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--orange), var(--gold), transparent);
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .rv-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Inner glow */
+        .rv-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 114, 12, .08) 0%, transparent 70%);
+            pointer-events: none;
+            transition: opacity .4s;
+            opacity: .6;
+        }
+
+        .rv-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Quote mark */
+        .rv-quote-icon {
+            font-size: 3.5rem;
+            line-height: .8;
+            font-family: Georgia, serif;
+            color: rgba(232, 114, 12, .18);
+            margin-bottom: .4rem;
+            transition: color .3s;
+            user-select: none;
+        }
+
+        .rv-card:hover .rv-quote-icon {
+            color: rgba(232, 114, 12, .32);
+        }
+
+        /* Star rating */
+        .rv-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: .8rem;
+        }
+
+        .rv-star {
+            font-size: .95rem;
+            animation: starPop .4s var(--ease-back) calc(var(--si)*0.07s) both;
+        }
+
+        /* Review text */
+        .rv-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(.88rem, 1.8vw, .98rem);
+            color: var(--cream-dim);
+            line-height: 1.75;
+            margin-bottom: 1.3rem;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            transition: color .3s;
+        }
+
+        .rv-card:hover .rv-text {
+            color: var(--cream);
+        }
+
+        /* Hindi snippet */
+        .rv-hindi {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: .78rem;
+            color: var(--orange);
+            opacity: .65;
+            margin-bottom: 1.1rem;
+            transition: opacity .3s;
+        }
+
+        .rv-card:hover .rv-hindi {
+            opacity: .9;
+        }
+
+        /* Divider */
+        .rv-div {
+            width: 36px;
+            height: 1px;
+            background: linear-gradient(to right, var(--orange), transparent);
+            margin-bottom: 1.1rem;
+            transition: width .4s var(--ease);
+        }
+
+        .rv-card:hover .rv-div {
+            width: 60px;
+        }
+
+        /* Reviewer info */
+        .rv-person {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .rv-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: var(--avatar-grad, var(--grad));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid rgba(232, 114, 12, .2);
+            transition: border-color .3s, transform .35s var(--ease-back), box-shadow .3s;
+        }
+
+        .rv-card:hover .rv-avatar {
+            border-color: rgba(232, 114, 12, .5);
+            transform: scale(1.1);
+            box-shadow: 0 0 14px rgba(232, 114, 12, .3);
+        }
+
+        .rv-meta {
+            display: flex;
+            flex-direction: column;
+            gap: .1rem;
+        }
+
+        .rv-name {
+            font-size: .88rem;
+            font-weight: 600;
+            color: var(--cream);
+            transition: color .3s;
+        }
+
+        .rv-card:hover .rv-name {
+            color: var(--orange-glow);
+        }
+
+        .rv-role {
+            font-size: .68rem;
+            color: var(--muted);
+            letter-spacing: .06em;
+        }
+
+        .rv-date {
+            font-size: .62rem;
+            color: var(--muted);
+            opacity: .6;
+            margin-top: .08rem;
+        }
+
+        /* Verified badge */
+        .rv-verified {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+            font-size: .58rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--success, #22c55e);
+            font-weight: 600;
+            background: rgba(34, 197, 94, .08);
+            border: 1px solid rgba(34, 197, 94, .2);
+            border-radius: 50px;
+            padding: 3px 9px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ── Second row (reverse) ── */
+        .slider-track.reverse {
+            animation: slideAutoReverse 42s linear infinite;
+        }
+
+        .slider-track.reverse:hover {
+            animation-play-state: paused;
+        }
+
+        /* ── Platform logos strip ── */
+        .rv-platforms {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-top: clamp(2.5rem, 5vh, 4rem);
+            padding: 0 1rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .7s var(--ease) .4s, transform .7s var(--ease) .4s;
+        }
+
+        .rv-platforms.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rv-platforms p {
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+
+        .platform-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1.2rem, 4vw, 2.5rem);
+            flex-wrap: wrap;
+        }
+
+        .platform-pill {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(17, 12, 5, .6);
+            border: 1px solid var(--border);
+            font-size: .72rem;
+            font-weight: 500;
+            color: var(--cream-dim);
+            transition: border-color .3s, background .3s;
+        }
+
+        .platform-pill:hover {
+            border-color: rgba(232, 114, 12, .3);
+            background: rgba(232, 114, 12, .06);
+        }
+
+        .platform-star {
+            color: var(--gold);
+            font-size: .85rem;
+        }
+
+        /* ── Keyframes ── */
+        @keyframes slideAuto {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        @keyframes slideAutoReverse {
+            0% {
+                transform: translateX(-50%)
+            }
+
+            100% {
+                transform: translateX(0)
+            }
+        }
+
+        @keyframes starPop {
+            0% {
+                transform: scale(0) rotate(-30deg);
+                opacity: 0
+            }
+
+            70% {
+                transform: scale(1.3) rotate(5deg)
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1
+            }
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:640px) {
+            .rv-card {
+                width: clamp(255px, 80vw, 310px);
+            }
+
+            .sum-sep {
+                display: none;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .slider-track,
+            .slider-track.reverse {
+                animation: none;
+            }
+
+            * {
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════
+     REVIEWS SECTION
+═══════════════════════════════════ -->
+    <section id="reviews" aria-label="Customer reviews">
+
+        <canvas id="reviewsCanvas" aria-hidden="true"></canvas>
+
+        <!-- Header -->
+        <div class="reviews-header">
+            <p class="rv-eyebrow js-rv">What Our Customers Say</p>
+            <h2 class="rv-title js-rv">
+                <span class="t1">Real</span>
+                <span class="t2">Reviews</span>
+            </h2>
+            <p class="rv-sub js-rv">Straight from the hearts of our chai lovers — college students, couples, and office
+                warriors.</p>
+        </div>
+
+        <!-- Rating Summary -->
+        <div class="rv-summary js-rv">
+            <div class="sum-block">
+                <span class="sum-num">4.9</span>
+                <div class="sum-stars">
+                    <span class="sum-star">⭐</span><span class="sum-star">⭐</span>
+                    <span class="sum-star">⭐</span><span class="sum-star">⭐</span>
+                    <span class="sum-star">⭐</span>
+                </div>
+                <span class="sum-label">Average Rating</span>
+            </div>
+            <div class="sum-sep"></div>
+            <div class="sum-block">
+                <span class="sum-num">1,200+</span>
+                <div class="sum-stars" style="visibility:hidden"><span class="sum-star">⭐</span></div>
+                <span class="sum-label">Happy Customers</span>
+            </div>
+            <div class="sum-sep"></div>
+            <div class="sum-block">
+                <span class="sum-num">98%</span>
+                <div class="sum-stars" style="visibility:hidden"><span class="sum-star">⭐</span></div>
+                <span class="sum-label">Would Return</span>
+            </div>
+        </div>
+
+        <!-- ── ROW 1 — Auto slide left ── -->
+        <div class="slider-wrap js-rv" id="sliderRow1">
+            <div class="slider-track" id="track1">
+
+                <!-- Review 1 — College Student -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#e8720c,#d4a030)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"LLB ka masala chai poori padhai ki tension door kar deta hai. Exam ke time pe
+                        yahan aana mandatory ho gaya hai. Best chai in all of Gautam Nagar, hands down!"</p>
+                    <div class="rv-hindi">बेस्ट चाय, बेस्ट वाइब्स! ☕</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👨‍🎓</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Arjun Sharma</span>
+                            <span class="rv-role">B.Tech Student · Delhi University</span>
+                            <span class="rv-date">2 weeks ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 2 — Couple -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#ec4899,#f97316)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"We come here every Friday evening. The ambience is so warm and cosy — perfect
+                        for a date. The couple combo is amazing value, and the kulhad chai is something else entirely!"
+                    </p>
+                    <div class="rv-hindi">हर शुक्रवार की शाम यहीं! 💑</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">💑</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Priya & Rohan</span>
+                            <span class="rv-role">Couple · South Delhi</span>
+                            <span class="rv-date">1 month ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 3 — Office Worker -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#3b82f6,#6366f1)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"After a long day at the office, this is the only place that feels like
+                        unwinding. The ginger chai is STRONG — exactly what I need. And the samosas? Criminal level of
+                        crispiness."</p>
+                    <div class="rv-hindi">ऑफिस के बाद असली चाय यहाँ मिलती है! 💼</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👨‍💼</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Vikram Mehta</span>
+                            <span class="rv-role">Software Engineer · Noida</span>
+                            <span class="rv-date">3 weeks ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 4 — College Student -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#22c55e,#16a34a)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"Study sessions at LLB hit different. Free WiFi, unlimited chai refills with the
+                        student membership, and the Maggi is cooked PERFECTLY every single time. My second home fr fr!"
+                    </p>
+                    <div class="rv-hindi">पढ़ाई + चाय = LLB ☕📚</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👩‍🎓</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Sneha Gupta</span>
+                            <span class="rv-role">MBA Student · IGNOU</span>
+                            <span class="rv-date">5 days ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 5 — Office Worker -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f59e0b,#d97706)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"Our entire team does chai breaks at LLB now. It's become our office tradition.
+                        The VIP membership is completely worth it — 30% off every visit adds up fast!"</p>
+                    <div class="rv-hindi">टीम चाय ब्रेक = LLB! 🏆</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👩‍💼</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Kavya Reddy</span>
+                            <span class="rv-role">Product Manager · Connaught Place</span>
+                            <span class="rv-date">1 week ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 6 — Couple -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#a855f7,#7c3aed)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars">
+                        <span class="rv-star" style="--si:0">⭐</span><span class="rv-star" style="--si:1">⭐</span>
+                        <span class="rv-star" style="--si:2">⭐</span><span class="rv-star" style="--si:3">⭐</span>
+                        <span class="rv-star" style="--si:4">⭐</span>
+                    </div>
+                    <p class="rv-text">"We celebrated our anniversary here and the staff made it SO special. They set up
+                        the table beautifully, brought out a surprise dessert — completely unexpected and incredibly
+                        heartwarming."</p>
+                    <div class="rv-hindi">एनिवर्सरी यादगार बना दी! ✨</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🥂</div>
+                        <div class="rv-meta">
+                            <span class="rv-name">Ananya & Karan</span>
+                            <span class="rv-role">Couple · Lajpat Nagar</span>
+                            <span class="rv-date">2 months ago</span>
+                        </div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Duplicate set for seamless loop -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#e8720c,#d4a030)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"LLB ka masala chai poori padhai ki tension door kar deta hai. Exam ke time pe
+                        yahan aana mandatory ho gaya hai. Best chai in all of Gautam Nagar, hands down!"</p>
+                    <div class="rv-hindi">बेस्ट चाय, बेस्ट वाइब्स! ☕</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👨‍🎓</div>
+                        <div class="rv-meta"><span class="rv-name">Arjun Sharma</span><span class="rv-role">B.Tech
+                                Student · Delhi University</span><span class="rv-date">2 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#ec4899,#f97316)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"We come here every Friday evening. The ambience is so warm and cosy — perfect
+                        for a date. The couple combo is amazing value, and the kulhad chai is something else entirely!"
+                    </p>
+                    <div class="rv-hindi">हर शुक्रवार की शाम यहीं! 💑</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">💑</div>
+                        <div class="rv-meta"><span class="rv-name">Priya & Rohan</span><span class="rv-role">Couple ·
+                                South Delhi</span><span class="rv-date">1 month ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#3b82f6,#6366f1)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"After a long day at the office, this is the only place that feels like
+                        unwinding. The ginger chai is STRONG — exactly what I need. And the samosas? Criminal level of
+                        crispiness."</p>
+                    <div class="rv-hindi">ऑफिस के बाद असली चाय यहाँ मिलती है! 💼</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👨‍💼</div>
+                        <div class="rv-meta"><span class="rv-name">Vikram Mehta</span><span class="rv-role">Software
+                                Engineer · Noida</span><span class="rv-date">3 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#22c55e,#16a34a)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Study sessions at LLB hit different. Free WiFi, unlimited chai refills with the
+                        student membership, and the Maggi is cooked PERFECTLY every single time. My second home fr fr!"
+                    </p>
+                    <div class="rv-hindi">पढ़ाई + चाय = LLB ☕📚</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👩‍🎓</div>
+                        <div class="rv-meta"><span class="rv-name">Sneha Gupta</span><span class="rv-role">MBA Student ·
+                                IGNOU</span><span class="rv-date">5 days ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f59e0b,#d97706)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Our entire team does chai breaks at LLB now. It's become our office tradition.
+                        The VIP membership is completely worth it — 30% off every visit adds up fast!"</p>
+                    <div class="rv-hindi">टीम चाय ब्रेक = LLB! 🏆</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">👩‍💼</div>
+                        <div class="rv-meta"><span class="rv-name">Kavya Reddy</span><span class="rv-role">Product
+                                Manager · Connaught Place</span><span class="rv-date">1 week ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#a855f7,#7c3aed)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"We celebrated our anniversary here and the staff made it SO special. They set up
+                        the table beautifully, brought out a surprise dessert — completely unexpected and incredibly
+                        heartwarming."</p>
+                    <div class="rv-hindi">एनिवर्सरी यादगार बना दी! ✨</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🥂</div>
+                        <div class="rv-meta"><span class="rv-name">Ananya & Karan</span><span class="rv-role">Couple ·
+                                Lajpat Nagar</span><span class="rv-date">2 months ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+            </div><!-- /track1 -->
+        </div>
+
+        <!-- ── ROW 2 — Auto slide right (reverse) ── -->
+        <div class="slider-wrap js-rv" style="margin-top:clamp(.7rem,1.5vw,1rem)">
+            <div class="slider-track reverse" id="track2">
+
+                <!-- Review 7 — College Group -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f97316,#ea580c)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Came here after our semester exams with the whole gang. 8 people, 8 kulhads, and
+                        the loudest laughs of the year. This place has a vibe that no Starbucks can ever replicate."</p>
+                    <div class="rv-hindi">दोस्तों के साथ यहाँ आना ही अलग बात है! 🎉</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🎓</div>
+                        <div class="rv-meta"><span class="rv-name">Rahul & Gang</span><span class="rv-role">Engineering
+                                Students · DTU</span><span class="rv-date">3 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 8 — Working Professional -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#0ea5e9,#0284c7)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"I discovered LLB during a late-night work session nearby. The chai kept me going
+                        till 2am. Staff was incredibly warm even at that hour. Now it's my regular work-from-cafe spot."
+                    </p>
+                    <div class="rv-hindi">रात को भी चाय मिलती है यहाँ! 🌙</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">💻</div>
+                        <div class="rv-meta"><span class="rv-name">Deepak Nair</span><span class="rv-role">Freelance
+                                Designer · Remote</span><span class="rv-date">2 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 9 — First Date Couple -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f43f5e,#e11d48)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Our first date was at LLB. The warm lighting, the amazing chai, the comfortable
+                        seating — everything just made the conversation flow so naturally. We're coming back for our
+                        one-year!"</p>
+                    <div class="rv-hindi">पहली मुलाकात LLB में, यादगार रही! ❤️</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">☕</div>
+                        <div class="rv-meta"><span class="rv-name">Meera & Aditya</span><span class="rv-role">Couple ·
+                                Vasant Kunj</span><span class="rv-date">6 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 10 — Office Team -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#10b981,#059669)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"We ordered for our whole office one afternoon — 25 cups of masala chai delivered
+                        hot and fresh. Everyone was impressed. LLB has genuinely ruined regular chai for all of us."</p>
+                    <div class="rv-hindi">ऑफिस में 25 कप मंगवाई, सबने तारीफ की! 🏢</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🏢</div>
+                        <div class="rv-meta"><span class="rv-name">Sunita Kapoor</span><span class="rv-role">HR Manager
+                                · Green Park</span><span class="rv-date">1 month ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 11 — Student -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#8b5cf6,#7c3aed)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"₹49/month student membership is genuinely the best investment I've made since
+                        joining college. Daily 20% discount + free size upgrades = basically free chai every other
+                        visit."</p>
+                    <div class="rv-hindi">₹49 में इतना मिले? कमाल है! 💜</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">📱</div>
+                        <div class="rv-meta"><span class="rv-name">Tanish Agarwal</span><span class="rv-role">BCA
+                                Student · IP University</span><span class="rv-date">4 days ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Review 12 — Regular customer -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#d4a030,#e8720c)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"3 years of coming to LLB and it has never disappointed. The chai tastes exactly
+                        the same — perfectly consistent, perfectly spiced. That consistency is rare and that's what
+                        keeps me coming back."</p>
+                    <div class="rv-hindi">3 साल से आ रहा हूँ, स्वाद वही है! 👑</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">⭐</div>
+                        <div class="rv-meta"><span class="rv-name">Nikhil Saxena</span><span class="rv-role">VIP Member
+                                · Gautam Nagar</span><span class="rv-date">Yesterday</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+                <!-- Duplicates for seamless loop -->
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f97316,#ea580c)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Came here after our semester exams with the whole gang. 8 people, 8 kulhads, and
+                        the loudest laughs of the year. This place has a vibe that no Starbucks can ever replicate."</p>
+                    <div class="rv-hindi">दोस्तों के साथ यहाँ आना ही अलग बात है! 🎉</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🎓</div>
+                        <div class="rv-meta"><span class="rv-name">Rahul & Gang</span><span class="rv-role">Engineering
+                                Students · DTU</span><span class="rv-date">3 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#0ea5e9,#0284c7)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"I discovered LLB during a late-night work session nearby. The chai kept me going
+                        till 2am. Staff was incredibly warm even at that hour. Now it's my regular work-from-cafe spot."
+                    </p>
+                    <div class="rv-hindi">रात को भी चाय मिलती है यहाँ! 🌙</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">💻</div>
+                        <div class="rv-meta"><span class="rv-name">Deepak Nair</span><span class="rv-role">Freelance
+                                Designer · Remote</span><span class="rv-date">2 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f43f5e,#e11d48)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"Our first date was at LLB. The warm lighting, the amazing chai, the comfortable
+                        seating — everything just made the conversation flow so naturally. We're coming back for our
+                        one-year!"</p>
+                    <div class="rv-hindi">पहली मुलाकात LLB में, यादगार रही! ❤️</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">☕</div>
+                        <div class="rv-meta"><span class="rv-name">Meera & Aditya</span><span class="rv-role">Couple ·
+                                Vasant Kunj</span><span class="rv-date">6 weeks ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#10b981,#059669)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"We ordered for our whole office one afternoon — 25 cups of masala chai delivered
+                        hot and fresh. Everyone was impressed. LLB has genuinely ruined regular chai for all of us."</p>
+                    <div class="rv-hindi">ऑफिस में 25 कप मंगवाई, सबने तारीफ की! 🏢</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">🏢</div>
+                        <div class="rv-meta"><span class="rv-name">Sunita Kapoor</span><span class="rv-role">HR Manager
+                                · Green Park</span><span class="rv-date">1 month ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#8b5cf6,#7c3aed)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"₹49/month student membership is genuinely the best investment I've made since
+                        joining college. Daily 20% discount + free size upgrades = basically free chai every other
+                        visit."</p>
+                    <div class="rv-hindi">₹49 में इतना मिले? कमाल है! 💜</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">📱</div>
+                        <div class="rv-meta"><span class="rv-name">Tanish Agarwal</span><span class="rv-role">BCA
+                                Student · IP University</span><span class="rv-date">4 days ago</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#d4a030,#e8720c)">
+                    <div class="rv-quote-icon">"</div>
+                    <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                            style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span class="rv-star"
+                            style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span></div>
+                    <p class="rv-text">"3 years of coming to LLB and it has never disappointed. The chai tastes exactly
+                        the same — perfectly consistent, perfectly spiced. That consistency is rare and that's what
+                        keeps me coming back."</p>
+                    <div class="rv-hindi">3 साल से आ रहा हूँ, स्वाद वही है! 👑</div>
+                    <div class="rv-div"></div>
+                    <div class="rv-person">
+                        <div class="rv-avatar">⭐</div>
+                        <div class="rv-meta"><span class="rv-name">Nikhil Saxena</span><span class="rv-role">VIP Member
+                                · Gautam Nagar</span><span class="rv-date">Yesterday</span></div>
+                        <div class="rv-verified">✓ Verified</div>
+                    </div>
+                </div>
+
+            </div><!-- /track2 -->
+        </div>
+
+        <!-- Platform ratings -->
+        <div class="rv-platforms js-rv">
+            <p>Also rated highly on</p>
+            <div class="platform-row">
+                <div class="platform-pill"><span class="platform-star">⭐</span> Google Reviews <strong>4.9</strong>
+                </div>
+                <div class="platform-pill"><span class="platform-star">⭐</span> Zomato <strong>4.8</strong></div>
+                <div class="platform-pill"><span class="platform-star">⭐</span> Swiggy <strong>4.7</strong></div>
+                <div class="platform-pill"><span class="platform-star">⭐</span> Magicpin <strong>4.9</strong></div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        'use strict';
+
+        /* ── Particle canvas ── */
+        (function () {
+            const c = document.getElementById('reviewsCanvas'); if (!c) return;
+            const ctx = c.getContext('2d');
+            const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
+            let W, H, pts = [], raf;
+            function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+            function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.5 + .3, vy: Math.random() * .32 + .08, vx: (Math.random() - .5) * .15, op: Math.random() * .3 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                pts.forEach((p, i) => {
+                    p.y -= p.vy; p.x += p.vx;
+                    if (p.fl) p.op += (Math.random() - .5) * .025;
+                    p.op = Math.min(.42, Math.max(.04, p.op));
+                    if (p.y < H * .15) p.op -= .003;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
+                    if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.4, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
+                    if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
+                }); raf = requestAnimationFrame(draw);
+            }
+            const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
+            resize(); for (let i = 0; i < 40; i++)pts.push(mk(true)); draw();
+            document.addEventListener('visibilitychange', () => document.hidden ? cancelAnimationFrame(raf) : draw());
+        })();
+
+        /* ── Scroll reveals ── */
+        (function () {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); });
+            }, { threshold: .1, rootMargin: '-20px 0px' });
+            document.querySelectorAll('.js-rv').forEach(el => io.observe(el));
+        })();
+    </script>
+</body>
+
+</html>
