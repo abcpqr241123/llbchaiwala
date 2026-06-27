@@ -2,15 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- =============================================
-       LLB CHAI WALA — index.html
-       Sections built:
-       ✅ Loading Screen
-       ✅ Navbar
-       ✅ Hero Section
-  ============================================= -->
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="itLh-MqGGpb3BOEZ568lPNoQt3S_lvK42GncwL1_7vQ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="LLB Chai Wala — Premium Chai & Fast Food Cafe, Gautam Nagar, New Delhi." />
     <meta name="theme-color" content="#0a0603" />
@@ -131,7 +123,6 @@
     <!-- ══════════════════════════════════════════
        NAVBAR
   ══════════════════════════════════════════ -->
-    <div id="scrollProgress" aria-hidden="true"></div>
 
     <header id="navbar" class="at-top" role="banner">
         <nav class="nav-inner" aria-label="Main navigation">
@@ -451,206 +442,6 @@
             <div class="counter-divider" aria-hidden="true"></div>
         </section>
 
-        <!-- ════════════════════════════
-         SPECIAL OFFERS SECTION
-    ════════════════════════════ -->
-        <section id="offers" aria-label="Special offers and deals">
-
-            <canvas id="offersCanvas" aria-hidden="true"></canvas>
-
-            <div class="offers-header">
-                <p class="offers-eyebrow js-ov">
-                    <span class="oe-line"></span>Limited Time Deals<span class="oe-line"></span>
-                </p>
-                <h2 class="offers-title js-ov">
-                    <span class="ot-white">Special </span><span class="ot-orange">Offers</span>
-                </h2>
-                <p class="offers-desc js-ov">
-                    Handpicked deals brewed with love. Grab them before they're gone —<br />
-                    <em style="color:var(--cream-dim)">kyunki acchi cheez zyada der nahi tikti.</em>
-                </p>
-                <div class="offers-timer js-ov">
-                    <span class="timer-dot"></span>
-                    Offers valid today only &nbsp;·&nbsp; While stocks last
-                </div>
-            </div>
-
-            <div class="offers-grid">
-
-                <!-- BOGO Chai — featured wide -->
-                <div class="offer-card offer-card-wide js-ocard" aria-label="Buy 1 Get 1 Chai offer">
-                    <div class="card-shimmer"></div>
-                    <div class="card-corner card-corner-tl"></div>
-                    <div class="card-corner card-corner-br"></div>
-                    <div class="card-inner">
-                        <div class="wide-left">
-                            <span class="card-badge badge-hot"><span class="badge-dot"></span>Hottest Deal</span>
-                            <div class="card-icon-wrap" style="margin-top:2.5rem">☕</div>
-                            <div class="card-offer-label">Buy 1 Get 1 Free</div>
-                            <div class="card-title">Double the Chai, Same Price</div>
-                            <p class="card-desc">Share with your chai-buddy or keep both — we won't judge. <strong>Every
-                                    cup brewed fresh,</strong> every sip worth it.</p>
-                            <ul class="card-includes">
-                                <li>Any 2 Chai of choice</li>
-                                <li>All chai variants</li>
-                                <li>Dine-in &amp; takeaway</li>
-                                <li>No coupon needed</li>
-                            </ul>
-                            <div class="card-footer">
-                                <div class="card-price-wrap">
-                                    <span class="price-old">₹60</span>
-                                    <span class="price-new">₹30</span>
-                                    <span class="price-save">You save ₹30 🎉</span>
-                                </div>
-                                <a href="#menu" class="card-cta">Grab Deal <svg width="14" height="14"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg></a>
-                            </div>
-                            <div class="card-expiry">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Valid Mon–Fri · 3 PM – 7 PM only
-                            </div>
-                        </div>
-                        <div class="wide-right">
-                            <div class="wide-cups">
-                                <span class="wcup">☕</span><span class="wcup">+</span><span class="wcup">☕</span>
-                            </div>
-                            <div class="wide-divider">1 + 1 FREE</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Combo -->
-                <div class="offer-card js-ocard" aria-label="Student combo offer">
-                    <div class="card-shimmer"></div>
-                    <div class="card-corner card-corner-tl"></div>
-                    <div class="card-corner card-corner-br"></div>
-                    <div class="card-inner">
-                        <span class="card-badge badge-new"><span class="badge-dot"></span>Students Only</span>
-                        <div class="card-icon-wrap" style="margin-top:2.5rem">🎓</div>
-                        <div class="card-offer-label">Student Combo</div>
-                        <div class="card-title">"Padhai + Chai" — The OG Duo</div>
-                        <p class="card-desc">Fuel your grind. One chai, one snack, one smile. <strong>Show your student
-                                ID</strong> and unlock this exclusive deal.</p>
-                        <ul class="card-includes">
-                            <li>1 Masala Chai</li>
-                            <li>1 Maggi / Toast</li>
-                            <li>Valid on student ID</li>
-                            <li>Mon–Sat only</li>
-                        </ul>
-                        <div class="card-footer">
-                            <div class="card-price-wrap">
-                                <span class="price-old">₹90</span>
-                                <span class="price-new">₹59</span>
-                                <span class="price-save">Save ₹31 📚</span>
-                            </div>
-                            <a href="#menu" class="card-cta">Claim <svg width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg></a>
-                        </div>
-                        <div class="card-expiry">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10" />
-                                <polyline points="12 6 12 12 16 14" />
-                            </svg>
-                            Show valid student ID at counter
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Couple Combo -->
-                <div class="offer-card js-ocard" aria-label="Couple combo offer">
-                    <div class="card-shimmer"></div>
-                    <div class="card-corner card-corner-tl"></div>
-                    <div class="card-corner card-corner-br"></div>
-                    <div class="card-inner">
-                        <span class="card-badge badge-pop"><span class="badge-dot"></span>Most Popular</span>
-                        <div class="card-icon-wrap" style="margin-top:2.5rem">💑</div>
-                        <div class="card-offer-label">Couple Combo</div>
-                        <div class="card-title">"Dono ka adda, ek hi jagah"</div>
-                        <p class="card-desc">Two chai, two snacks, one cozy corner. <strong>The perfect chai
-                                date</strong> — simple, warm, unforgettable.</p>
-                        <ul class="card-includes">
-                            <li>2 Special Chai</li>
-                            <li>2 Snacks of choice</li>
-                            <li>Priority seating</li>
-                            <li>Anytime, any day</li>
-                        </ul>
-                        <div class="card-footer">
-                            <div class="card-price-wrap">
-                                <span class="price-old">₹160</span>
-                                <span class="price-new">₹119</span>
-                                <span class="price-save">Save ₹41 ❤️</span>
-                            </div>
-                            <a href="#menu" class="card-cta">Book Now <svg width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg></a>
-                        </div>
-                        <div class="card-expiry">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10" />
-                                <polyline points="12 6 12 12 16 14" />
-                            </svg>
-                            Valid all 7 days · No time restriction
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Evening Snacks Deal -->
-                <div class="offer-card js-ocard" aria-label="Evening snacks deal">
-                    <div class="card-shimmer"></div>
-                    <div class="card-corner card-corner-tl"></div>
-                    <div class="card-corner card-corner-br"></div>
-                    <div class="card-inner">
-                        <span class="card-badge badge-eve"><span class="badge-dot"></span>Evening Special</span>
-                        <div class="card-icon-wrap" style="margin-top:2.5rem">🌆</div>
-                        <div class="card-offer-label">Evening Snacks Deal</div>
-                        <div class="card-title">"Shaam ki chai, life ka best time"</div>
-                        <p class="card-desc">Chai + full snacks platter to end your day on a golden note. <strong>Best
-                                vibes, best bites.</strong></p>
-                        <ul class="card-includes">
-                            <li>1 Cutting Chai</li>
-                            <li>Snacks Platter (4 items)</li>
-                            <li>4 PM – 8 PM only</li>
-                            <li>Dine-in only</li>
-                        </ul>
-                        <div class="card-footer">
-                            <div class="card-price-wrap">
-                                <span class="price-old">₹140</span>
-                                <span class="price-new">₹99</span>
-                                <span class="price-save">Save ₹41 🌅</span>
-                            </div>
-                            <a href="#menu" class="card-cta">Order Now <svg width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg></a>
-                        </div>
-                        <div class="card-expiry">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10" />
-                                <polyline points="12 6 12 12 16 14" />
-                            </svg>
-                            4 PM – 8 PM · Dine-in only
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
 
         <!-- ════════════════════════════
          OFFERS SECTION
@@ -954,7 +745,7 @@
                             <div class="sw"></div>
                             <div class="sw"></div>
                         </div>
-                        <div class="plate-emoji"> <img src= "image/maggi.png" alt="Masala Maggi"></div><span class="card-badge"
+                        <div class="plate-emoji"><img src="maggi.png" alt="maggi"></div><span class="card-badge"
                             style="--badge-bg:rgba(220,180,40,.12);--badge-brd:rgba(220,180,40,.28);--badge-col:#fde047">Meal</span><span
                             class="card-best">🔥 Hot Pick</span>
                     </div>
@@ -1006,7 +797,7 @@
                             <div class="sw"></div>
                             <div class="sw"></div>
                         </div>
-                        <div class="plate-emoji"> <img src="image/poha.png" alt="Poha"> </div><span class="card-badge"
+                        <div class="plate-emoji">🍛</div><span class="card-badge"
                             style="--badge-bg:rgba(250,200,60,.1);--badge-brd:rgba(250,200,60,.25);--badge-col:#fde047">Meal</span>
                     </div>
                     <div class="card-body">
@@ -1997,9 +1788,510 @@
             <div class="lb-counter" id="lbCounter">1 / 12</div>
         </div>
 
-        <!-- Future sections: #reviews #contact -->
+        <!-- ════════════════════════════
+         REVIEWS SECTION
+    ════════════════════════════ -->
+        <section id="reviews" aria-label="Customer reviews">
+            <canvas id="reviewsCanvas" aria-hidden="true"></canvas>
+            <div class="reviews-header">
+                <p class="rv-eyebrow js-rv">What Our Customers Say</p>
+                <h2 class="rv-title js-rv"><span class="t1">Real</span><span class="t2">Reviews</span></h2>
+                <p class="rv-sub js-rv">Straight from the hearts of our chai lovers — students, couples, and office
+                    warriors.</p>
+            </div>
+            <div class="rv-summary js-rv">
+                <div class="sum-block"><span class="sum-num">4.9</span>
+                    <div class="sum-stars"><span class="sum-star">⭐</span><span class="sum-star">⭐</span><span
+                            class="sum-star">⭐</span><span class="sum-star">⭐</span><span class="sum-star">⭐</span>
+                    </div><span class="sum-label">Average Rating</span>
+                </div>
+                <div class="sum-sep"></div>
+                <div class="sum-block"><span class="sum-num">1,200+</span>
+                    <div class="sum-stars" style="visibility:hidden"><span class="sum-star">⭐</span></div><span
+                        class="sum-label">Happy Customers</span>
+                </div>
+                <div class="sum-sep"></div>
+                <div class="sum-block"><span class="sum-num">98%</span>
+                    <div class="sum-stars" style="visibility:hidden"><span class="sum-star">⭐</span></div><span
+                        class="sum-label">Would Return</span>
+                </div>
+            </div>
+            <div class="slider-wrap js-rv">
+                <div class="slider-track">
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#e8720c,#d4a030)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"LLB ka masala chai poori padhai ki tension door kar deta hai. Exam time pe
+                            yahan aana mandatory ho gaya hai. Best chai in Gautam Nagar, hands down!"</p>
+                        <div class="rv-hindi">बेस्ट चाय, बेस्ट वाइब्स! ☕</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">👨‍🎓</div>
+                            <div class="rv-meta"><span class="rv-name">Arjun Sharma</span><span class="rv-role">B.Tech
+                                    Student · Delhi University</span><span class="rv-date">2 weeks ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#ec4899,#f97316)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"We come here every Friday evening — perfect for a date. The couple combo is
+                            amazing value, and the kulhad chai is something else entirely!"</p>
+                        <div class="rv-hindi">हर शुक्रवार की शाम यहीं! 💑</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">💑</div>
+                            <div class="rv-meta"><span class="rv-name">Priya &amp; Rohan</span><span
+                                    class="rv-role">Couple · South Delhi</span><span class="rv-date">1 month ago</span>
+                            </div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#3b82f6,#6366f1)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"After office, this is the only place that feels like unwinding. The ginger
+                            chai is STRONG and samosas? Criminal level of crispiness."</p>
+                        <div class="rv-hindi">ऑफिस के बाद असली चाय यहाँ! 💼</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">👨‍💼</div>
+                            <div class="rv-meta"><span class="rv-name">Vikram Mehta</span><span class="rv-role">Software
+                                    Engineer · Noida</span><span class="rv-date">3 weeks ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#22c55e,#16a34a)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Study sessions at LLB hit different. Student membership + Maggi cooked
+                            PERFECTLY every single time. My second home fr fr!"</p>
+                        <div class="rv-hindi">पढ़ाई + चाय = LLB ☕📚</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">👩‍🎓</div>
+                            <div class="rv-meta"><span class="rv-name">Sneha Gupta</span><span class="rv-role">MBA
+                                    Student · IGNOU</span><span class="rv-date">5 days ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f59e0b,#d97706)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Our whole team does chai breaks at LLB now. VIP membership is completely
+                            worth it — 30% off every visit adds up fast!"</p>
+                        <div class="rv-hindi">टीम चाय ब्रेक = LLB! 🏆</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">👩‍💼</div>
+                            <div class="rv-meta"><span class="rv-name">Kavya Reddy</span><span class="rv-role">Product
+                                    Manager · Connaught Place</span><span class="rv-date">1 week ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#a855f7,#7c3aed)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"We celebrated our anniversary here and staff made it SO special — surprise
+                            dessert, beautiful setup. Completely unexpected!"</p>
+                        <div class="rv-hindi">एनिवर्सरी यादगार बना दी! ✨</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">🥂</div>
+                            <div class="rv-meta"><span class="rv-name">Ananya &amp; Karan</span><span
+                                    class="rv-role">Couple · Lajpat Nagar</span><span class="rv-date">2 months
+                                    ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#e8720c,#d4a030)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"LLB ka masala chai poori padhai ki tension door kar deta hai. Exam time pe
+                            yahan aana mandatory ho gaya hai. Best chai in Gautam Nagar, hands down!"</p>
+                        <div class="rv-hindi">बेस्ट चाय, बेस्ट वाइब्स! ☕</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">👨‍🎓</div>
+                            <div class="rv-meta"><span class="rv-name">Arjun Sharma</span><span class="rv-role">B.Tech
+                                    Student · Delhi University</span><span class="rv-date">2 weeks ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#ec4899,#f97316)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"We come here every Friday evening — perfect for a date. The couple combo is
+                            amazing value, and the kulhad chai is something else entirely!"</p>
+                        <div class="rv-hindi">हर शुक्रवार की शाम यहीं! 💑</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">💑</div>
+                            <div class="rv-meta"><span class="rv-name">Priya &amp; Rohan</span><span
+                                    class="rv-role">Couple · South Delhi</span><span class="rv-date">1 month ago</span>
+                            </div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-wrap js-rv" style="margin-top:clamp(.7rem,1.5vw,1rem)">
+                <div class="slider-track reverse">
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f97316,#ea580c)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Came with whole gang after exams. 8 kulhads, loudest laughs of the year.
+                            This place has a vibe no Starbucks can replicate."</p>
+                        <div class="rv-hindi">दोस्तों के साथ यहाँ आना ही अलग है! 🎉</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">🎓</div>
+                            <div class="rv-meta"><span class="rv-name">Rahul &amp; Gang</span><span
+                                    class="rv-role">Engineering Students · DTU</span><span class="rv-date">3 weeks
+                                    ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#0ea5e9,#0284c7)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Discovered LLB during a late-night work session. Chai kept me going till
+                            2am. Staff was incredibly warm. Now it is my regular work-from-cafe spot."</p>
+                        <div class="rv-hindi">रात को भी चाय मिलती है यहाँ! 🌙</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">💻</div>
+                            <div class="rv-meta"><span class="rv-name">Deepak Nair</span><span class="rv-role">Freelance
+                                    Designer · Remote</span><span class="rv-date">2 weeks ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f43f5e,#e11d48)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Our first date was at LLB. Warm lighting, amazing chai — the conversation
+                            just flowed naturally. Coming back for our one-year!"</p>
+                        <div class="rv-hindi">पहली मुलाकात LLB में, यादगार रही! ❤️</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">☕</div>
+                            <div class="rv-meta"><span class="rv-name">Meera &amp; Aditya</span><span
+                                    class="rv-role">Couple · Vasant Kunj</span><span class="rv-date">6 weeks ago</span>
+                            </div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#8b5cf6,#7c3aed)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Rs 49 per month student membership is the best investment since joining
+                            college. 20% off daily + free size upgrades = basically free chai every other visit."</p>
+                        <div class="rv-hindi">₹49 में इतना मिले? कमाल है! 💜</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">📱</div>
+                            <div class="rv-meta"><span class="rv-name">Tanish Agarwal</span><span class="rv-role">BCA
+                                    Student · IP University</span><span class="rv-date">4 days ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#d4a030,#e8720c)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"3 years of coming to LLB and it has never disappointed. Perfectly
+                            consistent, perfectly spiced. That consistency is rare and keeps me coming back."</p>
+                        <div class="rv-hindi">3 साल से आ रहा हूँ, स्वाद वही है! 👑</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">⭐</div>
+                            <div class="rv-meta"><span class="rv-name">Nikhil Saxena</span><span class="rv-role">VIP
+                                    Member · Gautam Nagar</span><span class="rv-date">Yesterday</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#10b981,#059669)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"We ordered 25 cups for the whole office — delivered hot and fresh. LLB has
+                            genuinely ruined regular chai for all of us."</p>
+                        <div class="rv-hindi">ऑफिस में 25 कप, सबने तारीफ की! 🏢</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">🏢</div>
+                            <div class="rv-meta"><span class="rv-name">Sunita Kapoor</span><span class="rv-role">HR
+                                    Manager · Green Park</span><span class="rv-date">1 month ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#f97316,#ea580c)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Came with whole gang after exams. 8 kulhads, loudest laughs of the year.
+                            This place has a vibe no Starbucks can replicate."</p>
+                        <div class="rv-hindi">दोस्तों के साथ यहाँ आना ही अलग है! 🎉</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">🎓</div>
+                            <div class="rv-meta"><span class="rv-name">Rahul &amp; Gang</span><span
+                                    class="rv-role">Engineering Students · DTU</span><span class="rv-date">3 weeks
+                                    ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                    <div class="rv-card" style="--avatar-grad:linear-gradient(135deg,#0ea5e9,#0284c7)">
+                        <div class="rv-quote-icon">"</div>
+                        <div class="rv-stars"><span class="rv-star" style="--si:0">⭐</span><span class="rv-star"
+                                style="--si:1">⭐</span><span class="rv-star" style="--si:2">⭐</span><span
+                                class="rv-star" style="--si:3">⭐</span><span class="rv-star" style="--si:4">⭐</span>
+                        </div>
+                        <p class="rv-text">"Discovered LLB during a late-night work session. Chai kept me going till
+                            2am. Staff was incredibly warm. Now it is my regular work-from-cafe spot."</p>
+                        <div class="rv-hindi">रात को भी चाय मिलती है यहाँ! 🌙</div>
+                        <div class="rv-div"></div>
+                        <div class="rv-person">
+                            <div class="rv-avatar">💻</div>
+                            <div class="rv-meta"><span class="rv-name">Deepak Nair</span><span class="rv-role">Freelance
+                                    Designer · Remote</span><span class="rv-date">2 weeks ago</span></div>
+                            <div class="rv-verified">✓ Verified</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rv-platforms js-rv">
+                <p>Also rated highly on</p>
+                <div class="platform-row">
+                    <div class="platform-pill"><span class="platform-star">⭐</span> Google Reviews <strong>4.9</strong>
+                    </div>
+                    <div class="platform-pill"><span class="platform-star">⭐</span> Zomato <strong>4.8</strong></div>
+                    <div class="platform-pill"><span class="platform-star">⭐</span> Swiggy <strong>4.7</strong></div>
+                    <div class="platform-pill"><span class="platform-star">⭐</span> Magicpin <strong>4.9</strong></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════
+         CONTACT SECTION
+    ════════════════════════════ -->
+        <section id="contact" aria-label="Contact us">
+            <canvas id="contactCanvas" aria-hidden="true"></canvas>
+
+            <div class="contact-header">
+                <p class="ct-eyebrow js-ct">Get In Touch</p>
+                <h2 class="ct-title js-ct"><span class="t1">Find</span><span class="t2">Us</span></h2>
+                <p class="ct-sub js-ct">Drop by, call us, or send a message — we're always happy to hear from you.</p>
+            </div>
+
+            <div class="contact-wrap">
+
+                <div class="contact-info js-ct">
+                    <div class="ct-info-card">
+                        <div class="ct-icon">📍</div>
+                        <div class="ct-info-text">
+                            <div class="ct-info-label">Address</div>
+                            <div class="ct-info-val">Shop 14, Gautam Nagar Market,<br />New Delhi – 110049</div>
+                        </div>
+                    </div>
+                    <div class="ct-info-card">
+                        <div class="ct-icon">📞</div>
+                        <div class="ct-info-text">
+                            <div class="ct-info-label">Phone</div>
+                            <div class="ct-info-val"><a href="tel:+919876543210">+91 98765 43210</a></div>
+                        </div>
+                    </div>
+                    <div class="ct-info-card">
+                        <div class="ct-icon">✉️</div>
+                        <div class="ct-info-text">
+                            <div class="ct-info-label">Email</div>
+                            <div class="ct-info-val"><a href="mailto:hello@llbchaiwala.com">hello@llbchaiwala.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ct-info-card">
+                        <div class="ct-icon">🕒</div>
+                        <div class="ct-info-text" style="width:100%">
+                            <div class="ct-info-label">Opening Hours</div>
+                            <div class="ct-hours">
+                                <div class="ct-hour-row"><span>Mon – Fri</span><span>7AM – 11PM</span></div>
+                                <div class="ct-hour-row"><span>Saturday</span><span>7AM – 12AM</span></div>
+                                <div class="ct-hour-row"><span>Sunday</span><span>8AM – 11PM</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ct-map" id="mapBtn">
+                        <div class="ct-map-pin">📍</div>
+                        <div class="ct-map-label">Gautam Nagar, New Delhi</div>
+                        <div class="ct-map-link">Open in Google Maps →</div>
+                    </div>
+
+                    <div class="ct-socials">
+                        <a href="#" class="ct-social">📷 Instagram</a>
+                        <a href="#" class="ct-social">👍 Facebook</a>
+                        <a href="#" class="ct-social">💬 WhatsApp</a>
+                    </div>
+                </div>
+
+                <div class="contact-form-side js-ct">
+                    <div class="ct-form-card">
+                        <div class="ct-form-title">Send Us a Message</div>
+                        <form id="contactForm">
+                            <div class="ct-field">
+                                <label class="ct-label" for="ctName">Your Name</label>
+                                <input type="text" id="ctName" class="ct-input" placeholder="Full name" required />
+                            </div>
+                            <div class="ct-field">
+                                <label class="ct-label" for="ctEmail">Email or Phone</label>
+                                <input type="text" id="ctEmail" class="ct-input" placeholder="you@example.com"
+                                    required />
+                            </div>
+                            <div class="ct-field">
+                                <label class="ct-label" for="ctMsg">Message</label>
+                                <textarea id="ctMsg" class="ct-textarea" placeholder="Tell us what's on your mind…"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="ct-send" id="ctSendBtn">
+                                <span id="ctSendLabel">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Future sections: none — footer goes outside <main> -->
 
     </main>
+
+    <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+    <footer id="footer" role="contentinfo">
+
+        <div class="footer-top">
+
+            <!-- Brand column -->
+            <div class="ft-brand">
+                <div class="ft-logo">
+                    <span class="ft-logo-hindi">एलएलबी</span>
+                    <span class="ft-logo-sep"></span>
+                    <span class="ft-logo-name">CHAI WALA</span>
+                </div>
+                <p class="ft-desc">
+                    Premium chai &amp; fast food, brewed with love in the heart of
+                    Gautam Nagar. Every cup tells a story — come find yours.
+                </p>
+                <div class="ft-socials">
+                    <button class="ft-social" aria-label="Instagram" title="Instagram">📷</button>
+                    <button class="ft-social" aria-label="Facebook" title="Facebook">👍</button>
+                    <button class="ft-social" aria-label="WhatsApp" title="WhatsApp">💬</button>
+                    <button class="ft-social" aria-label="YouTube" title="YouTube">▶️</button>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="ft-col">
+                <div class="ft-col-title">Explore</div>
+                <ul class="ft-links">
+                    <li><a href="#hero" class="ft-link">Home</a></li>
+                    <li><a href="#menu" class="ft-link">Menu</a></li>
+                    <li><a href="#offers" class="ft-link">Offers</a></li>
+                    <li><a href="#rewards" class="ft-link">Rewards</a></li>
+                    <li><a href="#gallery" class="ft-link">Gallery</a></li>
+                </ul>
+            </div>
+
+            <!-- More Links -->
+            <div class="ft-col">
+                <div class="ft-col-title">Connect</div>
+                <ul class="ft-links">
+                    <li><a href="#reviews" class="ft-link">Reviews</a></li>
+                    <li><a href="#booking" class="ft-link">Book a Table</a></li>
+                    <li><a href="#contact" class="ft-link">Contact Us</a></li>
+                    <li><a href="#" class="ft-link">Careers</a></li>
+                    <li><a href="#" class="ft-link">Franchise</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal -->
+            <div class="ft-col">
+                <div class="ft-col-title">Legal</div>
+                <ul class="ft-links">
+                    <li><a href="#" class="ft-link">Privacy Policy</a></li>
+                    <li><a href="#" class="ft-link">Terms of Service</a></li>
+                    <li><a href="#" class="ft-link">Refund Policy</a></li>
+                    <li><a href="#" class="ft-link">FSSAI License</a></li>
+                </ul>
+            </div>
+
+        </div><!-- /footer-top -->
+
+        <!-- Badge strip -->
+        <div class="footer-badge-strip">
+            <span class="ft-badge"><span>🔒</span> Secure Payments</span>
+            <span class="ft-badge"><span>✓</span> FSSAI Certified</span>
+            <span class="ft-badge"><span>⭐</span> 4.9 Rated</span>
+            <span class="ft-badge"><span>📍</span> Gautam Nagar, Delhi</span>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="footer-bottom">
+            <p class="ft-copy">© 2026 <span>LLB Chai Wala</span>. All rights reserved. Made with ☕ in Delhi.</p>
+            <button class="ft-back-top" id="backToTop">
+                Back to Top
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 15l-6-6-6 6" />
+                </svg>
+            </button>
+        </div>
+
+    </footer>
 
     <script src="script.js"></script>
 </body>
