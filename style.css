@@ -1,34 +1,3 @@
-/* =============================================
-   LLB CHAI WALA — style.css
-   Clean, de-duplicated build
-   ─────────────────────────────────────────
-   1.  Tokens, Reset, Preloader, Wipe Overlay
-   2.  Hero Section
-   3.  Navbar + Mobile Drawer
-   4.  Counter Section
-   5.  Offers Section
-   6.  Menu Section
-   7.  Cart System
-   8.  Booking Section
-   9.  Rewards Section
-   10. Gallery Section + Lightbox
-   11. Reviews Section
-   12. Contact Section
-   13. Footer
-============================================= */
-
-/* =============================================
-   LLB CHAI WALA — style.css  (Complete)
-   1.  Tokens & Reset
-   2.  Preloader / Wipe
-   3.  Navbar
-   4.  Mobile Drawer
-   5.  Hero Section
-   6.  Keyframes
-   7.  Responsive
-============================================= */
-
-/* ── 1. Tokens ── */
 *,
 *::before,
 *::after {
@@ -2256,8 +2225,6 @@ body {
   }
 }
 
-
-/* ============================================
 /* ============================================
    OFFERS SECTION STYLES
 ============================================ */
@@ -3188,6 +3155,7 @@ body {
 }
 
 .plate-emoji {
+  object-fit:cover;
   font-size: 3.5rem;
   position: relative;
   z-index: 1;
@@ -5856,7 +5824,7 @@ body {
 #gallery {
   position: relative;
   width: 100%;
-  padding: clamp(5rem, 10vh, 8rem) clamp(1rem, 4vw, 2rem);
+  padding: clamp(5rem, 10vh, 8rem) 0;
   overflow: hidden;
   background: linear-gradient(180deg, #0a0603 0%, #0f0906 50%, #0a0603 100%);
 }
@@ -5872,20 +5840,12 @@ body {
   pointer-events: none;
 }
 
-#galleryCanvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
 /* Header */
 .gallery-header {
   position: relative;
   z-index: 2;
   text-align: center;
+  padding: 0 clamp(1rem, 4vw, 2rem);
   margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
@@ -5972,111 +5932,39 @@ body {
   transform: translateY(0);
 }
 
-/* Filters */
-.gallery-filters {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  flex-wrap: wrap;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity .7s var(--ease) .22s, transform .7s var(--ease) .22s;
-}
-
-.gallery-filters.in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.gl-filter {
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: .72rem;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  border: 1px solid var(--border);
-  background: rgba(17, 12, 5, .5);
-  color: var(--muted);
-  cursor: pointer;
-  transition: color .25s, border-color .25s, background .25s, box-shadow .25s, transform .2s;
-}
-
-.gl-filter:hover {
-  color: var(--cream-dim);
-  border-color: rgba(232, 114, 12, .3);
-  background: rgba(232, 114, 12, .07);
-  transform: translateY(-1px);
-}
-
-.gl-filter.active {
-  color: #fff;
-  border-color: var(--orange);
-  background: var(--grad);
-  box-shadow: 0 4px 18px rgba(232, 114, 12, .35);
-}
-
-/* Masonry grid */
-.gallery-grid {
-  position: relative;
-  z-index: 2;
-  columns: 4 220px;
-  column-gap: clamp(.7rem, 1.5vw, 1rem);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Gallery item */
+/* Gallery card — sits inside .slider-track (shared with Reviews slider mechanism) */
 .gl-item {
-  break-inside: avoid;
-  margin-bottom: clamp(.7rem, 1.5vw, 1rem);
-  border-radius: 14px;
+  width: clamp(220px, 26vw, 290px);
+  flex-shrink: 0;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(24px) scale(.97);
-  transition: opacity .75s var(--ease), transform .75s var(--ease);
-  display: block;
+  transition: transform .35s var(--ease), box-shadow .35s;
 }
 
-.gl-item.in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+.gl-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, .5);
 }
 
-.gl-item.filtered-out {
-  opacity: 0 !important;
-  transform: scale(.92) !important;
-  pointer-events: none;
-  max-height: 0;
-  overflow: hidden;
-  margin-bottom: 0;
-}
-
-/* Visual card */
 .gl-visual {
   position: relative;
   width: 100%;
+  aspect-ratio: 4/3;
   background: rgba(16, 10, 4, .85);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: border-color .35s, box-shadow .35s;
-  min-height: var(--card-h, 180px);
+  transition: border-color .35s;
 }
 
 .gl-item:hover .gl-visual {
   border-color: rgba(232, 114, 12, .4);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, .5), 0 0 0 1px rgba(232, 114, 12, .15);
 }
 
 .gl-bg-glow {
@@ -6092,18 +5980,17 @@ body {
 }
 
 .gl-emoji {
-  font-size: var(--em-size, 3.8rem);
+  font-size: 3.6rem;
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .6));
   transition: transform .5s var(--ease), filter .4s;
   user-select: none;
   line-height: 1;
-  padding: 1.5rem;
 }
 
 .gl-item:hover .gl-emoji {
-  transform: scale(1.2) translateY(-6px);
+  transform: scale(1.15) translateY(-4px);
   filter: drop-shadow(0 12px 28px rgba(232, 114, 12, .4));
 }
 
@@ -6127,7 +6014,7 @@ body {
 
 .gl-overlay-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   letter-spacing: .07em;
   color: var(--cream);
   margin-bottom: .2rem;
@@ -6156,8 +6043,8 @@ body {
   top: 10px;
   right: 10px;
   z-index: 3;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: rgba(10, 6, 2, .8);
   border: 1px solid rgba(232, 114, 12, .3);
@@ -6190,7 +6077,6 @@ body {
   background: rgba(10, 6, 2, .8);
   border: 1px solid var(--border);
   color: var(--muted);
-  backdrop-filter: blur(8px);
   transition: color .3s, border-color .3s;
 }
 
@@ -6401,10 +6287,6 @@ body {
 
 /* Gallery responsive */
 @media(max-width:900px) {
-  .gallery-grid {
-    columns: 3 180px;
-  }
-
   #lbPrev {
     left: -44px;
   }
@@ -6415,9 +6297,6 @@ body {
 }
 
 @media(max-width:600px) {
-  .gallery-grid {
-    columns: 2 150px;
-  }
 
   #lbPrev,
   #lbNext {
@@ -6427,11 +6306,9 @@ body {
   .lb-visual {
     width: 85vw;
   }
-}
 
-@media(max-width:380px) {
-  .gallery-grid {
-    columns: 1;
+  .gl-item {
+    width: clamp(180px, 68vw, 240px);
   }
 }
 
@@ -7153,8 +7030,6 @@ body {
   transform: scale(1.08);
 }
 
-.ct-info-text {}
-
 .ct-info-label {
   font-size: .62rem;
   letter-spacing: .16em;
@@ -7475,8 +7350,6 @@ body {
 }
 
 /* Brand col */
-.ft-brand {}
-
 .ft-logo {
   display: flex;
   align-items: center;
@@ -7543,8 +7416,6 @@ body {
 }
 
 /* Link columns */
-.ft-col {}
-
 .ft-col-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1rem;
@@ -7655,6 +7526,64 @@ body {
 
 .ft-badge span {
   font-size: .85rem;
+}
+
+.ft-author{
+    min-width:280px;
+}
+
+.author-card{
+    margin-top:15px;
+}
+
+.author-photo{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #d4af37;
+    margin-bottom:15px;
+}
+
+.author-card h4{
+    color:#fff;
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.author-role{
+    display:inline-block;
+    color:#d4af37;
+    font-size:13px;
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+.author-text{
+    color:#bfbfbf;
+    line-height:1.7;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+.author-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.author-links a{
+    text-decoration:none;
+    color:#d4af37;
+    border:1px solid rgba(212,175,55,.3);
+    padding:7px 14px;
+    border-radius:25px;
+    transition:.3s;
+}
+
+.author-links a:hover{
+    background:#d4af37;
+    color:#111;
 }
 
 /* Footer responsive */

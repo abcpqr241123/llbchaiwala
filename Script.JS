@@ -20,20 +20,88 @@
 'use strict';
 
 /* =============================================
-   LLB CHAI WALA — script.js  (Complete)
-   1.  Preloader
-   2.  Wipe Overlay
-   3.  Progress Engine
-   4.  Exit Sequence
-   5.  Navbar (scroll, active link)
-   6.  Mobile Drawer
-   7.  Cart Badge
-   8.  Smooth Scroll
-   9.  Hero Particles
-   10. Hero Counters
-   11. Hero Parallax + Ripple
+   SHARED PARTICLE FIELD FACTORY
+   ─────────────────────────────────────────
+   Replaces 9 copy-pasted canvas particle
+   implementations with one reusable, perf-aware
+   version. Every instance:
+   - Skips entirely on narrow screens (<700px)
+     and prefers-reduced-motion (particles are
+     decorative, not essential, on small/low-end
+     devices — this is the single biggest win
+     for mobile speed and battery life)
+   - Pauses its own requestAnimationFrame loop
+     when its canvas scrolls off-screen
+   - Pauses when the browser tab is hidden
 ============================================= */
-'use strict';
+function createParticleField(canvasId, options = {}) {
+  const {
+    count = 45,
+    colors = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'],
+    maxOpacity = 0.4,
+  } = options;
+
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+
+  /* Skip on small/low-power devices entirely — biggest perf win */
+  const skip = window.matchMedia('(max-width: 700px)').matches ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (skip) return;
+
+  const ctx = c.getContext('2d');
+  let W, H, pts = [], raf = null, running = false;
+
+  function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+
+  function mk(rand) {
+    return {
+      x: Math.random() * W, y: rand ? Math.random() * H : H + 5,
+      rad: Math.random() * 1.6 + .3,
+      vy: Math.random() * .35 + .08, vx: (Math.random() - .5) * .16,
+      op: Math.random() * maxOpacity + .05,
+      col: colors[~~(Math.random() * colors.length)],
+      fl: Math.random() < .3
+    };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach((p, i) => {
+      p.y -= p.vy; p.x += p.vx;
+      if (p.fl) p.op += (Math.random() - .5) * .028;
+      p.op = Math.min(maxOpacity + .06, Math.max(.04, p.op));
+      if (p.y < H * .15) p.op -= .003;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2);
+      ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
+      if (p.rad > 1.1) {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill();
+      }
+      if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
+    });
+    if (running) raf = requestAnimationFrame(draw);
+  }
+
+  function start() { if (running) return; running = true; draw(); }
+  function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+
+  const ro = new ResizeObserver(() => resize());
+  ro.observe(c.parentElement || document.body);
+  resize();
+  for (let i = 0; i < count; i++) pts.push(mk(true));
+
+  /* Pause when off-screen */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? start() : stop());
+  }, { threshold: 0 });
+  io.observe(c);
+
+  /* Pause when tab hidden */
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stop() : (c.getBoundingClientRect().top < window.innerHeight && start());
+  });
+}
 
 /* ── 1. Particle System (Loader) ── */
 const LoaderParticles = (function () {
@@ -92,15 +160,7 @@ const ExitSequence = (function () {
 
 /* ── 9. Hero Particles ── */
 function initHeroParticles() {
-  const c = document.getElementById('heroCanvas'); if (!c) return;
-  const ctx = c.getContext('2d');
-  const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-  let W, H, pts = [];
-  function mkPt(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, r: Math.random() * 2.2 + .4, vy: Math.random() * .5 + .1, vx: (Math.random() - .5) * .3, op: Math.random() * .4 + .08, col: COLS[Math.floor(Math.random() * COLS.length)], flick: Math.random() < .3 }; }
-  function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
-  function draw() { ctx.clearRect(0, 0, W, H); pts.forEach((p, i) => { p.y -= p.vy; p.x += p.vx; if (p.flick) p.op += ((Math.random() - .5) * .045); p.op = Math.min(.58, Math.max(.04, p.op)); if (p.y < H * .3) p.op -= .0025; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill(); if (p.r > 1.5) { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); } if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false); }); requestAnimationFrame(draw); }
-  resize(); for (let i = 0; i < 65; i++)pts.push(mkPt(true)); draw();
-  window.addEventListener('resize', resize, { passive: true });
+  createParticleField('heroCanvas', { count: 65, maxOpacity: .52 });
 }
 
 /* ── 10. Hero Counters ── */
@@ -115,14 +175,58 @@ function initHeroParallax() {
   const hero = document.getElementById('hero'); if (!hero) return;
   const content = hero.querySelector('.hero-content');
   const visual = hero.querySelector('.pour-visual');
-  if (!content || !visual) return;
-  let mx = 0, my = 0, cx = 0, cy = 0;
-  hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); mx = ((e.clientX - r.left) / r.width - .5) * 2; my = ((e.clientY - r.top) / r.height - .5) * 2; });
-  hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
-  (function loop() { cx += (mx - cx) * .06; cy += (my - cy) * .06; content.style.transform = `translate(${cx * 6}px,${cy * 4}px)`; visual.style.transform = `translate(${-cx * 12}px,${-cy * 6}px)`; requestAnimationFrame(loop); })();
-  // Pour ripple
+
+  /* Skip parallax tilt on touch/narrow devices — mouse-only effect anyway */
+  const skipParallax = window.matchMedia('(max-width: 700px)').matches ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let parallaxRunning = false;
+
+  if (content && visual && !skipParallax) {
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - .5) * 2;
+      my = ((e.clientY - r.top) / r.height - .5) * 2;
+    });
+    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+
+    function loop() {
+      if (!parallaxRunning) return;
+      cx += (mx - cx) * .06; cy += (my - cy) * .06;
+      content.style.transform = `translate(${cx * 6}px,${cy * 4}px)`;
+      visual.style.transform = `translate(${-cx * 12}px,${-cy * 6}px)`;
+      requestAnimationFrame(loop);
+    }
+
+    /* Only run the loop while hero is on-screen */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !parallaxRunning) { parallaxRunning = true; loop(); }
+        else if (!e.isIntersecting) { parallaxRunning = false; }
+      });
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+
+  /* Pour ripple — same on/off-screen gating */
   const r = document.getElementById('splashRipple'); if (!r) return;
-  let rx = 8, grow = true; (function anim() { grow ? rx += .3 : rx -= .3; if (rx > 14) grow = false; if (rx < 6) grow = true; r.setAttribute('rx', rx); r.setAttribute('opacity', .3 + (14 - rx) / 20); requestAnimationFrame(anim); })();
+  let rx = 8, grow = true, rippleRunning = false;
+  function anim() {
+    if (!rippleRunning) return;
+    grow ? rx += .3 : rx -= .3;
+    if (rx > 14) grow = false; if (rx < 6) grow = true;
+    r.setAttribute('rx', rx);
+    r.setAttribute('opacity', .3 + (14 - rx) / 20);
+    requestAnimationFrame(anim);
+  }
+  const rio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !rippleRunning) { rippleRunning = true; anim(); }
+      else if (!e.isIntersecting) { rippleRunning = false; }
+    });
+  }, { threshold: 0 });
+  rio.observe(hero);
 }
 
 function initHeroSection() { initHeroParticles(); initHeroCounters(); initHeroParallax(); }
@@ -241,50 +345,9 @@ window.LLBChaiWala.Navbar = Navbar;
 ============================================ */
 const CounterSection = (function () {
 
-  /* Particle system for counter canvas */
+  /* Particle system for counter canvas — uses shared factory */
   function initParticles() {
-    const c = document.getElementById('counterCanvas');
-    if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-
-    function mkPt(rand) {
-      return {
-        x: Math.random() * W, y: rand ? Math.random() * H : H + 5,
-        r: Math.random() * 1.8 + .3,
-        vy: Math.random() * .4 + .1, vx: (Math.random() - .5) * .2,
-        op: Math.random() * .38 + .06,
-        col: COLS[Math.floor(Math.random() * COLS.length)],
-        flick: Math.random() < .3
-      };
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.flick) p.op += (Math.random() - .5) * .035;
-        p.op = Math.min(.5, Math.max(.04, p.op));
-        if (p.y < H * .2) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.r > 1.2) {
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.8, 0, Math.PI * 2);
-          ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill();
-        }
-        if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
-      });
-      raf = requestAnimationFrame(draw);
-    }
-
-    const ro = new ResizeObserver(() => resize());
-    ro.observe(c.parentElement || document.body);
-    resize();
-    for (let i = 0; i < 50; i++) pts.push(mkPt(true));
-    draw();
+    createParticleField('counterCanvas', { count: 50, maxOpacity: .44 });
   }
 
   /* Counter animation with scramble effect */
@@ -370,31 +433,7 @@ window.LLBChaiWala.CounterSection = CounterSection;
 const OffersSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('offersCanvas');
-    if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mkPt(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.6 + .3, vy: Math.random() * .35 + .09, vx: (Math.random() - .5) * .18, op: Math.random() * .35 + .06, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .03;
-        p.op = Math.min(.48, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.6, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
-      });
-      raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize());
-    ro.observe(c.parentElement || document.body);
-    resize();
-    for (let i = 0; i < 45; i++)pts.push(mkPt(true));
-    draw();
+    createParticleField('offersCanvas', { count: 45, maxOpacity: .42 });
   }
 
   function initReveals() {
@@ -451,26 +490,7 @@ window.LLBChaiWala.OffersSection = OffersSection;
 const MenuSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('menuCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mkPt(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.6 + .3, vy: Math.random() * .38 + .09, vx: (Math.random() - .5) * .18, op: Math.random() * .32 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .03;
-        p.op = Math.min(.45, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.6, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mkPt(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 55; i++)pts.push(mkPt(true)); draw();
+    createParticleField('menuCanvas', { count: 55, maxOpacity: .39 });
   }
 
   function initReveals() {
@@ -858,26 +878,7 @@ window.LLBChaiWala.Cart = CartSystem;
 const BookingSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('bookingCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.5 + .3, vy: Math.random() * .35 + .08, vx: (Math.random() - .5) * .15, op: Math.random() * .32 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .028;
-        p.op = Math.min(.42, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.5, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 40; i++)pts.push(mk(true)); draw();
+    createParticleField('bookingCanvas', { count: 40, maxOpacity: .36 });
   }
 
   function initReveal() {
@@ -1019,26 +1020,10 @@ window.LLBChaiWala.BookingSection = BookingSection;
 const RewardsSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('rewardsCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(212,160,48,', 'rgba(232,114,12,', 'rgba(240,192,96,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.8 + .3, vy: Math.random() * .38 + .08, vx: (Math.random() - .5) * .18, op: Math.random() * .35 + .06, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .03;
-        p.op = Math.min(.48, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.2) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.6, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 48; i++)pts.push(mk(true)); draw();
+    createParticleField('rewardsCanvas', {
+      count: 48, maxOpacity: .42,
+      colors: ['rgba(212,160,48,', 'rgba(232,114,12,', 'rgba(240,192,96,', 'rgba(180,90,10,']
+    });
   }
 
   function initReveals() {
@@ -1091,59 +1076,11 @@ window.LLBChaiWala.RewardsSection = RewardsSection;
 ============================================ */
 const GallerySection = (function () {
 
-  function initParticles() {
-    const c = document.getElementById('galleryCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.6 + .3, vy: Math.random() * .35 + .08, vx: (Math.random() - .5) * .16, op: Math.random() * .32 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .028;
-        p.op = Math.min(.44, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.5, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 45; i++)pts.push(mk(true)); draw();
-  }
-
   function initReveals() {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target); });
     }, { threshold: .1, rootMargin: '-20px 0px' });
     document.querySelectorAll('.js-gl').forEach(el => io.observe(el));
-
-    const iio = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); iio.unobserve(e.target); });
-    }, { threshold: .06, rootMargin: '-10px 0px' });
-    document.querySelectorAll('.js-gitem').forEach((el, i) => {
-      el.style.transitionDelay = (i * 0.06) + 's';
-      iio.observe(el);
-    });
-  }
-
-  function initFilters() {
-    const filters = document.querySelectorAll('.gl-filter');
-    const items = document.querySelectorAll('.gl-item');
-    filters.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filters.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.cat;
-        items.forEach(item => {
-          const match = cat === 'all' || item.dataset.cat === cat;
-          item.classList.toggle('filtered-out', !match);
-          if (match && !item.classList.contains('in')) item.classList.add('in');
-        });
-      });
-    });
   }
 
   function initLightbox() {
@@ -1159,7 +1096,7 @@ const GallerySection = (function () {
     const lbNext = document.getElementById('lbNext');
     let allItems = [], currentIndex = 0;
 
-    function buildItems() { allItems = [...document.querySelectorAll('.gl-item:not(.filtered-out)')]; }
+    function buildItems() { allItems = [...document.querySelectorAll('.gl-item')]; }
 
     function buildDots() {
       if (!lbDots) return;
@@ -1221,9 +1158,7 @@ const GallerySection = (function () {
   }
 
   function init() {
-    initParticles();
     initReveals();
-    initFilters();
     initLightbox();
   }
 
@@ -1241,26 +1176,7 @@ window.LLBChaiWala.GallerySection = GallerySection;
 const ReviewsSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('reviewsCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,', 'rgba(180,90,10,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.5 + .3, vy: Math.random() * .32 + .08, vx: (Math.random() - .5) * .15, op: Math.random() * .3 + .05, col: COLS[~~(Math.random() * 4)], fl: Math.random() < .3 }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.fl) p.op += (Math.random() - .5) * .025;
-        p.op = Math.min(.42, Math.max(.04, p.op));
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.rad > 1.1) { ctx.beginPath(); ctx.arc(p.x, p.y, p.rad * 2.4, 0, Math.PI * 2); ctx.fillStyle = p.col + (p.op * .1) + ')'; ctx.fill(); }
-        if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 40; i++)pts.push(mk(true)); draw();
+    createParticleField('reviewsCanvas', { count: 40, maxOpacity: .36 });
   }
 
   function initReveals() {
@@ -1289,23 +1205,10 @@ window.LLBChaiWala.ReviewsSection = ReviewsSection;
 const ContactSection = (function () {
 
   function initParticles() {
-    const c = document.getElementById('contactCanvas'); if (!c) return;
-    const ctx = c.getContext('2d');
-    const COLS = ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,'];
-    let W, H, pts = [], raf;
-    function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
-    function mk(r) { return { x: Math.random() * W, y: r ? Math.random() * H : H + 5, rad: Math.random() * 1.4 + .3, vy: Math.random() * .3 + .07, vx: (Math.random() - .5) * .14, op: Math.random() * .3 + .05, col: COLS[~~(Math.random() * 3)] }; }
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      pts.forEach((p, i) => {
-        p.y -= p.vy; p.x += p.vx;
-        if (p.y < H * .15) p.op -= .003;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2); ctx.fillStyle = p.col + p.op + ')'; ctx.fill();
-        if (p.y < -8 || p.op <= 0) pts[i] = mk(false);
-      }); raf = requestAnimationFrame(draw);
-    }
-    const ro = new ResizeObserver(() => resize()); ro.observe(c.parentElement || document.body);
-    resize(); for (let i = 0; i < 35; i++)pts.push(mk(true)); draw();
+    createParticleField('contactCanvas', {
+      count: 35, maxOpacity: .3,
+      colors: ['rgba(232,114,12,', 'rgba(212,160,48,', 'rgba(245,137,26,']
+    });
   }
 
   function initReveals() {
