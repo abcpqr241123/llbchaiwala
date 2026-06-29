@@ -3155,7 +3155,6 @@ body {
 }
 
 .plate-emoji {
-  object-fit:cover;
   font-size: 3.5rem;
   position: relative;
   z-index: 1;
