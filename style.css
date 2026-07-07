@@ -2694,7 +2694,7 @@ body {
   top: 18px;
   right: -28px;
   width: 110px;
-  background: var(--expiry-bg, rgba(232, 114, 12, .85));
+  background: var(--expiry-bg, rgba(232, 114, 12, .9));
   color: #fff;
   font-size: .55rem;
   font-weight: 700;
@@ -3168,6 +3168,16 @@ body {
   filter: drop-shadow(0 10px 22px rgba(232, 114, 12, .35));
 }
 
+/* Plate image (used for the Masala Maggi photo) — keep it the
+   same footprint as the emoji glyphs above so layout is identical */
+.plate-emoji img {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .5));
+}
+
 /* Steam */
 .card-steam {
   position: absolute;
@@ -3495,6 +3505,11 @@ body {
     font-size: 2.8rem;
   }
 
+  .plate-emoji img {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
   .card-body {
     padding: .9rem .9rem 1rem;
   }
@@ -3504,9 +3519,60 @@ body {
   }
 }
 
+/* Extra-small phones (320–380px): keep the 2-column grid instead of
+   collapsing to 1 column, but shrink paddings/fonts so nothing
+   overflows the narrower card width. This satisfies "2 cards per
+   row on mobile" even at the smallest supported width. */
 @media(max-width:380px) {
   .menu-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .6rem;
+  }
+
+  .card-plate {
+    height: 90px;
+  }
+
+  .plate-emoji {
+    font-size: 2.1rem;
+  }
+
+  .plate-emoji img {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .card-body {
+    padding: .7rem .65rem .8rem;
+  }
+
+  .card-name {
+    font-size: .92rem;
+  }
+
+  .card-desc {
+    font-size: .65rem;
+    margin-bottom: .6rem;
+  }
+
+  .card-foot {
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .price-amount {
+    font-size: 1.15rem;
+  }
+
+  .btn-cart {
+    padding: 7px 10px;
+    font-size: .6rem;
+  }
+
+  .card-badge,
+  .card-best {
+    font-size: .48rem;
+    padding: 2px 6px;
   }
 }
 
@@ -5785,7 +5851,8 @@ body {
 /* Rewards responsive */
 @media(max-width:780px) {
   .rewards-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .reward-card:hover {
@@ -5801,18 +5868,65 @@ body {
 
 @media(max-width:480px) {
   .rc-inner {
-    padding: 1.6rem 1.3rem;
+    padding: 1.2rem .9rem;
+  }
+
+  .rc-top {
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .rc-badge {
+    width: 46px;
+    height: 46px;
+  }
+
+  .badge-icon {
+    font-size: 1.15rem;
+  }
+
+  .rc-tier {
+    font-size: .52rem;
+    padding: 3px 8px;
+  }
+
+  .rc-name {
+    font-size: 1.05rem;
+  }
+
+  .rc-tagline {
+    font-size: .68rem;
+    margin-bottom: .8rem;
+  }
+
+  .rc-perks {
+    gap: .35rem;
+    margin-bottom: 1rem;
+  }
+
+  .rc-perks li {
+    font-size: .64rem;
+  }
+
+  .rp-label {
+    font-size: .52rem;
+  }
+
+  .rp-val {
+    font-size: 1.2rem;
   }
 
   .rc-foot {
     flex-direction: column;
     align-items: flex-start;
-    gap: .8rem;
+    gap: .6rem;
   }
 
   .rc-btn {
     width: 100%;
     justify-content: center;
+    padding: 9px 14px;
+    font-size: .62rem;
   }
 }
 
@@ -7604,5 +7718,9 @@ body {
 
   .footer-badge-strip {
     gap: 1rem;
+  }
+
+  .ft-author {
+    min-width: auto;
   }
 }
